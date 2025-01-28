@@ -7,6 +7,7 @@
     "start:dev2": "bunx --bun vite --mode dev2",
     "start:staging": "bunx --bun vite --mode staging",
     "build": "tsc -b && vite build",
+    "build:dev2": "tsc -b && vite build --mode dev2",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
