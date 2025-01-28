@@ -1,0 +1,153 @@
+import { memo, useCallback, useMemo } from 'react';
+import SortIcon from '@icons/table/SortIcon';
+import { cn } from '@utils/CN';
+import Pagination from '@components/table/Pagination';
+import CaretArrowIcon from '@icons/arrows/CaretArrowIcon';
+import get from 'lodash/get';
+
+type Column = {
+  field: string;
+  header: string;
+  headerClassName?: any;
+  formattedValue?: (columnValue: any, row?: any) => any;
+  sort?: boolean;
+  sortByColumn?: string;
+  valueClassName?: string;
+};
+type Data = { content: any[]; page: Page } | undefined;
+
+const TableHeader = ({
+  sort = false,
+  onClick,
+  ...props
+}: {
+  sort?: boolean;
+  [key: string]: any;
+}) => {
+  return sort ? (
+    <button
+      onClick={onClick}
+      {...props}
+    />
+  ) : (
+    <div {...props} />
+  );
+};
+
+const Table = ({
+  columns,
+  data,
+  filters,
+  onChangeFilters = (value: { [key: string]: string }) => console.log(value),
+  tableClassName,
+}: {
+  columns: Column[];
+  data: Data;
+  tableClassName?: any;
+  filters?: { [key: string]: string | number };
+  onChangeFilters: (value: { [key: string]: string }) => void;
+}) => {
+  const sort = useMemo(() => {
+    return {
+      sortProperty: filters?.sortProperty ?? '',
+      order: filters?.order ?? '',
+    };
+  }, [filters?.sortProperty, filters?.order]);
+
+  const onChangeSort = useCallback(
+    (sortProperty = '') => {
+      if (!sortProperty) {
+        return;
+      }
+      let orderValue = 'ASC';
+      if (sortProperty === sort.sortProperty) {
+        if (sort?.order === '') {
+          orderValue = 'ASC';
+        } else if (sort?.order === 'ASC') {
+          orderValue = 'DESC';
+        } else if (sort?.order === 'DESC') {
+          orderValue = 'ASC';
+        }
+      }
+      onChangeFilters({
+        sortProperty,
+        order: orderValue,
+      });
+    },
+    [onChangeFilters, sort?.sortProperty, sort?.order]
+  );
+  return (
+    <div className={'w-full overflow-x-auto'}>
+      <table className={cn('border border-gray-1', tableClassName)}>
+        <thead>
+          <tr className={'border border-gray-2'}>
+            {columns.map((column, idx) => (
+              <th
+                className={cn('border border-gray-2 p-2', column.headerClassName)}
+                key={'header-' + idx}
+              >
+                <TableHeader
+                  sort={column?.sort}
+                  onClick={() => onChangeSort(column.sortByColumn ?? column.field)}
+                  className={cn('flex w-full justify-center', {
+                    'justify-between': column?.sort,
+                  })}
+                >
+                  <p
+                    className={cn('font-medium text-gray-1', {
+                      'font-bold text-black':
+                        sort.sortProperty === (column.sortByColumn ?? column.field),
+                    })}
+                  >
+                    {column.header}
+                  </p>
+                  {column?.sort ? (
+                    <>
+                      {sort.sortProperty === (column.sortByColumn ?? column.field) ? (
+                        <CaretArrowIcon rotate={sort.order === 'ASC' ? 0 : 180} />
+                      ) : (
+                        <SortIcon />
+                      )}
+                    </>
+                  ) : null}
+                </TableHeader>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className={''}>
+          {data?.content.map((row, idx) => (
+            <tr
+              key={'row-' + idx}
+              className={'border border-gray-2'}
+            >
+              {columns.map((column, idx) => (
+                <td
+                  key={'column-' + idx}
+                  className={'border border-gray-2 px-2.5 py-2'}
+                >
+                  {column?.formattedValue ? (
+                    column.formattedValue(get(row, column.field, ''), row)
+                  ) : (
+                    <p className={cn('text-left text-sm', column?.valueClassName)}>
+                      {get(row, column.field, '')}
+                    </p>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Pagination
+        page={filters?.page}
+        onChangePage={(v: number) => onChangeFilters({ page: `${v}` })}
+        pageData={data?.page}
+        pageSize={filters?.pageSize}
+        onChangePageSize={(v) => onChangeFilters({ pageSize: `${v}` })}
+      />
+    </div>
+  );
+};
+
+export default memo(Table);

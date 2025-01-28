@@ -1,0 +1,19 @@
+{
+  "LOGIN": "/login",
+  "MAIN_DASHBOARD": "/main-dashboard",
+  "USERS": "/users",
+  "MOBILE_USERS": "/mobile-users",
+  "SERVICES": "/services",
+  "OFFERS": "/offers",
+  "STOREFRONTS": "/storefront",
+  "ORDERS": "/orders",
+  "POSTS": "/posts",
+  "MARKETING": "/marketing",
+  "ADVERTISEMENT": "/advertisement",
+  "TEMPLATE_ACCESS_ROLE": "/template-access-role",
+  "TENANTS": "/tenants",
+  "REFUNDS": "/refunds",
+  "EVENTS": "/events",
+  "REPORTS": "/reports",
+  "NODE_TYPES": "/node-types"
+}
