@@ -4,6 +4,6 @@ type User = {
   firstName: string;
   lastName: string;
   phones: string;
-  roles: string
+  roles: string;
   userId: string;
-}
+};

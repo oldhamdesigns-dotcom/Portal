@@ -9,8 +9,20 @@ import { CopyFormatter, FormatValue } from '@utils/formatter/FormatValue';
 import { useQueryParams } from '@hooks/useQueryParams';
 
 const columns = [
-  { field: 'firstName', header: 'First Name', sort: true, headerClassName: 'w-1/8', sortByColumn: 'first_name' },
-  { field: 'lastName', header: 'Last Name', sort: true, headerClassName: 'w-1/8', sortByColumn: 'last_name' },
+  {
+    field: 'firstName',
+    header: 'First Name',
+    sort: true,
+    headerClassName: 'w-1/8',
+    sortByColumn: 'first_name',
+  },
+  {
+    field: 'lastName',
+    header: 'Last Name',
+    sort: true,
+    headerClassName: 'w-1/8',
+    sortByColumn: 'last_name',
+  },
   { field: 'status', header: 'Status', sort: true },
   { field: 'emails', header: 'Email' },
   { field: 'phones', header: 'Phone' },
@@ -18,13 +30,26 @@ const columns = [
     field: 'createdAt',
     header: 'User Since',
     sort: true,
-    formattedValue: (value: string) => <FormatValue prop={'DATE'} value={value}>{value}</FormatValue>,
+    formattedValue: (value: string) => (
+      <FormatValue
+        prop={'DATE'}
+        value={value}
+      >
+        {value}
+      </FormatValue>
+    ),
   },
   {
     field: 'id',
     header: 'User ID',
-    formattedValue: (value: string) => <CopyFormatter textToCopy={value}
-                                                      className={'justify-end'}>{value}</CopyFormatter>,
+    formattedValue: (value: string) => (
+      <CopyFormatter
+        textToCopy={value}
+        className={'justify-end'}
+      >
+        {value}
+      </CopyFormatter>
+    ),
   },
 ];
 
@@ -50,33 +75,38 @@ const MobileUsersPage = () => {
     reset(params);
   }, [reset, params]);
 
-  return <div className={'flex flex-col p-4'}>
-    <div>
-      <h2 className={'flex grow font-bold text-xl'}>{'User Management'}</h2>
-    </div>
-    <div className={'flex justify-between p-2'}>
-      <div className={'grow-0'}>
-        <Controller name={'term'}
-                    control={control}
-                    render={({ field }) =>
-                      <Input {...field}
-                             placeholder={'Search...'}
-                             onChange={(e) => {
-                               field.onChange(e);
-                               setParams({ [field.name]: e.target.value, page: '0' });
-                             }}
-                      />}
-        />
+  return (
+    <div className={'flex flex-col p-4'}>
+      <div>
+        <h2 className={'flex grow text-xl font-bold'}>{'User Management'}</h2>
       </div>
+      <div className={'flex justify-between p-2'}>
+        <div className={'grow-0'}>
+          <Controller
+            name={'term'}
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                placeholder={'Search...'}
+                onChange={(e) => {
+                  field.onChange(e);
+                  setParams({ [field.name]: e.target.value, page: '0' });
+                }}
+              />
+            )}
+          />
+        </div>
+      </div>
+      <Table
+        tableClassName={'min-w-full'}
+        columns={columns}
+        data={data}
+        filters={params}
+        onChangeFilters={setParams}
+      />
     </div>
-    <Table
-      tableClassName={'min-w-full'}
-      columns={columns}
-      data={data}
-      filters={params}
-      onChangeFilters={setParams}
-    />
-  </div>;
+  );
 };
 
 export default memo(MobileUsersPage);

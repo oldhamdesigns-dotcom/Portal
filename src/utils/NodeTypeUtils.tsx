@@ -1,4 +1,4 @@
-import { ComponentType, memo, MemoExoticComponent } from 'react';
+import { ComponentType, MemoExoticComponent } from 'react';
 import NodeTypeListPage from '@pages/generated/NodeTypeListPage';
 import DotIcon from '@icons/node-type/DotIcon';
 import BuildingsIcon from '@icons/node-type/BuildingsIcon';

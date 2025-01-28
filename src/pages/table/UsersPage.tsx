@@ -9,8 +9,20 @@ import { useQueryParams } from '@hooks/useQueryParams';
 
 const columns = [
   { field: 'userId', header: 'User id', headerClassName: 'w-1/6' },
-  { field: 'firstName', header: 'First Name', sort: true, headerClassName: 'w-1/8', sortByColumn: 'first_name' },
-  { field: 'lastName', header: 'Last Name', sort: true, headerClassName: 'w-1/8', sortByColumn: 'last_name' },
+  {
+    field: 'firstName',
+    header: 'First Name',
+    sort: true,
+    headerClassName: 'w-1/8',
+    sortByColumn: 'first_name',
+  },
+  {
+    field: 'lastName',
+    header: 'Last Name',
+    sort: true,
+    headerClassName: 'w-1/8',
+    sortByColumn: 'last_name',
+  },
   { field: 'company', header: 'Company' },
   { field: 'roles', header: 'Roles' },
   { field: 'emails', header: 'Emails' },
@@ -38,33 +50,38 @@ const UsersPage = () => {
     reset(params);
   }, [reset, params]);
 
-  return <div className={'flex flex-col p-4'}>
-    <div>
-      <h2 className={'flex grow font-bold text-xl'}>{'User Management'}</h2>
-    </div>
-    <div className={'flex justify-between p-2'}>
-      <div className={'grow-0'}>
-        <Controller name={'term'}
-                    control={control}
-                    render={({ field }) =>
-                      <Input {...field}
-                             placeholder={'Search...'}
-                             onChange={(e) => {
-                               field.onChange(e);
-                               setParams({ [field.name]: e.target.value, page: '0' });
-                             }}
-                      />}
-        />
+  return (
+    <div className={'flex flex-col p-4'}>
+      <div>
+        <h2 className={'flex grow text-xl font-bold'}>{'User Management'}</h2>
       </div>
+      <div className={'flex justify-between p-2'}>
+        <div className={'grow-0'}>
+          <Controller
+            name={'term'}
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                placeholder={'Search...'}
+                onChange={(e) => {
+                  field.onChange(e);
+                  setParams({ [field.name]: e.target.value, page: '0' });
+                }}
+              />
+            )}
+          />
+        </div>
+      </div>
+      <Table
+        tableClassName={'min-w-full'}
+        columns={columns}
+        data={data}
+        filters={params}
+        onChangeFilters={setParams}
+      />
     </div>
-    <Table
-      tableClassName={'min-w-full'}
-      columns={columns}
-      data={data}
-      filters={params}
-      onChangeFilters={setParams}
-    />
-  </div>;
+  );
 };
 
 export default memo(UsersPage);

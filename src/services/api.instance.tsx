@@ -14,13 +14,13 @@ const ignoredErrorUrls = [
     `^${import.meta.env.VITE_API_ENDPOINT}order-management\\/api\\/orders\\/[^\\/]+\\/[^\\/]+\\/transaction$`
   ),
 ];
-
+/*
 const ignoredLoaderUrl = [
   new RegExp(`^${import.meta.env.VITE_API_ENDPOINT}user\\/api\\/photo\\/[^\\/]+\\/user\\/[^\\/]+$`),
   new RegExp(
     `^${import.meta.env.VITE_API_ENDPOINT}order-management\\/api\\/orders\\/[^\\/]+\\/[^\\/]+\\/transaction$`
   ),
-];
+];*/
 
 const handleError = (error: any) => {
   if ((error.response && error.response.status === 401) || error.message === 'Network Error') {

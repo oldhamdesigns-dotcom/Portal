@@ -12,7 +12,6 @@ import store from '@/store';
 import LoadingView from '@components/LoadingView';
 import { ToastContainer } from 'react-toastify';
 
-
 const RoutesDefinition = () => {
   const authRoutes = useNavigationRoutes();
 
@@ -28,12 +27,12 @@ const RoutesDefinition = () => {
         />
         {authRoutes.length
           ? authRoutes.map(({ path, Component = () => <></> }, idx) => (
-            <Route
-              path={path}
-              key={'route-' + idx}
-              element={<Component />}
-            />
-          ))
+              <Route
+                path={path}
+                key={'route-' + idx}
+                element={<Component />}
+              />
+            ))
           : null}
         <Route
           path={'*'}
@@ -68,17 +67,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,7 +8,6 @@
   "proseWrap": "always",
   "printWidth": 100,
   "singleAttributePerLine": true,
-  "jsxBracketSameLine": false,
   "plugins": [
     "prettier-plugin-tailwindcss"
   ]

@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "prettier": "prettier --check .",
+    "prettier": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
     "prettier:fix": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'"
   },
   "dependencies": {
