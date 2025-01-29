@@ -9,6 +9,8 @@ import { getOrders } from '@services/orders.service';
 import { CopyFormatter, FormatValue } from '@utils/formatter/FormatValue';
 import capitalize from 'lodash/capitalize';
 import startCase from 'lodash/startCase';
+import Dropdown from '@components/forms/Dropdown';
+import { OrderStatusOptions } from '@/conststants/OrderStatusOptions';
 
 const columns = [
   {
@@ -71,6 +73,9 @@ const columns = [
 
 const defaultFilters = {
   searchTerm: '',
+  customerId: '',
+  serviceName: '',
+  status: '',
   page: '0',
   pageSize: '15',
   sortProperty: 'requested_date_time',
@@ -102,14 +107,75 @@ const OrdersPage = () => {
         <h2 className={'flex grow text-xl font-bold'}>{'Orders'}</h2>
       </div>
       <div className={'flex justify-between p-2'}>
-        <div className={'grow-0'}>
+        <div className={'basis-1/5'}>
           <Controller
             name={'searchTerm'}
             control={control}
             render={({ field }) => (
               <Input
                 {...field}
-                placeholder={'Search...'}
+                placeholder={'Search by order, first name or last  name'}
+                onChange={(e) => {
+                  field.onChange(e);
+                  setParams({ [field.name]: e.target.value, page: '0' });
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className={'basis-1/5'}>
+          <Controller
+            name={'serviceName'}
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                placeholder={'Service'}
+                onChange={(e) => {
+                  field.onChange(e);
+                  setParams({ [field.name]: e.target.value, page: '0' });
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className={'flex w-full basis-1/5'}>
+          <Controller
+            name={'status'}
+            control={control}
+            render={({ field }) => (
+              <Dropdown
+                options={OrderStatusOptions}
+                placeholder={'Status'}
+                selectedOption={field?.value}
+                getOptionLabel={(v) => v?.label}
+                getOptionValue={(v) => v?.value}
+                compareWith={(o) => o.value === field?.value}
+                buttonClassName={'bg-white text-black border border-gray p-2 rounded-lg w-full'}
+                optionClassName={'bg-white text-black w-full justify-start px-2'}
+                selectedOptionClassName={'bg-black text-white'}
+                optionContainerClassName={'bg-white h-[200px] overflow-y-auto mt-0'}
+                onChange={(e) => {
+                  if (field?.value === e.target.value) {
+                    field.onChange({ ...e, target: { ...e.target, value: undefined } });
+                    setParams({ [field.name]: '', page: '0' });
+                  } else {
+                    field.onChange(e);
+                    setParams({ [field.name]: e.target.value ?? '', page: '0' });
+                  }
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className={'basis-1/5'}>
+          <Controller
+            name={'customerId'}
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                placeholder={'Customer ID'}
                 onChange={(e) => {
                   field.onChange(e);
                   setParams({ [field.name]: e.target.value, page: '0' });

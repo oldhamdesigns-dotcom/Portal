@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { useClick, useDismiss, useFloating, useHover, useInteractions } from '@floating-ui/react';
+import {
+  size,
+  useClick,
+  useDismiss,
+  useFloating,
+  useHover,
+  useInteractions,
+} from '@floating-ui/react';
 
 type EventProps = {
   enableClick?: boolean;
@@ -38,6 +45,17 @@ const useMenu = (
     },
     placement: 'bottom-start',
     transform: false,
+    middleware: [
+      size({
+        apply({ rects, elements, availableHeight }) {
+          Object.assign(elements.floating.style, {
+            maxHeight: `${availableHeight}px`,
+            minWidth: `${rects.reference.width}px`,
+          });
+        },
+        padding: 10,
+      }),
+    ],
   });
   const click = useClick(context, { enabled: enableClick });
   const hover = useHover(context, { enabled: enableHover });

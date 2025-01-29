@@ -43,10 +43,11 @@ const Pagination = ({
       <Dropdown
         options={PageSizes}
         selectedOption={pageSizeValue}
-        onChange={onChangePageSize}
+        onChange={(e) => onChangePageSize(e.target.value)}
         buttonClassName={'bg-black text-white p-2 rounded-lg'}
         optionClassName={'hover:bg-white hover:text-black'}
         optionContainerClassName={'bg-black text-white'}
+        hideOptions
       />
 
       <div className={'flex gap-1'}>
