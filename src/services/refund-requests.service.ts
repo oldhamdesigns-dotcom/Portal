@@ -8,7 +8,7 @@ const getRefundRequests = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: RefundRequest[];
   page: Page;
 }> => {
   if (!tenant) {

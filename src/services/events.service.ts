@@ -8,7 +8,7 @@ const getEvents = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: Event[];
   page: Page;
 }> => {
   if (!tenant) {

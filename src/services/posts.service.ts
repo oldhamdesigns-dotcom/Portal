@@ -8,7 +8,7 @@ const getPosts = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: Post[];
   page: Page;
 }> => {
   if (!tenant) {

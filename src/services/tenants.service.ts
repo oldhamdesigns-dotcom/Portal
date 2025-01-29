@@ -8,7 +8,7 @@ const getTenantsTopLevel = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: Tenant[];
   page: Page;
 }> => {
   if (!tenant) {

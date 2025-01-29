@@ -25,7 +25,7 @@ const getNodeTypeById = async (
   nodeId?: number,
   { sortProperty: sortBy, order, page, pageSize: count, ...filter }: { [key: string]: string } = {}
 ): Promise<{
-  content: NodeType[];
+  content: Node[];
   page: Page;
 }> => {
   if (!tenant) {

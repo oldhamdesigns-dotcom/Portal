@@ -7,7 +7,7 @@ const getTemplateAccessRoles = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: TemplateAccessRole[];
   page: Page;
 }> => {
   const params = handleURLSearchParams({ page, count, ...filter });

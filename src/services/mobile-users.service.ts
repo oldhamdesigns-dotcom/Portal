@@ -8,7 +8,7 @@ const getMobileUsers = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: User[];
+  content: MobileUser[];
   page: Page;
 }> => {
   if (!tenant) {

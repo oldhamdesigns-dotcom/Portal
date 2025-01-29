@@ -1,9 +1,9 @@
-type NodeType = {
+type Node = {
   id: number;
   parentId: number;
   name: string;
   nodeTypeId: number;
-  payload: any[];
+  payload: any;
   links: any[];
   userProperty: any[];
 };

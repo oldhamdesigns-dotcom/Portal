@@ -13,6 +13,6 @@ type UserData = {
     id: number;
     userId: string;
     mainPhoto: boolean;
-    fileDTO: { id: number; awsId: string; fileName: string; fileType: string; filePath: string };
+    fileDTO: AwsFile;
   }[];
 };

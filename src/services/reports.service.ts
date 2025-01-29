@@ -8,7 +8,7 @@ const getReports = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: Report[];
   page: Page;
 }> => {
   if (!tenant) {

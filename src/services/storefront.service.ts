@@ -8,7 +8,7 @@ const getStorefronts = async (
     pageSize: 15,
   }
 ): Promise<{
-  content: any[];
+  content: Storefront[];
   page: Page;
 }> => {
   if (!tenant) {
