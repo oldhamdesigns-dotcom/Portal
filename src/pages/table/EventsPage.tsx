@@ -56,10 +56,11 @@ const columns = [
     header: 'Storefronts',
     formattedValue: (cell: any[]) => {
       const storefronts = Array.isArray(cell) && cell.find((el) => !!el.name)?.name;
-      return <>{storefronts ?? 'Storefront for this event doesn\'t exists anymore'}</>;
+      return <>{storefronts ?? "Storefront for this event doesn't exists anymore"}</>;
     },
   },
 ];
+
 const defaultFilters = { term: '', page: '0', pageSize: '15' };
 
 const EventsPage = () => {
