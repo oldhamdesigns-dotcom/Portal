@@ -26,6 +26,10 @@ import { nodeTypesToRoute } from '@utils/NodeTypeUtils';
 import RefundRequestsPage from '@pages/table/RefundRequestsPage';
 import TemplateAccessRolesPage from '@pages/table/TemplateAccessRolesPage';
 import TenantsPage from '@pages/table/TenantsPage';
+import StorefrontPage from '@pages/table/StorefrontPage';
+import PostsPage from '@pages/table/PostsPage';
+import EventsPage from '@pages/table/EventsPage';
+import ReportsPage from '@pages/table/ReportsPage';
 
 const NavigationRoutes: {
   path: string;
@@ -61,6 +65,7 @@ const NavigationRoutes: {
     title: 'Storefront',
     labels: ['VIEW_STOREFRONT'],
     Icon: StorefrontIcon,
+    Component: StorefrontPage,
   },
   {
     path: routes.ORDERS,
@@ -69,7 +74,13 @@ const NavigationRoutes: {
     Icon: OrdersIcon,
     Component: OrdersPage,
   },
-  { path: routes.POSTS, title: 'Posts', labels: ['VIEW_POST', 'MANAGE_POST'], Icon: PostsIcon },
+  {
+    path: routes.POSTS,
+    title: 'Posts',
+    labels: ['VIEW_POST', 'MANAGE_POST'],
+    Icon: PostsIcon,
+    Component: PostsPage,
+  },
   {
     path: routes.MARKETING,
     title: 'Marketing',
@@ -103,8 +114,20 @@ const NavigationRoutes: {
     Icon: OffersIcon,
     Component: RefundRequestsPage,
   },
-  { path: routes.EVENTS, title: 'Events', labels: ['VIEW_POST', 'MANAGE_POST'], Icon: EventsIcon },
-  { path: routes.REPORTS, title: 'Reports', labels: ['MANAGE_REPORT'], Icon: ReportsIcon },
+  {
+    path: routes.EVENTS,
+    title: 'Events',
+    labels: ['VIEW_POST', 'MANAGE_POST'],
+    Icon: EventsIcon,
+    Component: EventsPage,
+  },
+  {
+    path: routes.REPORTS,
+    title: 'Reports',
+    labels: ['MANAGE_REPORT'],
+    Icon: ReportsIcon,
+    Component: ReportsPage,
+  },
   {
     path: routes.NODE_TYPES,
     title: 'Node types',

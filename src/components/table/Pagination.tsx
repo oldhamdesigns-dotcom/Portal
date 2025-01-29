@@ -72,7 +72,7 @@ const Pagination = ({
             {page}
           </button>
         ))}
-        {currentPage !== (pageData?.totalPages ?? 1) - 1 ? (
+        {(pageData?.totalPages ?? 0) > 0 && currentPage !== (pageData?.totalPages ?? 1) - 1 ? (
           <button
             className={cn(
               'flex h-[40px] w-[32px] items-center justify-center rounded-lg border border-placeholder bg-white text-black'

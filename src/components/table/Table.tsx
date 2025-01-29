@@ -9,7 +9,7 @@ type Column = {
   field: string;
   header: string;
   headerClassName?: any;
-  formattedValue?: (columnValue: any, row?: any) => any;
+  formattedValue?: (columnValue: any, row?: any, idx?: number) => any;
   sort?: boolean;
   sortByColumn?: string;
   valueClassName?: string;
@@ -36,12 +36,14 @@ const TableHeader = ({
 
 const Table = ({
   columns,
+  hidePagination = false,
   data,
   filters,
   onChangeFilters = (value: { [key: string]: string }) => console.log(value),
   tableClassName,
 }: {
   columns: Column[];
+  hidePagination?: boolean;
   data: Data;
   tableClassName?: any;
   filters?: { [key: string]: string | number };
@@ -116,9 +118,9 @@ const Table = ({
           </tr>
         </thead>
         <tbody className={''}>
-          {data?.content.map((row, idx) => (
+          {data?.content.map((row, idxR) => (
             <tr
-              key={'row-' + idx}
+              key={'row-' + idxR}
               className={'border border-gray-2'}
             >
               {columns.map((column, idx) => (
@@ -127,7 +129,7 @@ const Table = ({
                   className={'border border-gray-2 px-2.5 py-2'}
                 >
                   {column?.formattedValue ? (
-                    column.formattedValue(get(row, column.field, ''), row)
+                    column.formattedValue(get(row, column.field, ''), row, idxR)
                   ) : (
                     <p className={cn('text-left text-sm', column?.valueClassName)}>
                       {get(row, column.field, '')}
@@ -139,13 +141,15 @@ const Table = ({
           ))}
         </tbody>
       </table>
-      <Pagination
-        page={filters?.page}
-        onChangePage={(v: number) => onChangeFilters({ page: `${v}` })}
-        pageData={data?.page}
-        pageSize={filters?.pageSize}
-        onChangePageSize={(v) => onChangeFilters({ pageSize: `${v}` })}
-      />
+      {!hidePagination ? (
+        <Pagination
+          page={filters?.page}
+          onChangePage={(v: number) => onChangeFilters({ page: `${v}` })}
+          pageData={data?.page}
+          pageSize={filters?.pageSize}
+          onChangePageSize={(v) => onChangeFilters({ pageSize: `${v}` })}
+        />
+      ) : null}
     </div>
   );
 };
