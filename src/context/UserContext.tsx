@@ -10,6 +10,7 @@ import {
 import { useNavigate } from 'react-router';
 import routes from '@/navigation/routes.json';
 import { useTenant } from '@/context/TenantContext';
+import VoidFn from '@utils/fn-utils';
 
 const LOGGED_IN_USER_DATA_KEY = 'loggedInUserData';
 const USER_INFO_KEY = 'userInfo';
@@ -36,7 +37,7 @@ const UserContext = createContext<{
   logout: () => void;
 }>({
   userData: initUserData(),
-  logout: () => console.log('logout'),
+  logout: () => VoidFn('logout'),
 });
 
 const UserProvider = ({ children }: DetailedHTMLProps<any, any>) => {

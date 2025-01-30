@@ -3,6 +3,7 @@ import useMenu from '@hooks/useMenu';
 import { cn } from '@utils/CN';
 import ArrowIcon from '@icons/arrows/ArrowIcon';
 import CloseIcon from '@icons/CloseIcon';
+import VoidFn from '@utils/fn-utils';
 
 type DropdownProps = {
   selectedOption: any;
@@ -37,7 +38,7 @@ const Option = memo(
 const Dropdown = ({
   selectedOption,
   getOptionLabel = (option) => option,
-  onChange = (option) => console.log(option),
+  onChange = (option) => VoidFn(option),
   getOptionValue = (option) => option,
   placeholder = '',
   options = [],

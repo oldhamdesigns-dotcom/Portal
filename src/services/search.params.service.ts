@@ -1,5 +1,5 @@
-export const handleURLSearchParams = (params: { [key: string]: string | number }) => {
-  const filters: { [key: string]: string } = {};
+export const handleURLSearchParams = (params: Record<string, string | number>) => {
+  const filters: Record<string, string> = {};
 
   Object.keys(params).forEach((key: string) => {
     let value = params[key];

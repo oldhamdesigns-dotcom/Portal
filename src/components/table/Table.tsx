@@ -4,6 +4,7 @@ import { cn } from '@utils/CN';
 import Pagination from '@components/table/Pagination';
 import CaretArrowIcon from '@icons/arrows/CaretArrowIcon';
 import get from 'lodash/get';
+import VoidFn from '@utils/fn-utils';
 
 type Column = {
   field: string;
@@ -13,6 +14,7 @@ type Column = {
   sort?: boolean;
   sortByColumn?: string;
   valueClassName?: string;
+  onClick?: (e?: any) => void;
 };
 type Data = { content: any[]; page: Page } | undefined;
 
@@ -22,8 +24,8 @@ const TableHeader = ({
   ...props
 }: {
   sort?: boolean;
-  [key: string]: any;
-}) => {
+  onClick?: (e?: any) => void;
+} & Record<string, any>) => {
   return sort ? (
     <button
       onClick={onClick}
@@ -39,15 +41,17 @@ const Table = ({
   hidePagination = false,
   data,
   filters,
-  onChangeFilters = (value: { [key: string]: string }) => console.log(value),
+  onChangeFilters = (value: Record<string, string>) => VoidFn(value),
   tableClassName,
+  onClickRow = (e: any, row: any) => VoidFn('onClickRow', e, row),
 }: {
   columns: Column[];
   hidePagination?: boolean;
   data: Data;
   tableClassName?: any;
-  filters?: { [key: string]: string | number };
-  onChangeFilters: (value: { [key: string]: string }) => void;
+  filters?: Record<string, string | number>;
+  onChangeFilters: (value: Record<string, string>) => void;
+  onClickRow?: (e: any, row: any) => void;
 }) => {
   const sort = useMemo(() => {
     return {
@@ -121,12 +125,24 @@ const Table = ({
           {data?.content.map((row, idxR) => (
             <tr
               key={'row-' + idxR}
-              className={'border border-gray-2'}
+              className={'cursor-pointer border border-gray-2'}
+              onClick={(e) => onClickRow(e, row)}
             >
               {columns.map((column, idx) => (
                 <td
                   key={'column-' + idx}
                   className={'border border-gray-2 px-2.5 py-2'}
+                  onClick={
+                    column.onClick
+                      ? (e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (column.onClick) {
+                            column.onClick(e);
+                          }
+                        }
+                      : undefined
+                  }
                 >
                   {column?.formattedValue ? (
                     column.formattedValue(get(row, column.field, ''), row, idxR)

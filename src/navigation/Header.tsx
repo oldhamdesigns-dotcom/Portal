@@ -24,7 +24,7 @@ const Header = () => {
       setTenantFilter('');
     },
   });
-  const [show, setShow] = useState<{ [KEY: string]: boolean }>({ roles: false });
+  const [show, setShow] = useState<Record<string, boolean>>({ roles: false });
   const [tenantFilter, setTenantFilter] = useState<string>('');
 
   const changeRole = useCallback(

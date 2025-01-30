@@ -14,7 +14,6 @@ import TenantsIcon from '@icons/navigation/TenantsIcon';
 import EventsIcon from '@icons/navigation/EventsIcon';
 import ReportsIcon from '@icons/navigation/ReportsIcon';
 import NodeTypesIcon from '@icons/navigation/NodeTypesIcon';
-import { ComponentType, MemoExoticComponent } from 'react';
 import { useTenant } from '@/context/TenantContext';
 import UsersPage from '@pages/table/UsersPage';
 import MobileUsersPage from '@pages/table/MobileUsersPage';
@@ -30,14 +29,9 @@ import StorefrontPage from '@pages/table/StorefrontPage';
 import PostsPage from '@pages/table/PostsPage';
 import EventsPage from '@pages/table/EventsPage';
 import ReportsPage from '@pages/table/ReportsPage';
+import { NavigationRoute } from '@/types/navigation-route';
 
-const NavigationRoutes: {
-  path: string;
-  title: string;
-  labels: string[];
-  Icon?: MemoExoticComponent<ComponentType<IconProps & { active?: boolean }>>;
-  Component?: MemoExoticComponent<ComponentType<any>> | ComponentType<any>;
-}[] = [
+const NavigationRoutes: NavigationRoute[] = [
   { path: routes.MAIN_DASHBOARD, title: 'Dashboard', labels: [], Icon: DashboardIcon },
   {
     path: routes.USERS,
@@ -45,6 +39,10 @@ const NavigationRoutes: {
     labels: ['VIEW_ROLE'],
     Icon: UsersIcon,
     Component: UsersPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.USERS, title: 'Users' },
+    ],
   },
   {
     path: routes.MOBILE_USERS,
@@ -52,6 +50,10 @@ const NavigationRoutes: {
     labels: ['VIEW_RESOURCE'],
     Icon: MobileUsersIcon,
     Component: MobileUsersPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.MOBILE_USERS, title: 'Mobile Users' },
+    ],
   },
   {
     path: routes.SERVICES,
@@ -66,6 +68,10 @@ const NavigationRoutes: {
     labels: ['VIEW_STOREFRONT'],
     Icon: StorefrontIcon,
     Component: StorefrontPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.STOREFRONTS, title: 'StoreFront' },
+    ],
   },
   {
     path: routes.ORDERS,
@@ -73,6 +79,10 @@ const NavigationRoutes: {
     labels: ['VIEW_ORDER', 'MANAGE_ORDER'],
     Icon: OrdersIcon,
     Component: OrdersPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.ORDERS, title: 'Orders' },
+    ],
   },
   {
     path: routes.POSTS,
@@ -80,6 +90,10 @@ const NavigationRoutes: {
     labels: ['VIEW_POST', 'MANAGE_POST'],
     Icon: PostsIcon,
     Component: PostsPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.POSTS, title: 'Posts' },
+    ],
   },
   {
     path: routes.MARKETING,
@@ -99,6 +113,10 @@ const NavigationRoutes: {
     labels: ['SUPER_ADMIN'],
     Icon: TemplateAccessRoleIcon,
     Component: TemplateAccessRolesPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.TEMPLATE_ACCESS_ROLE, title: 'Template access role' },
+    ],
   },
   {
     path: routes.TENANTS,
@@ -106,6 +124,10 @@ const NavigationRoutes: {
     labels: ['MANAGE_TENANT'],
     Icon: TenantsIcon,
     Component: TenantsPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.TENANTS, title: 'Tenants' },
+    ],
   },
   {
     path: routes.REFUNDS,
@@ -113,6 +135,10 @@ const NavigationRoutes: {
     labels: ['GET_REFUND_REQUEST'],
     Icon: OffersIcon,
     Component: RefundRequestsPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.REFUNDS, title: 'Refunds' },
+    ],
   },
   {
     path: routes.EVENTS,
@@ -120,6 +146,10 @@ const NavigationRoutes: {
     labels: ['VIEW_POST', 'MANAGE_POST'],
     Icon: EventsIcon,
     Component: EventsPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.EVENTS, title: 'Events' },
+    ],
   },
   {
     path: routes.REPORTS,
@@ -127,6 +157,10 @@ const NavigationRoutes: {
     labels: ['MANAGE_REPORT'],
     Icon: ReportsIcon,
     Component: ReportsPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.TENANTS, title: 'Reports' },
+    ],
   },
   {
     path: routes.NODE_TYPES,
@@ -134,10 +168,14 @@ const NavigationRoutes: {
     labels: ['VIEW_NODE_TYPE', 'MANAGE_NODE_TYPE'],
     Icon: NodeTypesIcon,
     Component: NodeTypesPage,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.NODE_TYPES, title: 'Node types' },
+    ],
   },
 ];
 
-const useNavigationRoutes = () => {
+const useNavigationRoutes = (): NavigationRoute[] => {
   const {
     tenantData: {
       activeTenantPermission: { permissionList = [], isSuperAdmin = false } = {

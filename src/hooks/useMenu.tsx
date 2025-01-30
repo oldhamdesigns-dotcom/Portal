@@ -7,6 +7,7 @@ import {
   useHover,
   useInteractions,
 } from '@floating-ui/react';
+import VoidFn from '@utils/fn-utils';
 
 type EventProps = {
   enableClick?: boolean;
@@ -21,14 +22,14 @@ const useMenu = (
     enableClick = true,
     enableHover = false,
     enableDismiss = true,
-    onOpen = () => console.log('onOpen'),
-    onClose = () => console.log('onClose'),
+    onOpen = () => VoidFn('onOpen'),
+    onClose = () => VoidFn('onClose'),
   }: EventProps = {
     enableClick: true,
     enableHover: false,
     enableDismiss: true,
-    onOpen: () => console.log('onOpen'),
-    onClose: () => console.log('onClose'),
+    onOpen: () => VoidFn('onOpen'),
+    onClose: () => VoidFn('onClose'),
   }
 ) => {
   const [visible, setVisible] = useState<boolean>(false);

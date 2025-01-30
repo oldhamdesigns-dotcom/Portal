@@ -5,6 +5,8 @@ import Input from '@components/forms/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { useQueryParams } from '@hooks/useQueryParams';
 import { getNodeTypes } from '@services/node-types.service';
+import { useNavigate } from 'react-router';
+import routes from '@/navigation/routes.json';
 
 const columns = [
   {
@@ -32,6 +34,7 @@ const defaultFilters = {
 const NodeTypesPage = () => {
   const [params, setParams] = useQueryParams(defaultFilters);
   const { reset, control } = useForm({ defaultValues: defaultFilters, mode: 'onTouched' });
+  const navigate = useNavigate();
 
   const { data, refetch } = useQuery({
     initialData: { content: [], page: { number: 0, size: 0, totalElements: 0, totalPages: 0 } },
@@ -50,7 +53,7 @@ const NodeTypesPage = () => {
   return (
     <div className={'flex flex-col p-4'}>
       <div>
-        <h2 className={'flex grow text-xl font-bold'}>{'User Management'}</h2>
+        <h2 className={'flex grow text-xl font-bold'}>{'Node Types'}</h2>
       </div>
       <div className={'flex justify-between p-2'}>
         <div className={'grow-0'}>
@@ -71,6 +74,7 @@ const NodeTypesPage = () => {
         </div>
       </div>
       <Table
+        onClickRow={(e, row) => navigate(`${routes.NODE_TYPES}/${row.id}`)}
         tableClassName={'min-w-full'}
         columns={columns}
         data={data}

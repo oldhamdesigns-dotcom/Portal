@@ -1,6 +1,6 @@
 {
   "LOGIN": "/login",
-  "MAIN_DASHBOARD": "/main-dashboard",
+  "MAIN_DASHBOARD": "/",
   "USERS": "/users",
   "MOBILE_USERS": "/mobile-users",
   "SERVICES": "/services",
@@ -15,5 +15,6 @@
   "REFUNDS": "/refunds",
   "EVENTS": "/events",
   "REPORTS": "/reports",
-  "NODE_TYPES": "/node-types"
+  "NODE_TYPES": "/node-types",
+  "NODE_TYPE_DETAILS": "/node-types/:id"
 }

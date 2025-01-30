@@ -1,6 +1,7 @@
 import { createContext, DetailedHTMLProps, useCallback, useContext, useState } from 'react';
 import routes from '@/navigation/routes.json';
 import { useNavigate } from 'react-router';
+import VoidFn from '@utils/fn-utils';
 
 const ACTIVE_TENANT_PERMISSION_KEY = 'activeTenantPermission';
 const ACTIVE_TENANT_KEY = 'activeTenant';
@@ -43,11 +44,11 @@ const TenantContext = createContext<{
 }>({
   tenantData: initTenantData(),
   changeTenantData: async (tenantPermissions: TenantPermission[], tenantList: Tenant[]) =>
-    console.log('changeTenantData', tenantPermissions, tenantList),
+    VoidFn('changeTenantData', tenantPermissions, tenantList),
   setActiveTenantPermission: (value: TenantPermission) =>
-    console.log('setActiveTenantPermission', value),
-  setActiveTenant: (value: Tenant) => console.log('setActiveTenant', value),
-  setMenu: (value: Partial<{ status: string; wide: boolean }>) => console.log('setMenu', value),
+    VoidFn('setActiveTenantPermission', value),
+  setActiveTenant: (value: Tenant) => VoidFn('setActiveTenant', value),
+  setMenu: (value: Partial<{ status: string; wide: boolean }>) => VoidFn('setMenu', value),
 });
 
 const TenantProvider = ({ children }: DetailedHTMLProps<any, any>) => {

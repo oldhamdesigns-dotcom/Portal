@@ -6,6 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CopyIcon from '@icons/CopyIcon';
 import { cn } from '@utils/CN';
 import { toast } from 'react-toastify';
+import VoidFn from '@utils/fn-utils';
 
 const dateFields = ['policyEffectiveDate', 'policyEnteredDate', 'DATE'];
 
@@ -65,7 +66,7 @@ export const FormatValue = memo(
 export const CopyFormatter = ({
   children = <></>,
   textToCopy = '',
-  onCopy = () => console.log('onCopy'),
+  onCopy = () => VoidFn('onCopy'),
   className = '',
 }: {
   children: any;
@@ -73,16 +74,26 @@ export const CopyFormatter = ({
   onCopy?: () => void;
   className?: string;
 }) => (
-  <CopyToClipboard
-    text={textToCopy}
-    onCopy={() => {
-      onCopy();
-      toast.success('Copied to clipboard');
-    }}
-  >
-    <p className={cn('flex cursor-pointer flex-row items-center gap-2', className)}>
-      <CopyIcon />
-      {children}
-    </p>
-  </CopyToClipboard>
+  <div className={cn('flex', className)}>
+    <div
+      role={'button'}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
+      <CopyToClipboard
+        text={textToCopy}
+        onCopy={() => {
+          onCopy();
+          toast.success('Copied to clipboard');
+        }}
+      >
+        <p className={cn('flex cursor-pointer flex-row items-center gap-2', className)}>
+          <CopyIcon />
+          {children}
+        </p>
+      </CopyToClipboard>
+    </div>
+  </div>
 );

@@ -11,16 +11,8 @@ import LocationIcon from '@icons/node-type/LocationIcon';
 import ChargeIcon from '@icons/node-type/ChargeIcon';
 import MobileIcon from '@icons/node-type/MobileIcon';
 import ReportIcon from '@icons/node-type/ReportIcon';
-
-type RouteNodeType = {
-  path: string;
-  title: string;
-  labels: string[];
-  Icon?:
-    | MemoExoticComponent<ComponentType<IconProps & { active?: boolean }>>
-    | ComponentType<IconProps & { active?: boolean }>;
-  Component?: MemoExoticComponent<ComponentType<any>> | ComponentType<any>;
-};
+import { NavigationRoute } from '@/types/navigation-route';
+import routes from '@/navigation/routes.json';
 
 export const nodeIconToIcon = (
   icon?: { name: string; color: string; size: number },
@@ -77,12 +69,17 @@ export const nodeIconToIcon = (
     ) : null;
 };
 
-export const nodeTypesToRoute = (array: any[] | NodeTypeMenu[]): RouteNodeType[] => {
+export const nodeTypesToRoute = (array: any[] | NodeTypeMenu[]): NavigationRoute[] => {
   return array.map((item) => ({
     path: item.path,
     title: item.title,
     labels: [item?.label, item?.secondLabel].filter((item) => item),
     Icon: ({ active = false }: { active?: boolean }) => nodeIconToIcon(item?.icon, active)(),
     Component: () => <NodeTypeListPage item={item} />,
+    breadcrumbs: [
+      { path: routes.MAIN_DASHBOARD, title: 'Home' },
+      { path: routes.NODE_TYPES, title: 'Node types' },
+      { path: item.path, title: item.title },
+    ],
   }));
 };
