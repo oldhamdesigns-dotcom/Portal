@@ -1453,19 +1453,24 @@ const CustomerProfilePage = () => {
                 <span className="text-[13px]">Member since {joinFormatted}</span>
               </div>
             </div>
-            <button
-              onClick={() => setShowDetails((v) => !v)}
-              className="self-end flex items-center gap-1 text-[12px] text-primary hover:underline transition-colors shrink-0"
-            >
-              {showDetails ? 'Hide details' : 'View more details'}
-              <svg className={cn('size-3 transition-transform duration-200', showDetails ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
           </div>
 
           {/* Contact card */}
           <div className="flex items-stretch border border-border rounded-xl">
+            <div className="flex items-start gap-3 flex-1 px-6 py-3">
+              <SmartphoneIcon />
+              <div className="flex flex-col gap-0.5">
+                <p className="text-[13px] text-text-body font-medium">App Version</p>
+                <p className="text-[14px] text-text-subtle">{MOCK_DEVICES[0]?.appVersion ?? '—'}</p>
+                <button
+                  onClick={() => setShowDevicesModal(true)}
+                  className="text-[12px] text-primary hover:underline transition-colors text-left mt-1"
+                >
+                  View Devices
+                </button>
+              </div>
+            </div>
+            <div className="w-px self-stretch bg-border shrink-0" />
             <div className="flex items-start gap-3 flex-1 px-6 py-3">
               <HomeIcon />
               <div className="flex flex-col gap-0.5">
@@ -1481,21 +1486,19 @@ const CustomerProfilePage = () => {
                 <p className="text-[14px] text-text-subtle">{customer.phone}</p>
               </div>
             </div>
-            <div className="w-px self-stretch bg-border shrink-0" />
-            <div className="flex items-start gap-3 flex-1 px-6 py-3">
-              <SmartphoneIcon />
-              <div className="flex flex-col gap-0.5">
-                <p className="text-[13px] text-text-body font-medium">App Version</p>
-                <p className="text-[14px] text-text-subtle">{MOCK_DEVICES[0]?.appVersion ?? '—'}</p>
-                <button
-                  onClick={() => setShowDevicesModal(true)}
-                  className="text-[12px] text-primary hover:underline transition-colors text-left mt-1"
-                >
-                  View Devices
-                </button>
-              </div>
-            </div>
           </div>
+          <div className="flex justify-end">
+            <button
+              onClick={() => setShowDetails((v) => !v)}
+              className="flex items-center gap-1 text-[13px] text-primary hover:underline transition-colors"
+            >
+              {showDetails ? 'Hide details' : 'View more details'}
+              <svg className={cn('size-3 transition-transform duration-200', showDetails ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+
           {showDetails && (
             <div className="border border-border rounded-xl overflow-hidden">
               <div className="px-5 py-4 flex flex-col">
