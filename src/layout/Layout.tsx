@@ -7,18 +7,17 @@ import NavigationMenu from '@/navigation/NavigationMenu';
 const Layout = () => {
   return (
     <UserProvider>
-      <div className={'flex pl-2 pt-[20px]'}>
+      <div className="flex h-screen overflow-hidden bg-white">
         <NavigationMenu />
-        <div className={'flex grow flex-col'}>
+        <div className="flex flex-1 flex-col min-w-0">
           <Header />
-          <div className={'flex py-2 pl-2'}>
-            <div className={'min-h-screen w-full rounded-lg bg-white py-2 pl-2'}>
-              <Outlet />
-            </div>
-          </div>
+          <main className="flex-1 overflow-auto bg-[#f7f7f7]">
+            <Outlet />
+          </main>
         </div>
       </div>
     </UserProvider>
   );
 };
+
 export default memo(Layout);

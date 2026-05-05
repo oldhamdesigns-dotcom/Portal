@@ -6,7 +6,9 @@ import LoadingView from '@components/LoadingView';
 import { ToastContainer } from 'react-toastify';
 import RoutesDefinition from '@/navigation/RouteDefinition';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false } },
+});
 
 const App = () => {
   return (

@@ -194,9 +194,11 @@ const useNavigationRoutes = (): NavigationRoute[] => {
     queryFn: async () => nodeTypesToRoute(await getNodeMenu()),
   });
 
+  const hasAuth = permissionList.length > 0 || isSuperAdmin;
+
   return [
     ...NavigationRoutes.filter(
-      (nr) => !nr.labels.length || permissionList.some((item) => nr.labels.includes(item))
+      (nr) => !hasAuth || !nr.labels.length || permissionList.some((item) => nr.labels.includes(item))
     ),
     ...(isSuperAdmin ? (data ?? []) : []),
   ];

@@ -44,7 +44,7 @@ const BreadcrumbsLayout = ({
       value={{ breadcrumbs: additionalBreadcrumbs, setBreadcrumbs: setAdditionalBreadcrumbs }}
     >
       {Array.isArray(breadcrumbs) && breadcrumbs.length ? (
-        <div className={'mx-2 flex gap-2 rounded-xl bg-gray p-2'}>
+        <div className={'mx-2 flex gap-2 p-2'}>
           {breadcrumbs.map(({ title, path }, idx) => {
             const isLast = breadcrumbs.length === idx + 1;
             return (

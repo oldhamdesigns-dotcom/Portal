@@ -22,8 +22,10 @@ const ignoredErrorUrls = [
 ];*/
 
 const handleError = (error: any) => {
-  if ((error.response && error.response.status === 401) || error.message === 'Network Error') {
-    toast.error(error.message);
+  if (error.message === 'Network Error') {
+    store.dispatch(stopLoading());
+    return Promise.reject(error);
+  } else if (error.response && error.response.status === 401) {
     store.dispatch(stopLoading());
   } else {
     store.dispatch(stopLoading());

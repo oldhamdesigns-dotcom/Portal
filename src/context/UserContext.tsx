@@ -16,6 +16,16 @@ const LOGGED_IN_USER_DATA_KEY = 'loggedInUserData';
 const USER_INFO_KEY = 'userInfo';
 const USER_KEY = 'user';
 
+const DEMO_USER = {
+  user: { username: 'demo' } as any,
+  userInfo: [] as TenantPermission[],
+  loggedInUserData: {
+    firstName: 'Mark',
+    lastName: 'Oldham',
+    userPhotos: [],
+  } as any,
+};
+
 const initUserData = () => ({
   user: localStorage.getItem(USER_KEY)
     ? JSON.parse(localStorage.getItem(USER_KEY) as string)
@@ -80,15 +90,13 @@ const UserProvider = ({ children }: DetailedHTMLProps<any, any>) => {
   }, [navigate]);
 
   useEffect(() => {
-    if (isError) {
-      navigate(routes.LOGIN);
-    }
+    // In demo/prototype mode, don't redirect on auth failure
   }, [isError, navigate]);
 
   return (
     <UserContext.Provider
       value={{
-        userData: userData ?? initUserData(),
+        userData: userData?.loggedInUserData ? userData : DEMO_USER,
         logout,
       }}
     >

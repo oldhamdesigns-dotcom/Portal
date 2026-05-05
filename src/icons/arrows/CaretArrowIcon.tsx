@@ -1,31 +1,21 @@
 import { memo } from 'react';
 
-const CaretArrowIcon = ({ height = 20, width = 20, rotate = 0 }: IconProps) => (
+const CaretArrowIcon = ({ height = 24, width = 24, rotate = 0 }: IconProps) => (
   <svg
     width={width}
     height={height}
-    viewBox={'0 0 20 20'}
-    fill={'none'}
-    xmlns={'http://www.w3.org/2000/svg'}
-    style={{ transform: `rotate(${rotate}deg)` }}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ transform: `rotate(${rotate}deg)`, transition: 'transform 0.2s ease' }}
   >
-    <g clipPath={'url(#clip0_1070_484)'}>
-      <path
-        d={
-          'M14.2217 8.23156C14.1933 8.16304 14.1453 8.10446 14.0836 8.06324C14.022 8.02202 13.9495 8.00002 13.8753 8H6.3753C6.30108 7.99994 6.22852 8.0219 6.1668 8.0631C6.10508 8.10431 6.05697 8.16289 6.02856 8.23145C6.00015 8.30001 5.99273 8.37546 6.00722 8.44824C6.02172 8.52102 6.05748 8.58787 6.10998 8.64031L9.85998 12.3903C9.89481 12.4252 9.93617 12.4528 9.98169 12.4717C10.0272 12.4906 10.076 12.5003 10.1253 12.5003C10.1746 12.5003 10.2234 12.4906 10.2689 12.4717C10.3144 12.4528 10.3558 12.4252 10.3906 12.3903L14.1406 8.64031C14.193 8.58784 14.2287 8.521 14.2432 8.44824C14.2576 8.37548 14.2501 8.30008 14.2217 8.23156Z'
-        }
-        fill={'#5F5F5F'}
-      />
-    </g>
-    <defs>
-      <clipPath id={'clip0_1070_484'}>
-        <rect
-          width={width}
-          height={height}
-          fill={'white'}
-        />
-      </clipPath>
-    </defs>
+    <path
+      d="M5 9l7 7 7-7"
+      stroke="#5F5F5F"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 

@@ -1,31 +1,22 @@
 import { memo, useCallback, useState } from 'react';
 import { useUserData } from '@/context/UserContext';
 import useUserFormat from '@hooks/useUserFormat';
-import BigMenuIcon from '@icons/BigMenuIcon';
-import SmallMenuIcon from '@icons/SmallMenuIcon';
 import useMenu from '@hooks/useMenu';
 import RolesIcon from '@icons/profile-menu/RolesIcon';
 import ViewProfileIcon from '@icons/profile-menu/ViewProfileIcon';
 import PowerOffIcon from '@icons/profile-menu/PowerOffIcon';
 import ArrowIcon from '@icons/arrows/ArrowIcon';
-import { cn } from '@utils/CN';
-import Avatar from '@icons/Avatar';
 import CaretArrowIcon from '@icons/arrows/CaretArrowIcon';
-import Input from '@components/forms/Input';
+import Avatar from '@icons/Avatar';
+import { cn } from '@utils/CN';
 import { useTenant } from '@/context/TenantContext';
 
 const Header = () => {
   const { userData, logout } = useUserData();
-  const { tenantData, setMenu, setActiveTenantPermission, setActiveTenant } = useTenant();
+  const { tenantData, setActiveTenantPermission } = useTenant();
   const { name, photo } = useUserFormat(userData?.loggedInUserData);
   const profileMenu = useMenu();
-  const tenantsMenu = useMenu({
-    onClose: () => {
-      setTenantFilter('');
-    },
-  });
   const [show, setShow] = useState<Record<string, boolean>>({ roles: false });
-  const [tenantFilter, setTenantFilter] = useState<string>('');
 
   const changeRole = useCallback(
     (value: TenantPermission) => {
@@ -36,122 +27,76 @@ const Header = () => {
     [setActiveTenantPermission, profileMenu]
   );
 
-  const changeActiveTenant = useCallback(
-    (value: Tenant) => {
-      tenantsMenu.setVisible(false);
-      setActiveTenant(value);
-    },
-    [setActiveTenant, tenantsMenu]
-  );
-
   return (
-    <div className={'flex w-full items-center justify-between px-[20px]'}>
-      <div>
-        {tenantData?.activeTenantPermission?.isSuperAdmin ? (
-          <>
-            <button
-              className={'flex items-center gap-2 outline-0'}
-              ref={tenantsMenu.ref}
-              {...tenantsMenu.itemProps}
-            >
-              <Avatar name={'T'} />
-              <span>{tenantData?.activeTenant?.marketingName}</span>
-              <CaretArrowIcon rotate={tenantsMenu.visible ? 180 : 0} />
-            </button>
-            {tenantsMenu.visible ? (
-              <div
-                className={
-                  'animate__animated animate__fadeInDown animate__faster ml-auto mt-[10px] flex w-max flex-col gap-2 rounded bg-white px-2 py-3 shadow-lg'
-                }
-                ref={tenantsMenu.menuRef}
-                style={tenantsMenu.styles}
-                {...tenantsMenu.props}
-              >
-                <Input
-                  value={tenantFilter}
-                  onChange={(e) => setTenantFilter(e.target.value)}
-                  placeholder={'Search tenant...'}
-                />
-                <div className={'flex max-h-[300px] flex-col gap-2 overflow-y-auto px-2 py-1'}>
-                  {tenantData.tenantList
-                    .filter((tenant) =>
-                      tenant.marketingName.toLowerCase().includes(tenantFilter.toLowerCase())
-                    )
-                    .map((item, idx) => (
-                      <button
-                        key={'tenant-' + idx}
-                        className={'cursor-pointer text-left text-sm'}
-                        onClick={() => changeActiveTenant(item)}
-                      >
-                        {item.marketingName}
-                      </button>
-                    ))}
-                </div>
-              </div>
-            ) : null}
-          </>
-        ) : null}
-      </div>
-      <div className={'flex gap-5'}>
+    <div className="flex w-full items-center justify-between px-4 h-[67px] bg-white border-b border-[#e2e8f0] shadow-[0px_1px_1px_rgba(0,0,0,0.1)] shrink-0">
+      <p className="text-lg font-semibold text-text-body">Support Portal</p>
+
+      <div className="relative">
         <button
-          className={'flex flex-row gap-2 text-left outline-0'}
+          className="flex items-center gap-3 bg-white border border-border rounded-lg px-4 h-[52px] outline-0 hover:shadow-sm transition-shadow"
           ref={profileMenu.ref}
           {...profileMenu.itemProps}
         >
           {photo ? (
             <img
               src={photo}
-              className={'size-[36px] rounded-full'}
-              alt={'profile-image'}
+              className="size-[32px] rounded-full object-cover shrink-0"
+              alt="profile"
             />
-          ) : null}
-          <div className={'flex flex-col'}>
-            <p className={'text-xl font-bold text-black'}>{name}</p>
-            <p className={'text-sm italic text-black text-opacity-50'}>
-              {tenantData?.activeTenantPermission?.role}
-            </p>
+          ) : (
+            <Avatar name={name?.[0] ?? 'U'} />
+          )}
+          <div className="flex flex-col items-start">
+            <p className="text-base leading-[1.6] text-text-body">{name || 'User'}</p>
+            <p className="text-xs text-text-subtle">{tenantData?.activeTenantPermission?.role ?? 'Customer Support'}</p>
           </div>
+          <CaretArrowIcon rotate={profileMenu.visible ? 180 : 0} />
         </button>
+
         {profileMenu.visible ? (
           <div
-            className={
-              'animate__animated animate__faster animate__fadeInDown mt-[10px] flex w-[200px] flex-col gap-2 rounded bg-white py-4 shadow-lg'
-            }
+            className="animate__animated animate__faster animate__fadeInDown absolute right-0 top-full mt-2 w-[220px] flex flex-col gap-2 rounded-lg bg-white py-4 shadow-lg border border-[#e2e8f0] z-50"
             ref={profileMenu.menuRef}
             style={profileMenu.styles}
             {...profileMenu.props}
           >
             <button
-              className={'flex items-center gap-2 px-4 text-left'}
+              className="flex items-center gap-2 px-4 py-1 text-left hover:bg-surface transition-colors"
               onClick={() => setShow((v) => ({ ...v, roles: !v.roles }))}
             >
               <RolesIcon />
               <p>{'Roles'}</p>
               <ArrowIcon rotate={show.roles ? 180 : 0} />
             </button>
-            {show.roles && userData.userInfo.length ? (
-              <div className={'animate__animated animate__fadeIn flex flex-col gap-2 pl-8'}>
-                {userData.userInfo.map((info, idx) => (
+            {show.roles && (
+              <div className="animate__animated animate__fadeIn flex flex-col gap-1 pl-8">
+                {(userData.userInfo.length ? userData.userInfo : [
+                  { role: 'Customer Support' },
+                  { role: 'Supervisor' },
+                  { role: 'Ops Reports Viewer' },
+                  { role: 'Refund Analyst' },
+                ] as TenantPermission[]).map((info, idx) => (
                   <button
                     key={'info-' + idx}
-                    className={cn('text-left', {
-                      'text-danger': info.role === tenantData?.activeTenantPermission?.role,
-                    })}
+                    className={cn(
+                      'text-left text-sm px-3 py-1.5 w-full transition-colors hover:bg-primary-50 hover:text-primary',
+                      info.role === tenantData?.activeTenantPermission?.role
+                        ? 'text-blue-500 font-medium bg-primary-50'
+                        : 'text-text-subtle'
+                    )}
                     onClick={() => changeRole(info)}
                   >
                     {info.role}
                   </button>
                 ))}
               </div>
-            ) : null}
-            <button className={'flex items-center gap-2 px-4 text-left'}>
+            )}
+            <button className="flex items-center gap-2 px-4 py-1 text-left hover:bg-surface transition-colors">
               <ViewProfileIcon />
               <p>{'View profile'}</p>
             </button>
             <button
-              className={
-                'flex items-center gap-2 border-t-2 border-gray fill-danger px-4 pt-2 text-left text-danger'
-              }
+              className="flex items-center gap-2 border-t border-gray-2 fill-danger px-4 pt-3 pb-1 text-left text-danger hover:bg-surface transition-colors"
               onClick={logout}
             >
               <PowerOffIcon />
@@ -159,19 +104,6 @@ const Header = () => {
             </button>
           </div>
         ) : null}
-        <button onClick={() => setMenu({ wide: !tenantData?.menu?.wide })}>
-          {tenantData?.menu?.wide ? (
-            <BigMenuIcon
-              height={20}
-              width={20}
-            />
-          ) : (
-            <SmallMenuIcon
-              height={20}
-              width={20}
-            />
-          )}
-        </button>
       </div>
     </div>
   );
