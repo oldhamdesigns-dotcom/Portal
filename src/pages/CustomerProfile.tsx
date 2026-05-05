@@ -1349,18 +1349,18 @@ const CustomerProfilePage = () => {
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const runningBalanceMap = useMemo(() => {
-    const sorted = [...allTransactions].sort((a, b) => b.id.localeCompare(a.id));
+    const sorted = [...allTransactions].sort((a, b) => parseInt(a.orderId) - parseInt(b.orderId));
     const map: Record<string, number> = {};
-    let balance = customer.balance;
+    let balance = 0;
     for (const tx of sorted) {
-      map[tx.id] = balance;
       if (tx.status !== 'Failed' && tx.status !== 'Pending') {
-        if ((tx.type === 'Washer' || tx.type === 'Dryer') && tx.refundStatus !== 'Refund Complete') balance += tx.amount;
-        else if (tx.type === 'Funds Added') balance -= tx.amount;
+        if (tx.type === 'Funds Added') balance += tx.amount;
+        else if ((tx.type === 'Washer' || tx.type === 'Dryer') && tx.refundStatus !== 'Refund Complete') balance -= tx.amount;
       }
+      map[tx.id] = Math.max(0, balance);
     }
     return map;
-  }, [allTransactions, customer.balance]);
+  }, [allTransactions]);
 
   const txStats = {
     balance: customer.balance,
