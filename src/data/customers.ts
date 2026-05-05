@@ -84,7 +84,7 @@ export const getTransactions = (customerId: string): Transaction[] => [
   { id: `${customerId}-5`, date: '08/12/2025', time: '4:10:55 PM', orderId: '2343601', type: 'Washer', details: 'Washer #2 — Northside Location', amount: 1.75, status: 'Done' },
   { id: `${customerId}-7`, date: '08/05/2025', time: '7:44:30 AM', orderId: '2343310', type: 'Dryer', details: 'Dryer #3 — Sunset Location', amount: 1.75, status: 'Done', refundStatus: 'Refund Complete', refundReason: 'Machine Malfunction', refundDate: '08/08/2025', refundTime: '10:22:11 AM' },
   { id: `${customerId}-8`, date: '08/01/2025', time: '1:00:00 PM', orderId: '2343199', type: 'Funds Added', details: 'Mastercard •••• 8817', amount: 10.00, status: 'Completed' },
-  { id: `${customerId}-10`, date: '07/25/2025', time: '8:30:00 AM', orderId: '2342910', type: 'Washer', details: 'Washer #6 — Downtown Location', amount: 1.75, status: 'Failed' },
+  { id: `${customerId}-10`, date: '07/25/2025', time: '8:30:00 AM', orderId: '2342910', type: 'Washer', details: 'Washer #6 — Downtown Location', amount: 1.75, status: 'Done' },
 ];
 
 export default customers;

@@ -34,8 +34,10 @@ const handleError = (error: any) => {
         return Promise.reject(error);
       }
     }
-    const errorMessage = error.response?.data?.message || error.message;
-    toast.error(errorMessage);
+    if (import.meta.env.VITE_API_ENDPOINT) {
+      const errorMessage = error.response?.data?.message || error.message;
+      toast.error(errorMessage);
+    }
   }
   return Promise.reject(error);
 };

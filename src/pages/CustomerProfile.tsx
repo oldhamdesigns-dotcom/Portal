@@ -49,6 +49,7 @@ const TX_TYPE_ICON: Record<string, React.ReactNode> = {
 
 const FILTER_TYPES = ['All Types', 'Purchase', 'Funds Added'];
 const FILTER_STATUSES = ['All Statuses', 'Done', 'Completed', 'Pending', 'Refund Requested', 'Refund Pending', 'Refund Completed'];
+
 const FILTER_STATUS_GROUPS = [
   { label: null, options: ['All Statuses'] },
   { label: 'Purchase', options: ['Done', 'Pending'] },
