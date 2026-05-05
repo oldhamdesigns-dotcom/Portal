@@ -1541,11 +1541,11 @@ const CustomerProfilePage = () => {
               onClick={() => {
                 const headers = ['Date', 'Time', 'Order ID', 'Type', 'Details', 'Amount', 'Balance', 'Status'];
                 const rows = filtered.map((tx) => {
-                  const bal = runningBalanceMap[tx.id] ?? 0;
+                  const bal = Math.max(0, runningBalanceMap[tx.id] ?? 0);
                   return [
                     tx.date, tx.time, tx.orderId, tx.type, tx.details,
-                    tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`,
-                    bal < 0 ? `-$${Math.abs(bal).toFixed(2)}` : `$${bal.toFixed(2)}`,
+                    `$${tx.amount.toFixed(2)}`,
+                    `$${bal.toFixed(2)}`,
                     tx.status,
                   ];
                 });
@@ -1680,15 +1680,15 @@ const CustomerProfilePage = () => {
                   </div>
                   <div className="w-[90px] shrink-0 px-[10px] py-[8px]">
                     <p className={cn('text-[14px] font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
-                      {(tx.type === 'Washer' || tx.type === 'Dryer') ? `-$${tx.amount.toFixed(2)}` : tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
+                      {tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
                     </p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[8px]">
                     {(() => {
-                      const bal = runningBalanceMap[tx.id] ?? 0;
+                      const bal = Math.max(0, runningBalanceMap[tx.id] ?? 0);
                       return (
-                        <p className={cn('text-[14px]', bal < 0 ? 'text-ds-red-700' : 'text-text-body')}>
-                          {bal < 0 ? `-$${Math.abs(bal).toFixed(2)}` : `$${bal.toFixed(2)}`}
+                        <p className="text-[14px] text-text-body">
+                          {`$${bal.toFixed(2)}`}
                         </p>
                       );
                     })()}
