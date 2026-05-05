@@ -1355,7 +1355,7 @@ const CustomerProfilePage = () => {
     for (const tx of sorted) {
       if (tx.status !== 'Failed' && tx.status !== 'Pending') {
         if (tx.type === 'Funds Added') balance += tx.amount;
-        else if ((tx.type === 'Washer' || tx.type === 'Dryer') && tx.refundStatus !== 'Refund Complete') balance -= tx.amount;
+        else if ((tx.type === 'Washer' || tx.type === 'Dryer') && tx.refundStatus !== 'Refund Complete' && !tx.coupon) balance -= tx.amount;
       }
       map[tx.id] = Math.max(0, balance);
     }
@@ -1365,7 +1365,7 @@ const CustomerProfilePage = () => {
   const txStats = {
     balance: customer.balance,
     loads: allTransactions.filter((t) => t.type === 'Washer' || t.type === 'Dryer').length,
-    spend: allTransactions.filter((t) => (t.type === 'Washer' || t.type === 'Dryer') && t.amount > 0).reduce((sum, t) => sum + t.amount, 0),
+    spend: allTransactions.filter((t) => (t.type === 'Washer' || t.type === 'Dryer') && t.amount > 0 && !t.coupon).reduce((sum, t) => sum + t.amount, 0),
     refundCount: allTransactions.filter((t) => t.refundStatus).length,
     refundTotal: allTransactions.filter((t) => t.refundStatus === 'Refund Complete').reduce((sum, t) => sum + t.amount, 0),
   };
