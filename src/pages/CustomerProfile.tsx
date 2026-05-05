@@ -1341,8 +1341,8 @@ const CustomerProfilePage = () => {
     .sort((a, b) => {
       if (filterSort === 'Amount: High to Low') return b.amount - a.amount;
       if (filterSort === 'Amount: Low to High') return a.amount - b.amount;
-      if (filterSort === 'Oldest First') return a.id.localeCompare(b.id);
-      return b.id.localeCompare(a.id);
+      if (filterSort === 'Oldest First') return parseInt(a.orderId) - parseInt(b.orderId);
+      return parseInt(b.orderId) - parseInt(a.orderId);
     });
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
