@@ -1680,7 +1680,7 @@ const CustomerProfilePage = () => {
                   </div>
                   <div className="w-[90px] shrink-0 px-[10px] py-[8px]">
                     <p className={cn('text-[14px] font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
-                      {tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
+                      {(tx.type === 'Washer' || tx.type === 'Dryer') ? `-$${tx.amount.toFixed(2)}` : tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
                     </p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[8px]">
