@@ -579,7 +579,7 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
   const [tab, setTab] = useState<'payrange' | 'offers'>('payrange');
 
   return (
-    <div className="flex flex-col flex-1 basis-[40%]">
+    <div className="flex flex-col flex-1 basis-[40%] self-start sticky top-6">
       {/* Tab row — sits above the card */}
       <div className="flex items-end">
         {(['payrange', 'offers'] as const).map((t) => (
