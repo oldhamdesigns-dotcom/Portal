@@ -1,19 +1,5 @@
 import { memo } from 'react';
 
-// Figma asset URLs (valid for 7 days from fetch)
-const imgMobileUserDefault = 'https://www.figma.com/api/mcp/asset/9d62b2b4-a9cf-4170-b031-2f2f16ba7625';
-const imgMobileUserHover = 'https://www.figma.com/api/mcp/asset/b5392739-101d-4bde-a035-70dc4bab0c93';
-const imgMobileUserSelected = 'https://www.figma.com/api/mcp/asset/9184a548-126d-41cb-8a43-9ca4d57397b2';
-const imgRefundDefault = 'https://www.figma.com/api/mcp/asset/ffdafd47-17e7-41f0-a398-e3dbaf0569a1';
-const imgRefundHover = 'https://www.figma.com/api/mcp/asset/c25751bd-b272-48c1-9d5d-6cc681658b95';
-const imgRefundSelected = 'https://www.figma.com/api/mcp/asset/f29925aa-f304-413e-a68d-3f341776707f';
-const imgTagsDefault = 'https://www.figma.com/api/mcp/asset/d670e798-affa-4f6c-b188-97d2e8a14c62';
-const imgTagsHover = 'https://www.figma.com/api/mcp/asset/71a08fc2-3886-400b-93f2-bf2ede2acf38';
-const imgTagsSelected = 'https://www.figma.com/api/mcp/asset/a5615282-056c-487e-b3d4-1c29471bf740';
-const imgAdminDefault = 'https://www.figma.com/api/mcp/asset/e36c9600-12e5-45ae-9f32-b968d5fb2381';
-const imgAdminHover = 'https://www.figma.com/api/mcp/asset/e36c9600-12e5-45ae-9f32-b968d5fb2381';
-const imgAdminSelected = 'https://www.figma.com/api/mcp/asset/e36c9600-12e5-45ae-9f32-b968d5fb2381';
-
 export type NavIconType = 'Dashboard' | 'MobileUser' | 'Orders' | 'Refund' | 'Reports' | 'Tags' | 'Admin';
 
 type Props = {
@@ -21,12 +7,6 @@ type Props = {
   state?: 'Default' | 'Hover' | 'Selected';
 };
 
-// Image-based icons (MobileUser, Refund, Tags, Admin)
-function ImageIcon({ src }: { src: string }) {
-  return <img alt="" className="absolute block inset-0 max-w-none size-full" src={src} />;
-}
-
-// Dashboard icon (SVG-based)
 function DashboardIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
@@ -43,7 +23,19 @@ function DashboardIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-// Orders icon (SVG-based)
+function MobileUserIcon({ state }: { state: Props['state'] }) {
+  const isSelected = state === 'Selected';
+  const isHover = state === 'Hover';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
+  return (
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="11" r="5" fill={fill} stroke={stroke} strokeWidth="2" />
+      <path d="M7 27c0-4.971 4.029-9 9-9s9 4.029 9 9" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function OrdersIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
@@ -59,7 +51,22 @@ function OrdersIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-// Reports icon (CSS-based)
+function RefundIcon({ state }: { state: Props['state'] }) {
+  const isSelected = state === 'Selected';
+  const isHover = state === 'Hover';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
+  return (
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="10" fill={fill} stroke={stroke} strokeWidth="2" />
+      <path d="M11 13h6a3 3 0 0 1 0 6h-6" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M13 11l-2 2 2 2" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="16" y1="10" x2="16" y2="12" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="16" y1="20" x2="16" y2="22" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function ReportsIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
@@ -76,44 +83,49 @@ function ReportsIcon({ state }: { state: Props['state'] }) {
   );
 }
 
+function TagsIcon({ state }: { state: Props['state'] }) {
+  const isSelected = state === 'Selected';
+  const isHover = state === 'Hover';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
+  return (
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4h11l13 13-11 11L4 15V4z" fill={fill} stroke={stroke} strokeWidth="2" strokeLinejoin="round" />
+      <circle cx="11" cy="11" r="2.5" fill={stroke} />
+    </svg>
+  );
+}
+
+function AdminIcon({ state }: { state: Props['state'] }) {
+  const isSelected = state === 'Selected';
+  const isHover = state === 'Hover';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
+  return (
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 3L5 7.5v8C5 21.75 9.8 27.45 16 29c6.2-1.55 11-7.25 11-13.5v-8L16 3z" fill={fill} stroke={stroke} strokeWidth="2" strokeLinejoin="round" />
+      <circle cx="16" cy="13" r="3" fill={stroke} />
+      <path d="M10.5 23c0-3.038 2.462-5.5 5.5-5.5s5.5 2.462 5.5 5.5" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 const NavIcon = ({ icon, state = 'Default' }: Props) => {
   const isActive = state === 'Selected' || state === 'Hover';
 
   return (
-    <div
-      className={`overflow-clip relative size-[28px] ${isActive ? 'bg-[#e6f4fd] rounded-[4px]' : ''}`}
-    >
+    <div className={`overflow-clip relative size-[28px] ${isActive ? 'bg-[#e6f4fd] rounded-[4px]' : ''}`}>
       {icon === 'Dashboard' && <DashboardIcon state={state} />}
+      {icon === 'MobileUser' && <MobileUserIcon state={state} />}
       {icon === 'Orders' && <OrdersIcon state={state} />}
+      {icon === 'Refund' && <RefundIcon state={state} />}
       {icon === 'Reports' && (
         <div className="absolute contents left-[4px] top-[3px]">
           <ReportsIcon state={state} />
         </div>
       )}
-      {icon === 'MobileUser' && (
-        <div className="absolute inset-[10.16%_21.88%_10.16%_22.42%]">
-          <ImageIcon src={state === 'Selected' ? imgMobileUserSelected : state === 'Hover' ? imgMobileUserHover : imgMobileUserDefault} />
-        </div>
-      )}
-      {icon === 'Refund' && (
-        <div className="absolute h-[18.17px] left-[1.87px] top-[5.39px] w-[24.09px]">
-          <ImageIcon src={state === 'Selected' ? imgRefundSelected : state === 'Hover' ? imgRefundHover : imgRefundDefault} />
-        </div>
-      )}
-      {icon === 'Tags' && (
-        <div className="absolute flex h-[20.52px] items-center justify-center left-[1.28px] top-[2.49px] w-[24.1px]">
-          <div className="rotate-45 flex-none">
-            <div className="h-[11.43px] relative w-[21.23px]">
-              <ImageIcon src={state === 'Selected' ? imgTagsSelected : state === 'Hover' ? imgTagsHover : imgTagsDefault} />
-            </div>
-          </div>
-        </div>
-      )}
-      {icon === 'Admin' && (
-        <div className="absolute -translate-x-1/2 -translate-y-1/2 h-[21px] left-[calc(50%-0.2px)] top-1/2 w-[18.9px]">
-          <ImageIcon src={state === 'Selected' ? imgAdminSelected : state === 'Hover' ? imgAdminHover : imgAdminDefault} />
-        </div>
-      )}
+      {icon === 'Tags' && <TagsIcon state={state} />}
+      {icon === 'Admin' && <AdminIcon state={state} />}
     </div>
   );
 };
