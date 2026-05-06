@@ -76,16 +76,16 @@ function RefundIcon({ state }: { state: Props['state'] }) {
 function ReportsIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
-  const border = isSelected ? 'border-[#005ba5]' : isHover ? 'border-[#0072ce]' : 'border-[#666]';
-  const bg = isSelected ? 'bg-[#c2ecff]' : isHover ? 'bg-[#c2ecff]' : 'bg-[#ddd]';
-  const bar = isSelected ? 'bg-[#005ba5]' : isHover ? 'bg-[#0072ce]' : 'bg-[#666]';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
+  const bar = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
   return (
-    <>
-      <div className={`absolute ${bg} border-2 ${border} border-solid h-[32.5px] left-[5px] rounded-[2px] top-[3.75px] w-[30px]`} />
-      <div className={`absolute ${bar} h-[8.67px] left-[10.79px] rounded-[2px] top-[22.17px] w-[4.61px]`} />
-      <div className={`absolute ${bar} h-[15.17px] left-[17.69px] rounded-[2px] top-[15.67px] w-[4.61px]`} />
-      <div className={`absolute ${bar} h-[19.5px] left-[24.61px] rounded-[2px] top-[11.33px] w-[4.61px]`} />
-    </>
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10.5" y="9.625" width="19" height="20.75" rx="1" fill={fill} stroke={stroke} strokeWidth="2"/>
+      <rect x="13.5385" y="21.5167" width="3.23077" height="6.06667" rx="1.61538" fill={bar}/>
+      <rect x="18.3846" y="16.9667" width="3.23077" height="10.6167" rx="1.61538" fill={bar}/>
+      <rect x="23.2308" y="13.9333" width="3.23077" height="13.65" rx="1.61538" fill={bar}/>
+    </svg>
   );
 }
 
@@ -124,11 +124,7 @@ const NavIcon = ({ icon, state = 'Default' }: Props) => {
       {icon === 'MobileUser' && <MobileUserIcon state={state} />}
       {icon === 'Orders' && <OrdersIcon state={state} />}
       {icon === 'Refund' && <RefundIcon state={state} />}
-      {icon === 'Reports' && (
-        <div className="absolute contents left-[4px] top-[3px]">
-          <ReportsIcon state={state} />
-        </div>
-      )}
+      {icon === 'Reports' && <ReportsIcon state={state} />}
       {icon === 'Tags' && <TagsIcon state={state} />}
       {icon === 'Admin' && <AdminIcon state={state} />}
     </div>
