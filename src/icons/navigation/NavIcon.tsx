@@ -10,15 +10,14 @@ type Props = {
 function DashboardIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#555';
-  const fillLarge = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#d9d9d9';
-  const fillSmall = 'none';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+  const fillLarge = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#D9D9D9';
   return (
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4" y="4" width="11" height="7" rx="2" fill={fillSmall} stroke={stroke} strokeWidth="2" />
-      <rect x="4" y="14" width="11" height="14" rx="2" fill={fillLarge} stroke={stroke} strokeWidth="2" />
-      <rect x="18" y="4" width="11" height="14" rx="2" fill={fillLarge} stroke={stroke} strokeWidth="2" />
-      <rect x="18" y="21" width="11" height="7" rx="2" fill={fillSmall} stroke={stroke} strokeWidth="2" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="21.6042" y="10.375" width="8.02083" height="4.8125" rx="1" stroke={stroke} strokeWidth="2"/>
+      <rect width="8.02083" height="4.8125" rx="1" transform="matrix(1 0 0 -1 10.375 29.625)" stroke={stroke} strokeWidth="2"/>
+      <rect x="21.7499" y="18.075" width="7.875" height="11.55" rx="1" fill={fillLarge} stroke={stroke} strokeWidth="2"/>
+      <rect width="7.875" height="11.55" rx="1" transform="matrix(1 0 0 -1 10.375 21.925)" fill={fillLarge} stroke={stroke} strokeWidth="2"/>
     </svg>
   );
 }
