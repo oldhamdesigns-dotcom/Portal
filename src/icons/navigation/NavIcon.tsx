@@ -39,14 +39,18 @@ function MobileUserIcon({ state }: { state: Props['state'] }) {
 function OrdersIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
+  const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
   return (
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="7" y="4" width="18" height="24" rx="2" fill={fill} stroke={stroke} strokeWidth="2" />
-      <line x1="10" y1="11" x2="22" y2="11" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
-      <line x1="10" y1="16" x2="22" y2="16" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
-      <line x1="10" y1="21" x2="22" y2="21" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="11.375" y="10.5729" width="17.25" height="18.8542" rx="1" fill={fill} stroke={stroke} strokeWidth="2"/>
+      <rect x="14.875" y="13.875" width="1.75" height="1.75" rx="0.875" transform="rotate(90 14.875 13.875)" fill={accent}/>
+      <rect x="14.875" y="19.125" width="1.75" height="1.75" rx="0.875" transform="rotate(90 14.875 19.125)" fill={accent}/>
+      <rect x="14.875" y="24.375" width="1.75" height="1.75" rx="0.875" transform="rotate(90 14.875 24.375)" fill={accent}/>
+      <rect x="27" y="13.875" width="1.75" height="10.5" rx="0.875" transform="rotate(90 27 13.875)" fill={accent}/>
+      <rect x="27" y="19.125" width="1.75" height="10.5" rx="0.875" transform="rotate(90 27 19.125)" fill={accent}/>
+      <rect x="27" y="24.375" width="1.75" height="10.5" rx="0.875" transform="rotate(90 27 24.375)" fill={accent}/>
     </svg>
   );
 }
