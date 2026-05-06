@@ -14,7 +14,7 @@ function DashboardIcon({ state }: { state: Props['state'] }) {
   const fillLarge = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#d9d9d9';
   const fillSmall = 'none';
   return (
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="4" y="4" width="11" height="7" rx="2" fill={fillSmall} stroke={stroke} strokeWidth="2" />
       <rect x="4" y="14" width="11" height="14" rx="2" fill={fillLarge} stroke={stroke} strokeWidth="2" />
       <rect x="18" y="4" width="11" height="14" rx="2" fill={fillLarge} stroke={stroke} strokeWidth="2" />
@@ -29,7 +29,7 @@ function MobileUserIcon({ state }: { state: Props['state'] }) {
   const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
   const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
   return (
-    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M26.1419 8.84375H14.0108C13.0577 8.84375 12.2778 9.6236 12.2778 10.5768L12.2778 29.4232C12.2778 30.3764 13.0577 31.1562 14.0108 31.1562H26.1419C27.0951 31.1562 27.8749 30.3764 27.8749 29.4232V10.5768C27.8749 9.6236 27.0951 8.84375 26.1419 8.84375ZM20.0764 18.1587C21.7487 18.1587 23.1091 19.5191 23.1091 21.1914C23.1091 22.8638 21.7487 24.2242 20.0764 24.2242C18.404 24.2242 17.0436 22.8638 17.0436 21.1914C17.0436 19.5191 18.404 18.1587 20.0764 18.1587ZM26.1419 29.4232H14.0108V29.2239C14.0108 28.6867 14.2535 28.1841 14.6694 27.8549C16.1511 26.6678 18.0314 25.9572 20.0764 25.9572C22.1213 25.9572 24.0016 26.6678 25.4834 27.8549C25.8993 28.1841 26.1419 28.6954 26.1419 29.2239V29.4232Z" fill={fill} />
       <path d="M23.1091 21.1914C23.1091 19.5191 21.7487 18.1587 20.0764 18.1587C18.404 18.1587 17.0436 19.5191 17.0436 21.1914C17.0436 22.8638 18.404 24.2242 20.0764 24.2242C21.7487 24.2242 23.1091 22.8638 23.1091 21.1914ZM26.1419 29.4232V29.224C26.1419 28.6954 25.8993 28.1841 25.4834 27.8548C24.0016 26.6677 22.1213 25.9572 20.0764 25.9572C18.0314 25.9572 16.1511 26.6677 14.6694 27.8548L14.5934 27.9187C14.2241 28.2472 14.0108 28.7203 14.0108 29.224V29.4232H26.1419ZM24.6255 21.1914C24.6255 22.6704 23.9172 23.9858 22.8219 24.817C24.1252 25.182 25.3233 25.8 26.3585 26.6141V10.5768C26.3585 10.4611 26.2576 10.3601 26.1419 10.3601H14.0108C13.8952 10.3601 13.7942 10.4611 13.7942 10.5768V26.6141C14.8294 25.8 16.0274 25.182 17.3307 24.817C16.2355 23.9858 15.5272 22.6704 15.5272 21.1914C15.5272 18.6816 17.5665 16.6423 20.0764 16.6423C22.5862 16.6423 24.6255 18.6816 24.6255 21.1914ZM27.8749 29.4232C27.8749 30.3764 27.0951 31.1562 26.1419 31.1562H14.0108C13.0577 31.1562 12.2778 30.3764 12.2778 29.4232V10.5768C12.2778 9.6236 13.0577 8.84375 14.0108 8.84375H26.1419C27.0951 8.84375 27.8749 9.6236 27.8749 10.5768V29.4232Z" fill={accent} />
       <path d="M23.3258 11.4433C23.6847 11.4433 23.9757 11.7342 23.9757 12.0931C23.9757 12.4521 23.6847 12.743 23.3258 12.743H16.6104C16.2515 12.743 15.9605 12.4521 15.9605 12.0931C15.9605 11.7342 16.2515 11.4433 16.6104 11.4433H23.3258Z" fill={accent} />
@@ -43,7 +43,7 @@ function OrdersIcon({ state }: { state: Props['state'] }) {
   const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
   const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
   return (
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="7" y="4" width="18" height="24" rx="2" fill={fill} stroke={stroke} strokeWidth="2" />
       <line x1="10" y1="11" x2="22" y2="11" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
       <line x1="10" y1="16" x2="22" y2="16" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
@@ -58,7 +58,7 @@ function RefundIcon({ state }: { state: Props['state'] }) {
   const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
   const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
   return (
-    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="16.9869" y="19.3814" width="13.9723" height="9.18077" rx="1" stroke={accent} strokeWidth="2"/>
       <ellipse cx="24.0345" cy="24.0332" rx="2.45728" ry="2.45731" fill={accent}/>
       <path d="M20.0417 19.9785C20.0417 20.3012 19.9777 20.6208 19.8542 20.919C19.7308 21.217 19.55 21.4877 19.322 21.7159C19.0938 21.944 18.8223 22.1256 18.5242 22.2491C18.2261 22.3725 17.9063 22.4356 17.5837 22.4356V19.9785H20.0417Z" fill={accent}/>
@@ -82,10 +82,10 @@ function ReportsIcon({ state }: { state: Props['state'] }) {
   const bar = isSelected ? 'bg-[#005ba5]' : isHover ? 'bg-[#0072ce]' : 'bg-[#666]';
   return (
     <>
-      <div className={`absolute ${bg} border-2 ${border} border-solid h-[22.75px] left-[3.5px] rounded-[2px] top-[2.63px] w-[21px]`} />
-      <div className={`absolute ${bar} h-[6.07px] left-[7.55px] rounded-[2px] top-[15.52px] w-[3.23px]`} />
-      <div className={`absolute ${bar} h-[10.62px] left-[12.38px] rounded-[2px] top-[10.97px] w-[3.23px]`} />
-      <div className={`absolute ${bar} h-[13.65px] left-[17.23px] rounded-[2px] top-[7.93px] w-[3.23px]`} />
+      <div className={`absolute ${bg} border-2 ${border} border-solid h-[32.5px] left-[5px] rounded-[2px] top-[3.75px] w-[30px]`} />
+      <div className={`absolute ${bar} h-[8.67px] left-[10.79px] rounded-[2px] top-[22.17px] w-[4.61px]`} />
+      <div className={`absolute ${bar} h-[15.17px] left-[17.69px] rounded-[2px] top-[15.67px] w-[4.61px]`} />
+      <div className={`absolute ${bar} h-[19.5px] left-[24.61px] rounded-[2px] top-[11.33px] w-[4.61px]`} />
     </>
   );
 }
@@ -96,7 +96,7 @@ function TagsIcon({ state }: { state: Props['state'] }) {
   const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
   const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#D9D9D9';
   return (
-    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M29.1577 18.9655L17.331 12.1374C17.0696 11.9864 16.754 11.9618 16.4723 12.0701L12.0107 13.786C11.5705 13.9553 11.3083 14.4094 11.3818 14.8753L12.1266 19.597C12.1736 19.8953 12.3527 20.1561 12.6142 20.3071L24.4409 27.1352C24.9192 27.4114 25.5307 27.2475 25.8069 26.7692L29.5237 20.3315C29.7998 19.8532 29.636 19.2416 29.1577 18.9655Z" fill={fill} stroke={stroke} strokeWidth="2" />
       <circle cx="0.81671" cy="0.81671" r="0.81671" transform="matrix(-0.866025 -0.5 -0.5 0.866025 16.2084 15.9929)" fill={stroke} />
     </svg>
@@ -109,7 +109,7 @@ function AdminIcon({ state }: { state: Props['state'] }) {
   const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
   const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
   return (
-    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M26.1248 13.7V18.0574C25.616 17.9542 25.0889 17.9002 24.5496 17.9002C20.2006 17.9004 16.6746 21.4261 16.6746 25.7752C16.6746 26.6472 16.8192 27.4853 17.0809 28.2693C16.8917 28.2276 16.7274 28.2419 16.6746 28.4002L17.2 28.9246C16.646 29.1324 16.6125 29.4227 16.6443 29.5672C16.5549 29.419 16.2944 29.0698 15.6248 28.4002C12.9999 25.7753 11.4247 20.5253 11.4246 17.9002V13.7L18.7752 10.5496L26.1248 13.7Z" fill={fill}/>
       <path d="M18.775 30.5C16.3425 29.8875 14.3345 28.4917 12.7511 26.3126C11.1671 24.1342 10.375 21.715 10.375 19.055V12.65L18.775 9.5L27.175 12.65V18.6087C26.8425 18.4688 26.5012 18.3417 26.1512 18.2276C25.8012 18.1142 25.4425 18.0312 25.075 17.9787V14.12L18.775 11.7575L12.475 14.12V19.055C12.475 19.8775 12.5842 20.7 12.8026 21.5225C13.0217 22.345 13.3283 23.1283 13.7224 23.8724C14.1158 24.6158 14.5925 25.3025 15.1525 25.9325C15.7125 26.5625 16.3337 27.0875 17.0162 27.5075C17.2087 28.0675 17.4625 28.6012 17.7775 29.1087C18.0925 29.6162 18.4512 30.0712 18.8537 30.4737C18.8362 30.4737 18.8233 30.4783 18.8149 30.4874C18.8058 30.4958 18.7925 30.5 18.775 30.5ZM24.025 25.25C24.4625 25.25 24.8342 25.0967 25.1401 24.7901C25.4467 24.4842 25.6 24.1125 25.6 23.675C25.6 23.2375 25.4467 22.8658 25.1401 22.5599C24.8342 22.2533 24.4625 22.1 24.025 22.1C23.5875 22.1 23.2158 22.2533 22.9099 22.5599C22.6033 22.8658 22.45 23.2375 22.45 23.675C22.45 24.1125 22.6033 24.4842 22.9099 24.7901C23.2158 25.0967 23.5875 25.25 24.025 25.25ZM24.025 28.4C24.5675 28.4 25.0662 28.2729 25.5212 28.0188C25.9762 27.7654 26.3438 27.4287 26.6237 27.0087C26.2387 26.7812 25.8275 26.6062 25.39 26.4837C24.9525 26.3612 24.4975 26.3 24.025 26.3C23.5525 26.3 23.0975 26.3612 22.66 26.4837C22.2225 26.6062 21.8112 26.7812 21.4262 27.0087C21.7062 27.4287 22.0737 27.7654 22.5287 28.0188C22.9837 28.2729 23.4825 28.4 24.025 28.4ZM24.025 30.5C22.5725 30.5 21.3345 29.9883 20.3111 28.9649C19.2871 27.9408 18.775 26.7025 18.775 25.25C18.775 23.7975 19.2871 22.5592 20.3111 21.5351C21.3345 20.5117 22.5725 20 24.025 20C25.4775 20 26.7158 20.5117 27.7399 21.5351C28.7633 22.5592 29.275 23.7975 29.275 25.25C29.275 26.7025 28.7633 27.9408 27.7399 28.9649C26.7158 29.9883 25.4775 30.5 24.025 30.5Z" fill={accent}/>
     </svg>
@@ -120,7 +120,7 @@ const NavIcon = ({ icon, state = 'Default' }: Props) => {
   const isActive = state === 'Selected' || state === 'Hover';
 
   return (
-    <div className={`overflow-clip relative size-[28px] ${isActive ? 'bg-[#e6f4fd] rounded-[4px]' : ''}`}>
+    <div className={`overflow-clip relative size-[40px] ${isActive ? 'bg-[#e6f4fd] rounded-[4px]' : ''}`}>
       {icon === 'Dashboard' && <DashboardIcon state={state} />}
       {icon === 'MobileUser' && <MobileUserIcon state={state} />}
       {icon === 'Orders' && <OrdersIcon state={state} />}
