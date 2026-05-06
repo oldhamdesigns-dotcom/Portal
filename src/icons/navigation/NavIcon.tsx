@@ -86,12 +86,12 @@ function ReportsIcon({ state }: { state: Props['state'] }) {
 function TagsIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#ddd';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#D9D9D9';
   return (
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 4h11l13 13-11 11L4 15V4z" fill={fill} stroke={stroke} strokeWidth="2" strokeLinejoin="round" />
-      <circle cx="11" cy="11" r="2.5" fill={stroke} />
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M29.1577 18.9655L17.331 12.1374C17.0696 11.9864 16.754 11.9618 16.4723 12.0701L12.0107 13.786C11.5705 13.9553 11.3083 14.4094 11.3818 14.8753L12.1266 19.597C12.1736 19.8953 12.3527 20.1561 12.6142 20.3071L24.4409 27.1352C24.9192 27.4114 25.5307 27.2475 25.8069 26.7692L29.5237 20.3315C29.7998 19.8532 29.636 19.2416 29.1577 18.9655Z" fill={fill} stroke={stroke} strokeWidth="2" />
+      <circle cx="0.81671" cy="0.81671" r="0.81671" transform="matrix(-0.866025 -0.5 -0.5 0.866025 16.2084 15.9929)" fill={stroke} />
     </svg>
   );
 }
