@@ -10,6 +10,17 @@ import { cn } from '@utils/CN';
 
 // ─── Style maps ───────────────────────────────────────────────────────────────
 
+const TX_TYPE_STYLE: Record<string, string> = {
+  'Washer':      'text-[#333333] bg-[#DDDDDD]',
+  'Dryer':       'text-[#333333] bg-[#DDDDDD]',
+  'Funds Added': 'text-ds-green-900 bg-[#B6DFA8]',
+};
+
+const TX_TYPE_LABEL: Record<string, string> = {
+  'Washer': 'Purchase',
+  'Dryer':  'Purchase',
+};
+
 const STATUS_STYLE: Record<string, string> = {
   done:      'bg-[#f2f2f2] text-[#444] border-[#ccc]',
   completed: 'bg-ds-green-100 text-ds-green-900 border-ds-green-300',
@@ -87,6 +98,55 @@ const MOCK_KIOSK_ORDERS: KioskOrder[] = [
   { id: '23269711', date: '05/05/2026', order: '23269711', kioskId: '30007104', status: 'done', as400Room: '', licensePlate: '', amount: '2.25', cc4digits: '4515' },
   { id: '23269708', date: '05/05/2026', order: '23269708', kioskId: '30004627', status: 'done', as400Room: '', licensePlate: '', amount: '3.00', cc4digits: '3109' },
   { id: '23269678', date: '05/05/2026', order: '23269678', kioskId: '30004656', status: 'done', as400Room: '', licensePlate: '', amount: '2.50', cc4digits: '1416' },
+];
+
+// ─── Mock transaction data ────────────────────────────────────────────────────
+
+type MockTransaction = {
+  id: string;
+  date: string;
+  orderId: string;
+  customer: string;
+  customerId: string;
+  type: string;
+  details: string;
+  amount: number;
+  status: string;
+  refundStatus?: string;
+  coupon?: boolean;
+};
+
+const MOCK_TRANSACTIONS: MockTransaction[] = [
+  { id: 'TX-001', date: '05/05/2026 9:14 AM', orderId: '23269817', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Funds Added', details: 'Visa •••• 4242',                        amount: 15.00, status: 'Completed' },
+  { id: 'TX-002', date: '05/05/2026 8:52 AM', orderId: '23269814', customer: 'Marcus Lee',       customerId: 'C002', type: 'Washer',      details: 'Washer #3 — Riverside Location',        amount: 1.75,  status: 'Done' },
+  { id: 'TX-003', date: '05/05/2026 8:31 AM', orderId: '23269811', customer: 'Priya Patel',      customerId: 'C003', type: 'Dryer',       details: 'Dryer #5 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-004', date: '05/05/2026 8:10 AM', orderId: '23269801', customer: 'James Rivera',     customerId: 'C004', type: 'Funds Added', details: 'Mastercard •••• 9010',                  amount: 20.00, status: 'Completed' },
+  { id: 'TX-005', date: '05/05/2026 7:58 AM', orderId: '23269796', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #6 — Riverside Location',        amount: 1.75,  status: 'Done' },
+  { id: 'TX-006', date: '05/05/2026 7:44 AM', orderId: '23269793', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Funds Added', details: 'Visa •••• 3311',                        amount: 10.00, status: 'Completed' },
+  { id: 'TX-007', date: '05/05/2026 7:29 AM', orderId: '23269787', customer: 'Marcus Lee',       customerId: 'C002', type: 'Dryer',       details: 'Dryer #2 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-008', date: '05/05/2026 7:12 AM', orderId: '23269784', customer: 'David Kim',        customerId: 'C006', type: 'Washer',      details: 'Washer #1 — Central Location',          amount: 2.00,  status: 'Done' },
+  { id: 'TX-009', date: '05/04/2026 6:55 PM', orderId: '23269759', customer: 'Priya Patel',      customerId: 'C003', type: 'Funds Added', details: 'Visa •••• 4242',                        amount: 15.00, status: 'Completed' },
+  { id: 'TX-010', date: '05/04/2026 6:38 PM', orderId: '23269730', customer: 'James Rivera',     customerId: 'C004', type: 'Washer',      details: 'Washer #4 — Riverside Location',        amount: 1.75,  status: 'Done' },
+  { id: 'TX-011', date: '05/04/2026 6:20 PM', orderId: '23269727', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Dryer',       details: 'Dryer #7 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-012', date: '05/04/2026 6:05 PM', orderId: '23269712', customer: 'David Kim',        customerId: 'C006', type: 'Funds Added', details: 'Mastercard •••• 5577',                  amount: 25.00, status: 'Completed' },
+  { id: 'TX-013', date: '05/04/2026 5:50 PM', orderId: '23269711', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #2 — Central Location',          amount: 1.75,  status: 'Done' },
+  { id: 'TX-014', date: '05/04/2026 5:33 PM', orderId: '23269708', customer: 'Marcus Lee',       customerId: 'C002', type: 'Funds Added', details: 'Visa •••• 1122',                        amount: 10.00, status: 'Completed' },
+  { id: 'TX-015', date: '05/04/2026 5:15 PM', orderId: '23269678', customer: 'Anna Torres',      customerId: 'C007', type: 'Washer',      details: 'Washer #8 — Riverside Location',        amount: 1.75,  status: 'Pending' },
+  { id: 'TX-016', date: '05/04/2026 4:58 PM', orderId: '23269670', customer: 'Priya Patel',      customerId: 'C003', type: 'Dryer',       details: 'Dryer #3 — Oak St. Location',           amount: 1.50,  status: 'Done', refundStatus: 'Refund Complete' },
+  { id: 'TX-017', date: '05/04/2026 4:40 PM', orderId: '23269652', customer: 'James Rivera',     customerId: 'C004', type: 'Funds Added', details: 'Visa •••• 6688',                        amount: 20.00, status: 'Completed' },
+  { id: 'TX-018', date: '05/04/2026 4:22 PM', orderId: '23269641', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Washer',      details: 'Washer #5 — Central Location',          amount: 2.00,  status: 'Done' },
+  { id: 'TX-019', date: '05/04/2026 4:08 PM', orderId: '23269628', customer: 'David Kim',        customerId: 'C006', type: 'Dryer',       details: 'Dryer #1 — Riverside Location',         amount: 1.50,  status: 'Done' },
+  { id: 'TX-020', date: '05/04/2026 3:50 PM', orderId: '23269610', customer: 'Anna Torres',      customerId: 'C007', type: 'Funds Added', details: 'Mastercard •••• 2244',                  amount: 15.00, status: 'Completed' },
+  { id: 'TX-021', date: '05/04/2026 3:33 PM', orderId: '23269591', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #6 — Riverside Location',        amount: 1.75,  status: 'Done', coupon: true },
+  { id: 'TX-022', date: '05/04/2026 3:15 PM', orderId: '23269580', customer: 'Marcus Lee',       customerId: 'C002', type: 'Dryer',       details: 'Dryer #4 — Central Location',           amount: 1.50,  status: 'Failed' },
+  { id: 'TX-023', date: '05/04/2026 2:55 PM', orderId: '23269562', customer: 'Priya Patel',      customerId: 'C003', type: 'Funds Added', details: 'Visa •••• 4242',                        amount: 10.00, status: 'Completed' },
+  { id: 'TX-024', date: '05/04/2026 2:38 PM', orderId: '23269540', customer: 'James Rivera',     customerId: 'C004', type: 'Washer',      details: 'Washer #3 — Oak St. Location',          amount: 1.75,  status: 'Done' },
+  { id: 'TX-025', date: '05/04/2026 2:20 PM', orderId: '23269515', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Dryer',       details: 'Dryer #6 — Riverside Location',         amount: 1.50,  status: 'Done' },
+  { id: 'TX-026', date: '05/04/2026 2:02 PM', orderId: '23269490', customer: 'David Kim',        customerId: 'C006', type: 'Funds Added', details: 'Mastercard •••• 9900',                  amount: 20.00, status: 'Completed' },
+  { id: 'TX-027', date: '05/04/2026 1:44 PM', orderId: '23269471', customer: 'Anna Torres',      customerId: 'C007', type: 'Washer',      details: 'Washer #1 — Central Location',          amount: 2.00,  status: 'Done' },
+  { id: 'TX-028', date: '05/04/2026 1:27 PM', orderId: '23269450', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Dryer',       details: 'Dryer #2 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-029', date: '05/04/2026 1:09 PM', orderId: '23269430', customer: 'Marcus Lee',       customerId: 'C002', type: 'Funds Added', details: 'Visa •••• 1122',                        amount: 15.00, status: 'Completed' },
+  { id: 'TX-030', date: '05/04/2026 12:50 PM', orderId: '23269410', customer: 'Priya Patel',    customerId: 'C003', type: 'Washer',      details: 'Washer #7 — Riverside Location',        amount: 1.75,  status: 'Done' },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -209,6 +269,12 @@ const OrdersPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [kioskPage, setKioskPage] = useState(1);
+  const [txSearch, setTxSearch] = useState('');
+  const [txTypeFilter, setTxTypeFilter] = useState('');
+  const [txStatusFilter, setTxStatusFilter] = useState('');
+  const [txDateFrom, setTxDateFrom] = useState('');
+  const [txDateTo, setTxDateTo] = useState('');
+  const [txPage, setTxPage] = useState(1);
 
   const { data, refetch } = useQuery({
     initialData: { content: [], page: { number: 0, size: 0, totalElements: 0, totalPages: 0 } },
@@ -240,6 +306,26 @@ const OrdersPage = () => {
   const appPage = parseInt(params.page) + 1;
   const appTotalPages = data?.page?.totalPages ?? 0;
   const appTotalElements = data?.page?.totalElements ?? 0;
+
+  // Transactions pagination
+  const txFiltered = MOCK_TRANSACTIONS.filter((tx) => {
+    const q = txSearch.toLowerCase();
+    if (q && !tx.customer.toLowerCase().includes(q) && !tx.orderId.includes(q) && !tx.details.toLowerCase().includes(q)) return false;
+    if (txTypeFilter && tx.type !== txTypeFilter) return false;
+    if (txStatusFilter && tx.status.toLowerCase() !== txStatusFilter.toLowerCase()) return false;
+    if (txDateFrom || txDateTo) {
+      const txDate = new Date(tx.date);
+      if (txDateFrom && txDate < new Date(txDateFrom)) return false;
+      if (txDateTo) {
+        const to = new Date(txDateTo);
+        to.setHours(23, 59, 59, 999);
+        if (txDate > to) return false;
+      }
+    }
+    return true;
+  });
+  const txTotalPages = Math.ceil(txFiltered.length / PAGE_SIZE);
+  const txPaginated = txFiltered.slice((txPage - 1) * PAGE_SIZE, txPage * PAGE_SIZE);
 
   const sortField = params.sortProperty;
   const sortDir = params.order as 'ASC' | 'DESC';
@@ -274,59 +360,41 @@ const OrdersPage = () => {
           {mode === 'app' ? (
             <>
               <div className="flex-1 min-w-0">
-                <Controller
-                  name="searchTerm"
-                  control={control}
-                  render={({ field }) => (
-                    <FilterInput
-                      placeholder="Search by order"
-                      value={field.value}
-                      onChange={(v) => { field.onChange(v); setParams({ searchTerm: v, page: '0' }); }}
-                      icon={<SearchIcon />}
-                    />
-                  )}
+                <FilterInput
+                  placeholder="Search customer, order ID..."
+                  value={txSearch}
+                  onChange={(v) => { setTxSearch(v); setTxPage(1); }}
+                  icon={<SearchIcon />}
                 />
               </div>
               <div className="w-[160px]">
-                <Controller
-                  name="customerId"
-                  control={control}
-                  render={({ field }) => (
-                    <FilterInput
-                      placeholder="Customer"
-                      value={field.value}
-                      onChange={(v) => { field.onChange(v); setParams({ customerId: v, page: '0' }); }}
-                    />
-                  )}
+                <FilterDropdown
+                  placeholder="Type"
+                  value={txTypeFilter}
+                  options={['Washer', 'Dryer', 'Funds Added']}
+                  onChange={(v) => { setTxTypeFilter(v); setTxPage(1); }}
                 />
               </div>
               <div className="w-[160px]">
-                <Controller
-                  name="serviceName"
-                  control={control}
-                  render={({ field }) => (
-                    <FilterInput
-                      placeholder="Service"
-                      value={field.value}
-                      onChange={(v) => { field.onChange(v); setParams({ serviceName: v, page: '0' }); }}
-                    />
-                  )}
+                <FilterDropdown
+                  placeholder="Status"
+                  value={txStatusFilter}
+                  options={['Completed', 'Done', 'Pending', 'Failed']}
+                  onChange={(v) => { setTxStatusFilter(v); setTxPage(1); }}
                 />
               </div>
-              <div className="w-[160px]">
-                <Controller
-                  name="status"
-                  control={control}
-                  render={({ field }) => (
-                    <FilterDropdown
-                      placeholder="Status"
-                      value={field.value}
-                      options={STATUS_OPTIONS}
-                      onChange={(v) => { field.onChange(v); setParams({ status: v.toLowerCase(), page: '0' }); }}
-                    />
-                  )}
-                />
-              </div>
+              <input
+                type="date"
+                value={txDateFrom}
+                onChange={(e) => { setTxDateFrom(e.target.value); setTxPage(1); }}
+                className="h-[36px] w-[140px] shrink-0 rounded-lg border border-border bg-white px-3 text-[13px] text-text-body focus:border-primary focus:outline-none"
+              />
+              <input
+                type="date"
+                value={txDateTo}
+                onChange={(e) => { setTxDateTo(e.target.value); setTxPage(1); }}
+                className="h-[36px] w-[140px] shrink-0 rounded-lg border border-border bg-white px-3 text-[13px] text-text-body focus:border-primary focus:outline-none"
+              />
             </>
           ) : (
             <>
@@ -357,73 +425,57 @@ const OrdersPage = () => {
           )}
         </div>
 
-        {/* APP table */}
+        {/* APP — transactions table */}
         {mode === 'app' && (
           <>
             <div className="flex bg-[#f9fafb]">
               {[
-                { label: '#', w: 'w-[100px]', key: 'id' },
-                { label: 'Order', w: 'w-[110px]', key: 'order_number' },
-                { label: 'First Name', w: 'w-[130px]', key: 'first_name' },
-                { label: 'Last Name', w: 'w-[140px]', key: 'last_name' },
-                { label: 'Date', w: 'w-[130px]', key: 'requested_date_time' },
-                { label: 'Service', w: 'flex-1', key: 'service_name' },
-                { label: 'Status', w: 'w-[120px]', key: 'status' },
-                { label: 'Amount', w: 'w-[100px]', key: 'amount' },
-                { label: 'Customer ID', w: 'w-[340px]' },
-              ].map(({ label, w, key }) => (
-                <HeaderCell key={label} label={label} w={w} sortKey={key} sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                { label: 'Date / Time', w: 'w-[160px]' },
+                { label: 'Order ID', w: 'w-[120px]' },
+                { label: 'Customer', w: 'w-[160px]' },
+                { label: 'Type', w: 'w-[130px]' },
+                { label: 'Details', w: 'flex-1' },
+                { label: 'Amount', w: 'w-[100px]' },
+                { label: 'Status', w: 'w-[140px]' },
+              ].map(({ label, w }) => (
+                <div key={label} className={cn('px-[10px] py-[10px] shrink-0', w)}>
+                  <p className="text-[13px] font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
+                </div>
               ))}
             </div>
 
-            {(data?.content ?? []).length === 0 ? (
-              <div className="px-4 py-8 text-[14px] text-text-muted text-center">No orders found.</div>
+            {txPaginated.length === 0 ? (
+              <div className="px-4 py-8 text-[14px] text-text-muted text-center">No transactions found.</div>
             ) : (
-              (data?.content ?? []).map((order, i) => (
+              txPaginated.map((tx, i) => (
                 <div
-                  key={order.id}
+                  key={tx.id}
                   className={cn('flex items-center border-t border-[#f0f0f0] hover:bg-primary-50 transition-colors', { 'border-t-0': i === 0 })}
                 >
-                  <div className="w-[100px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[13px] text-text-muted truncate">{order.id}</p>
-                  </div>
-                  <div className="w-[110px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] font-medium text-primary truncate">{order.order_number}</p>
-                  </div>
-                  <div className="w-[130px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body truncate">{order.first_name}</p>
-                  </div>
-                  <div className="w-[140px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body truncate">{order.last_name}</p>
-                  </div>
-                  <div className="w-[130px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body">
-                      {order.requested_date_time
-                        ? new Date(order.requested_date_time).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
-                        : '—'}
-                    </p>
-                  </div>
-                  <div className="flex-1 min-w-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body truncate">{order.service_name}</p>
+                  <div className="w-[160px] shrink-0 px-[10px] py-[10px]">
+                    <p className="text-[13px] text-text-body">{tx.date}</p>
                   </div>
                   <div className="w-[120px] shrink-0 px-[10px] py-[10px]">
-                    <StatusBadge status={order.status} />
+                    <p className="text-[14px] font-medium text-primary truncate">{tx.orderId}</p>
+                  </div>
+                  <div className="w-[160px] shrink-0 px-[10px] py-[10px]">
+                    <p className="text-[14px] text-text-body truncate">{tx.customer}</p>
+                  </div>
+                  <div className="w-[130px] shrink-0 px-[10px] py-[10px]">
+                    <span className={cn('inline-flex items-center text-[12px] font-medium px-2 py-0.5 rounded-md whitespace-nowrap', TX_TYPE_STYLE[tx.type] ?? 'bg-surface text-text-subtle')}>
+                      {TX_TYPE_LABEL[tx.type] ?? tx.type}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0 px-[10px] py-[10px]">
+                    <p className="text-[13px] text-text-muted truncate">{tx.details}</p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] font-semibold text-text-body">
-                      {order.amount ? `$${parseFloat(order.amount).toFixed(2)}` : '—'}
+                    <p className={cn('text-[14px] font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
+                      {tx.type === 'Washer' || tx.type === 'Dryer' ? `-$${tx.amount.toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
                     </p>
                   </div>
-                  <div className="w-[340px] shrink-0 px-[10px] py-[10px]">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <button
-                        onClick={() => navigator.clipboard.writeText(order.customer_id)}
-                        className="shrink-0 hover:opacity-70 transition-opacity"
-                      >
-                        <CopyIcon />
-                      </button>
-                      <p className="text-[13px] text-text-muted font-mono truncate">{order.customer_id}</p>
-                    </div>
+                  <div className="w-[140px] shrink-0 px-[10px] py-[10px]">
+                    <StatusBadge status={tx.refundStatus ?? tx.status} />
                   </div>
                 </div>
               ))
@@ -432,36 +484,34 @@ const OrdersPage = () => {
             {/* Pagination */}
             <div className="flex items-center justify-between px-4 py-2.5 border-t border-border">
               <p className="text-[13px] text-[#6a7282]">
-                {appTotalElements > 0
-                  ? `Showing ${(parseInt(params.page) * PAGE_SIZE) + 1}–${Math.min((parseInt(params.page) + 1) * PAGE_SIZE, appTotalElements)} of ${appTotalElements.toLocaleString()} orders`
-                  : 'No orders'}
+                Showing {txPaginated.length > 0 ? `${(txPage - 1) * PAGE_SIZE + 1}–${Math.min(txPage * PAGE_SIZE, txFiltered.length)}` : '0'} of {txFiltered.length} transactions
               </p>
               <div className="flex items-center gap-1">
                 <button
-                  disabled={appPage <= 1}
-                  onClick={() => setParams({ page: String(parseInt(params.page) - 1) })}
+                  disabled={txPage <= 1}
+                  onClick={() => setTxPage((p) => p - 1)}
                   className="size-[26px] border border-border rounded flex items-center justify-center disabled:opacity-40"
                 >
                   <ChevronLeftIcon />
                 </button>
-                {Array.from({ length: Math.min(appTotalPages, 5) }, (_, i) => {
-                  const start = Math.max(0, appPage - 3);
+                {Array.from({ length: Math.min(txTotalPages, 5) }, (_, i) => {
+                  const start = Math.max(0, txPage - 3);
                   return start + i + 1;
-                }).filter(p => p <= appTotalPages).map((p) => (
+                }).filter(p => p <= txTotalPages).map((p) => (
                   <button
                     key={p}
-                    onClick={() => setParams({ page: String(p - 1) })}
+                    onClick={() => setTxPage(p)}
                     className={cn(
                       'size-[26px] text-[13px] rounded flex items-center justify-center',
-                      p === appPage ? 'bg-black text-white' : 'border border-border text-[#727272] hover:bg-surface'
+                      p === txPage ? 'bg-black text-white' : 'border border-border text-[#727272] hover:bg-surface'
                     )}
                   >
                     {p}
                   </button>
                 ))}
                 <button
-                  disabled={appPage >= appTotalPages}
-                  onClick={() => setParams({ page: String(parseInt(params.page) + 1) })}
+                  disabled={txPage >= txTotalPages}
+                  onClick={() => setTxPage((p) => p + 1)}
                   className="size-[26px] border border-border rounded flex items-center justify-center disabled:opacity-40"
                 >
                   <ChevronRightIcon />
@@ -567,6 +617,7 @@ const OrdersPage = () => {
             </div>
           </>
         )}
+
       </div>
     </div>
   );
