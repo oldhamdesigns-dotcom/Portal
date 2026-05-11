@@ -19,5 +19,6 @@
   "REPORTS": "/reports",
   "NODE_TYPES": "/node-types",
   "NODE_TYPE_DETAILS": "/node-types/:id",
-  "CUSTOMER_PROFILE": "/customers/:id"
+  "CUSTOMER_PROFILE": "/customers/:id",
+  "AS400_LOCATIONS": "/as400-locations"
 }

@@ -4,6 +4,7 @@ import { cn } from '@utils/CN';
 import { getCustomerById, getTransactions, type Transaction } from '@/data/customers';
 import routes from '@/navigation/routes.json';
 import { useTenant } from '@/context/TenantContext';
+import { useUserData } from '@/context/UserContext';
 
 const STATUS_BADGE: Record<string, { bg: string; text: string; border: string }> = {
   Active: { bg: 'bg-primary-50', text: 'text-primary', border: 'border-primary' },
@@ -93,6 +94,13 @@ const HomeIcon = ({ small = false }: { small?: boolean }) => (
 const CalendarIcon = ({ small = false }: { small?: boolean }) => (
   <svg className={cn(small ? 'size-3.5' : 'size-5', 'text-primary shrink-0')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+  </svg>
+);
+
+const MapPinIcon = ({ small = false }: { small?: boolean }) => (
+  <svg className={cn(small ? 'size-3.5' : 'size-5', 'text-primary shrink-0')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
   </svg>
 );
 
@@ -226,10 +234,10 @@ const REFUND_REASONS = [
   'Other',
 ];
 
-const DetailRow = ({ label, value, chip = true }: { label: string; value: string; chip?: boolean }) => (
-  <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4">
+const DetailRow = ({ label, value, chip = true, wrap = false }: { label: string; value: string; chip?: boolean; wrap?: boolean }) => (
+  <div className={cn('flex justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', wrap ? 'items-start' : 'items-center')}>
     <p className="text-[14px] text-text-body shrink-0">{label}</p>
-    <p className="text-[14px] font-medium text-text-body truncate max-w-[60%] text-right">{value}</p>
+    <p className={cn('text-[14px] font-medium text-text-body text-right', wrap ? 'whitespace-normal' : 'truncate max-w-[60%]')}>{value}</p>
   </div>
 );
 
@@ -301,6 +309,8 @@ const TxDetailView = ({ tx, customer, onCreateRefund, onClose, txStats }: { tx: 
             <DetailRow label="Date" value={tx.date} />
             <DetailRow label="Time" value={tx.time} />
             <DetailRow label="Load Price" value={`$${Math.abs(tx.amount).toFixed(2)}`} />
+            {tx.coupon && <DetailRow label="Coupon" value={tx.coupon} wrap />}
+            {tx.coupon && <DetailRow label="Total Price Paid" value="$0.00" />}
           </div>
         </div>
 
@@ -425,6 +435,16 @@ const RefundDetailTab = ({ tx, customer }: { tx: Transaction; customer: NonNulla
           <p className="text-[14px] text-text-subtle mb-1">Request Details</p>
           <DetailRow label="Order ID" value={tx.orderId} />
           {tx.refundDate && <DetailRow label="Date Initiated" value={`${tx.refundDate} · ${tx.refundTime ?? ''}`} />}
+          {tx.refundCreatedBy && (
+            <DetailRow
+              label="Created By"
+              value={
+                tx.refundCreatedBy.startsWith('Agent:')
+                  ? `Agent: ${tx.refundCreatedBy.slice(6).trim()}`
+                  : tx.refundCreatedBy
+              }
+            />
+          )}
           {tx.refundReason && <DetailRow label="Reason" value={tx.refundReason} />}
           {tx.refundNote && <DetailRow label="Note" value={tx.refundNote} />}
           <DetailRow label="Refund Amount" value={`$${Math.abs(tx.amount).toFixed(2)}`} />
@@ -562,7 +582,7 @@ const StatCard = ({ label, value, green = false }: { label: string; value: strin
   </div>
 );
 
-type TxStats = { balance: number; loads: number; spend: number; refundCount: number; refundTotal: number };
+type TxStats = { balance: number; loads: number; spend: number; refundCount: number; refundTotal: number; laundryLocation: string };
 
 type PayRangeTabsProps = {
   txStats: TxStats;
@@ -1265,6 +1285,7 @@ const CustomerProfilePage = () => {
   const [successAlert, setSuccessAlert] = useState<string | null>(null);
 
   const { tenantData } = useTenant();
+  const { userData } = useUserData();
   const role = tenantData?.activeTenantPermission?.role ?? 'Customer Support';
   const [showModal, setShowModal] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -1296,10 +1317,13 @@ const CustomerProfilePage = () => {
     const now = new Date();
     const refundDate = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
     const refundTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const agentFirst = userData?.loggedInUserData?.firstName ?? '';
+    const agentLast = userData?.loggedInUserData?.lastName ?? '';
+    const refundCreatedBy = agentFirst || agentLast ? `Agent:${agentFirst} ${agentLast}`.trim() : 'Agent';
     setAllTransactions((prev) =>
       prev.map((tx) =>
         tx.id === parentTx.id
-          ? { ...tx, refundStatus: 'Refund Requested' as const, refundReason: reason, refundNote: note || undefined, refundDate, refundTime }
+          ? { ...tx, refundStatus: 'Refund Requested' as const, refundReason: reason, refundNote: note || undefined, refundDate, refundTime, refundCreatedBy }
           : tx
       )
     );
@@ -1362,12 +1386,18 @@ const CustomerProfilePage = () => {
     return map;
   }, [allTransactions]);
 
+  const lastWash = [...allTransactions]
+    .filter((t) => t.type === 'Washer' || t.type === 'Dryer')
+    .sort((a, b) => parseInt(b.orderId) - parseInt(a.orderId))[0];
+  const laundryLocation = lastWash ? (lastWash.details.split('—')[1]?.trim() ?? '—') : '—';
+
   const txStats = {
     balance: customer.balance,
     loads: allTransactions.filter((t) => t.type === 'Washer' || t.type === 'Dryer').length,
     spend: allTransactions.filter((t) => (t.type === 'Washer' || t.type === 'Dryer') && t.amount > 0 && !t.coupon).reduce((sum, t) => sum + t.amount, 0),
     refundCount: allTransactions.filter((t) => t.refundStatus).length,
     refundTotal: allTransactions.filter((t) => t.refundStatus === 'Refund Complete').reduce((sum, t) => sum + t.amount, 0),
+    laundryLocation: laundryLocation.toUpperCase(),
   };
 
   return (
@@ -1448,17 +1478,16 @@ const CustomerProfilePage = () => {
               <div className="flex items-center gap-1.5 text-[13px] text-text-subtle">
                 <span>{customer.email}</span>
               </div>
-              {/* Row 3: member since */}
+              {/* Row 3: phone */}
               <div className="flex items-center gap-1.5 text-text-subtle">
-                <CalendarIcon small />
-                <span className="text-[13px]">Member since {joinFormatted}</span>
+                <span className="text-[13px]">{customer.phone}</span>
               </div>
             </div>
           </div>
 
           {/* Contact card */}
           <div className="flex items-stretch border border-border rounded-xl">
-            <div className="flex items-start gap-3 flex-1 px-6 py-3">
+            <div className="flex items-start gap-2 flex-1 px-4 py-2">
               <SmartphoneIcon />
               <div className="flex flex-col gap-0.5">
                 <p className="text-[13px] text-text-body font-medium">App Version</p>
@@ -1472,7 +1501,7 @@ const CustomerProfilePage = () => {
               </div>
             </div>
             <div className="w-px self-stretch bg-border shrink-0" />
-            <div className="flex items-start gap-3 flex-1 px-6 py-3">
+            <div className="flex items-start gap-2 flex-1 px-4 py-2">
               <HomeIcon />
               <div className="flex flex-col gap-0.5">
                 <p className="text-[13px] text-text-body font-medium">Address</p>
@@ -1480,11 +1509,11 @@ const CustomerProfilePage = () => {
               </div>
             </div>
             <div className="w-px self-stretch bg-border shrink-0" />
-            <div className="flex items-start gap-3 flex-1 px-6 py-3">
-              <PhoneIcon />
+            <div className="flex items-start gap-2 flex-1 px-4 py-2">
+              <MapPinIcon />
               <div className="flex flex-col gap-0.5">
-                <p className="text-[13px] text-text-body font-medium">Phone</p>
-                <p className="text-[14px] text-text-subtle">{customer.phone}</p>
+                <p className="text-[13px] text-text-body font-medium">Laundry Location</p>
+                <p className="text-[14px] text-text-subtle">{txStats.laundryLocation}</p>
               </div>
             </div>
           </div>
@@ -1506,6 +1535,10 @@ const CustomerProfilePage = () => {
                 <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
                   <p className="text-[14px] text-text-body shrink-0">ID</p>
                   <InlineId id={customer.userId ?? customer.id} />
+                </div>
+                <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                  <p className="text-[14px] text-text-body shrink-0">Member Since</p>
+                  <p className="text-[14px] font-medium text-text-body">{joinFormatted}</p>
                 </div>
                 {DETAIL_ROWS.map(({ label, value }) => (
                   <div key={label} className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
@@ -1680,7 +1713,9 @@ const CustomerProfilePage = () => {
                   </div>
                   <div className="w-[90px] shrink-0 px-[10px] py-[8px]">
                     <p className={cn('text-[14px] font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
-                      {(tx.type === 'Washer' || tx.type === 'Dryer') ? `-$${tx.amount.toFixed(2)}` : tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
+                      {(tx.coupon || tx.refundStatus === 'Refund Complete')
+                        ? '$0.00'
+                        : (tx.type === 'Washer' || tx.type === 'Dryer') ? `-$${tx.amount.toFixed(2)}` : tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
                     </p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[8px]">

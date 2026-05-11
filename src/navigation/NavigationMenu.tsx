@@ -16,6 +16,7 @@ const ADMIN_NAV: { title: string; path: string; icon: NavIconType }[] = [
   { title: 'Dashboard', path: routes.DASHBOARD, icon: 'Dashboard' },
   { title: 'Reports', path: routes.REPORTS, icon: 'Reports' },
   { title: 'Tags', path: routes.NODE_TYPES, icon: 'Tags' },
+  { title: 'AS400', path: routes.AS400_LOCATIONS, icon: 'AS400' },
 ];
 
 type NavItemProps = {
@@ -53,7 +54,7 @@ const NavigationMenu = () => {
   const { tenantData, setMenu } = useTenant();
   const { pathname } = useLocation();
   const isWide = tenantData?.menu?.wide;
-  const [adminOpen, setAdminOpen] = useState(true);
+  const [adminOpen, setAdminOpen] = useState(false);
   const role = tenantData?.activeTenantPermission?.role ?? 'Customer Support';
   const isOpsViewer = role === 'Ops Reports Viewer';
   const visibleAdminNav = isOpsViewer
@@ -72,53 +73,58 @@ const NavigationMenu = () => {
         </Link>
       </div>
 
-      {/* Main nav — hidden for Ops Reports Viewer */}
-      {!isOpsViewer && (
-        <div className="flex flex-col gap-1 pl-3 pr-0 pt-5">
-          {MAIN_NAV.map(({ title, path, icon }) => (
-            <NavItem key={path} title={title} path={path} icon={icon} isActive={pathname === path} isWide={!!isWide} />
-          ))}
-        </div>
-      )}
+      {/* Main nav */}
+      <div className="flex flex-col gap-1 pl-3 pr-0 pt-5">
+        {isOpsViewer
+          ? visibleAdminNav.map(({ title, path, icon }) => (
+              <NavItem key={path} title={title} path={path} icon={icon} isActive={pathname === path} isWide={!!isWide} />
+            ))
+          : MAIN_NAV.map(({ title, path, icon }) => (
+              <NavItem key={path} title={title} path={path} icon={icon} isActive={pathname === path} isWide={!!isWide} />
+            ))
+        }
+      </div>
 
       <div className="flex-1" />
 
-      {/* Admin Tools collapsible */}
-      <div className="flex flex-col pl-3 pr-0 pb-2">
-        <button
-          onClick={() => setAdminOpen((v) => !v)}
-          title="Admin Tools"
-          className="relative flex items-center gap-2 pl-1 pr-0 py-1 w-full hover:bg-primary-50 transition-colors"
-        >
-          <NavIcon icon="Admin" state="Default" />
-          <p className={cn(
-            'text-sm whitespace-nowrap transition-all duration-300 ease-in-out overflow-hidden flex-1 text-left font-medium text-text-subtle',
-            isWide ? 'opacity-100 max-w-[120px]' : 'opacity-0 max-w-0',
-          )}>
-            Admin Tools
-          </p>
-          <span className={cn(
-            'shrink-0 overflow-hidden transition-all duration-300 ease-in-out flex items-center',
-            isWide ? 'max-w-[16px] opacity-100 mr-3' : 'max-w-0 opacity-0 mr-0'
-          )}>
-            <svg
-              className={cn('size-3 text-text-muted transition-transform duration-200', adminOpen ? 'rotate-90' : 'rotate-0')}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </button>
-        {adminOpen && (
-          <div className="flex flex-col gap-1 mt-1">
-            {visibleAdminNav.map(({ title, path, icon }) => (
-              <NavItem key={path} title={title} path={path} icon={icon} isActive={pathname === path} isWide={!!isWide} />
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Admin Tools collapsible — hidden for Ops Reports Viewer */}
+      {!isOpsViewer && (
+        <div className="flex flex-col pl-3 pr-0 pb-2">
+          <button
+            onClick={() => setAdminOpen((v) => !v)}
+            title="Admin Tools"
+            className="relative flex items-center gap-2 pl-1 pr-0 py-1 w-full hover:bg-primary-50 transition-colors"
+          >
+            <NavIcon icon="Admin" state="Default" />
+            <p className={cn(
+              'text-sm whitespace-nowrap transition-all duration-300 ease-in-out overflow-hidden flex-1 text-left font-medium text-text-subtle',
+              isWide ? 'opacity-100 max-w-[120px]' : 'opacity-0 max-w-0',
+            )}>
+              Admin Tools
+            </p>
+            <span className={cn(
+              'shrink-0 overflow-hidden transition-all duration-300 ease-in-out flex items-center',
+              isWide ? 'max-w-[16px] opacity-100 mr-3' : 'max-w-0 opacity-0 mr-0'
+            )}>
+              <svg
+                className={cn('size-3 text-text-muted transition-transform duration-200', adminOpen ? 'rotate-90' : 'rotate-0')}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </button>
+          {adminOpen && (
+            <div className="flex flex-col gap-1 mt-1">
+              {ADMIN_NAV.map(({ title, path, icon }) => (
+                <NavItem key={path} title={title} path={path} icon={icon} isActive={pathname === path} isWide={!!isWide} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Expand / collapse — fixed size, always left-aligned */}
       <div className="px-3 pb-4 pt-2">

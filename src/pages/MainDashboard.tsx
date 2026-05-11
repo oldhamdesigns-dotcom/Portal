@@ -23,6 +23,7 @@ const Highlight = ({ text, query }: { text: string; query: string }) => {
 const SEARCH_OPTIONS = [
   { value: 'name', label: 'Customer Name' },
   { value: 'email', label: 'Customer Email' },
+  { value: 'phone', label: 'Customer Phone' },
 ];
 
 const INFO_CARDS = [
@@ -82,7 +83,7 @@ const MainDashboardPage = () => {
     if (!query.trim()) { setResults([]); setHasSearched(false); return; }
     setIsSearching(true);
     setHasSearched(true);
-    const field = searchType.value === 'email' ? 'email' : 'name';
+    const field = searchType.value === 'email' ? 'email' : searchType.value === 'phone' ? 'phone' : 'name';
     const data = await searchCustomers(query, field);
     setResults(data);
     setIsSearching(false);
@@ -140,7 +141,7 @@ const MainDashboardPage = () => {
             )}>
               <input
                 className="flex-1 outline-none bg-transparent text-base text-text-body placeholder:text-text-muted"
-                placeholder={`Search customer by ${searchType.value === 'email' ? 'email' : 'name'}`}
+                placeholder={`Search customer by ${searchType.value === 'email' ? 'email' : searchType.value === 'phone' ? 'phone' : 'name'}`}
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 onFocus={() => setInputFocused(true)}
@@ -186,7 +187,9 @@ const MainDashboardPage = () => {
                           <Highlight text={`${c.firstName} ${c.lastName}`} query={searchType.value === 'name' ? searchQuery : ''} />
                         </p>
                         <p className="text-xs text-text-muted">
-                          <Highlight text={c.email} query={searchType.value === 'email' ? searchQuery : ''} />
+                          {searchType.value === 'phone'
+                            ? <Highlight text={c.phone} query={searchQuery} />
+                            : <Highlight text={c.email} query={searchType.value === 'email' ? searchQuery : ''} />}
                         </p>
                       </div>
                     </button>

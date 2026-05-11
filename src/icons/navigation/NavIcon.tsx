@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-export type NavIconType = 'Dashboard' | 'MobileUser' | 'Orders' | 'Refund' | 'Reports' | 'Tags' | 'Admin';
+export type NavIconType = 'Dashboard' | 'MobileUser' | 'Orders' | 'Refund' | 'Reports' | 'Tags' | 'Admin' | 'AS400';
 
 type Props = {
   icon: NavIconType;
@@ -106,6 +106,18 @@ function TagsIcon({ state }: { state: Props['state'] }) {
   );
 }
 
+function AS400Icon({ state }: { state: Props['state'] }) {
+  const isSelected = state === 'Selected';
+  const isHover = state === 'Hover';
+  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
+  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+  return (
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 10C16.13 10 13 13.13 13 17C13 20.7317 16.5367 25.7265 18.5823 28.3034C19.3189 29.2314 20.6811 29.2314 21.4177 28.3034C23.4633 25.7265 27 20.7317 27 17C27 13.13 23.87 10 20 10ZM20 19.5C18.62 19.5 17.5 18.38 17.5 17C17.5 15.62 18.62 14.5 20 14.5C21.38 14.5 22.5 15.62 22.5 17C22.5 18.38 21.38 19.5 20 19.5Z" fill={fill} stroke={stroke} strokeWidth="2"/>
+    </svg>
+  );
+}
+
 function AdminIcon({ state }: { state: Props['state'] }) {
   const isSelected = state === 'Selected';
   const isHover = state === 'Hover';
@@ -131,6 +143,7 @@ const NavIcon = ({ icon, state = 'Default' }: Props) => {
       {icon === 'Reports' && <ReportsIcon state={state} />}
       {icon === 'Tags' && <TagsIcon state={state} />}
       {icon === 'Admin' && <AdminIcon state={state} />}
+      {icon === 'AS400' && <AS400Icon state={state} />}
     </div>
   );
 };

@@ -39,13 +39,14 @@ const customers: Customer[] = [
 
 export const searchCustomers = async (
   query: string,
-  field: 'name' | 'email'
+  field: 'name' | 'email' | 'phone'
 ): Promise<Customer[]> => {
   await new Promise((res) => setTimeout(res, 300));
   if (!query.trim()) return [];
   const q = query.toLowerCase();
   return customers.filter((c) => {
     if (field === 'email') return c.email.toLowerCase().includes(q);
+    if (field === 'phone') return c.phone.replace(/\D/g, '').includes(q.replace(/\D/g, ''));
     return (
       c.firstName.toLowerCase().includes(q) ||
       c.lastName.toLowerCase().includes(q) ||
@@ -71,6 +72,7 @@ export type Transaction = {
   refundNote?: string;
   refundDate?: string;
   refundTime?: string;
+  refundCreatedBy?: string;
 };
 
 export const getCustomerById = (id: string): Customer | undefined =>
@@ -82,7 +84,7 @@ export const getTransactions = (customerId: string): Transaction[] => [
   { id: `${customerId}-3`, date: '08/18/2025', time: '9:05:10 AM', orderId: '2343890', type: 'Washer', details: 'Washer #5 — Riverside Location', amount: 1.75, status: 'Done' },
   { id: `${customerId}-4`, date: '08/15/2025', time: '2:33:00 PM', orderId: '2343742', type: 'Funds Added', details: 'Visa •••• 4242', amount: 15.00, status: 'Completed' },
   { id: `${customerId}-5`, date: '08/12/2025', time: '4:10:55 PM', orderId: '2343601', type: 'Washer', details: 'Washer #2 — Northside Location', amount: 1.75, status: 'Done' },
-  { id: `${customerId}-7`, date: '08/05/2025', time: '7:44:30 AM', orderId: '2343310', type: 'Dryer', details: 'Dryer #3 — Sunset Location', amount: 1.75, status: 'Done', refundStatus: 'Refund Complete', refundReason: 'Machine Malfunction', refundDate: '08/08/2025', refundTime: '10:22:11 AM' },
+  { id: `${customerId}-7`, date: '08/05/2025', time: '7:44:30 AM', orderId: '2343310', type: 'Dryer', details: 'Dryer #3 — Sunset Location', amount: 1.75, status: 'Done', refundStatus: 'Refund Complete', refundReason: 'Machine Malfunction', refundDate: '08/08/2025', refundTime: '10:22:11 AM', refundCreatedBy: 'Agent:Mark Oldham' },
   { id: `${customerId}-8`, date: '08/01/2025', time: '1:00:00 PM', orderId: '2343199', type: 'Washer', details: 'Washer #6 — Riverside Location', amount: 1.75, status: 'Done' },
   { id: `${customerId}-10`, date: '07/25/2025', time: '8:30:00 AM', orderId: '2342910', type: 'Funds Added', details: 'Visa •••• 4242', amount: 15.00, status: 'Completed' },
 ];
