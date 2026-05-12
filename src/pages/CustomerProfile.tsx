@@ -721,6 +721,8 @@ const DETAIL_ROWS = [
   { label: 'Phones', value: 'N/A' },
 ];
 
+const TAG_OPTIONS = ['Building Attendant', 'CSC Employee', 'Developer', 'Technician', 'Tester'];
+
 const MOCK_DEVICES = [
   {
     allowsPush: true,
@@ -735,12 +737,25 @@ const MOCK_DEVICES = [
 const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose }: AccountDetailsModalProps) => {
   const [hasChanges, setHasChanges] = useState(false);
   const [tab, setTab] = useState<'details' | 'devices'>('details');
+  const [tags, setTags] = useState<string[]>(['Technician']);
+  const [showTagDropdown, setShowTagDropdown] = useState(false);
+  const tagDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [onClose]);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (tagDropdownRef.current && !tagDropdownRef.current.contains(e.target as Node)) {
+        setShowTagDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
@@ -833,23 +848,50 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     <p className="text-[14px] font-medium text-text-body">{value}</p>
                   </div>
                 ))}
-                <div className="flex items-center justify-between py-2.5 gap-4">
-                  <p className="text-[14px] text-text-body shrink-0">Tags</p>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-2 bg-primary-50 rounded-full px-3 py-1">
-                      <span className="text-[14px] text-text-subtle">Technician</span>
-                      <button onClick={() => setHasChanges(true)} className="text-text-muted hover:text-text-body transition-colors">
-                        <svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <div className="flex items-start justify-between py-2.5 gap-4">
+                  <p className="text-[14px] text-text-body shrink-0 mt-1">Tags</p>
+                  <div className="flex flex-wrap items-center gap-2 justify-end">
+                    {tags.map((tag) => (
+                      <div key={tag} className="flex items-center gap-1.5 bg-primary-50 rounded-full px-3 py-1">
+                        <span className="text-[13px] text-text-subtle">{tag}</span>
+                        <button
+                          onClick={() => { setTags((prev) => prev.filter((t) => t !== tag)); setHasChanges(true); }}
+                          className="text-text-muted hover:text-text-body transition-colors"
+                        >
+                          <svg className="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                    <div className="relative" ref={tagDropdownRef}>
+                      <button
+                        onClick={() => setShowTagDropdown((v) => !v)}
+                        className="flex items-center gap-1.5 px-3 py-1 h-[30px] bg-white border border-border rounded-lg text-[13px] text-text-subtle hover:bg-surface transition-colors"
+                      >
+                        Add tag...
+                        <svg className={cn('size-3.5 text-text-muted shrink-0 transition-transform duration-150', showTagDropdown ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
+                      {showTagDropdown && (
+                        <div className="absolute right-0 top-full mt-1 w-[180px] bg-white border border-border rounded-lg shadow-lg z-50 overflow-hidden">
+                          {TAG_OPTIONS.filter((opt) => !tags.includes(opt)).length === 0 ? (
+                            <p className="px-4 py-3 text-[13px] text-text-muted">All tags added</p>
+                          ) : (
+                            TAG_OPTIONS.filter((opt) => !tags.includes(opt)).map((opt) => (
+                              <button
+                                key={opt}
+                                className="w-full px-4 py-2.5 text-left text-[14px] text-text-subtle hover:bg-primary-50 transition-colors"
+                                onClick={() => { setTags((prev) => [...prev, opt]); setHasChanges(true); setShowTagDropdown(false); }}
+                              >
+                                {opt}
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      )}
                     </div>
-                    <button onClick={() => setHasChanges(true)} className="flex items-center gap-2 px-3 py-1 h-[34px] bg-white border border-border rounded-lg text-[14px] text-text-body hover:bg-surface transition-colors">
-                      Add Tag
-                      <svg className="size-4 text-text-subtle shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
                   </div>
                 </div>
               </div>
@@ -1296,11 +1338,17 @@ const CustomerProfilePage = () => {
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [showActions, setShowActions] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
+  const [profileTags, setProfileTags] = useState<string[]>(['Technician']);
+  const [showProfileTagDropdown, setShowProfileTagDropdown] = useState(false);
+  const profileTagRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (actionsRef.current && !actionsRef.current.contains(e.target as Node)) {
         setShowActions(false);
+      }
+      if (profileTagRef.current && !profileTagRef.current.contains(e.target as Node)) {
+        setShowProfileTagDropdown(false);
       }
     };
     document.addEventListener('mousedown', handler);
@@ -1530,7 +1578,7 @@ const CustomerProfilePage = () => {
           </div>
 
           {showDetails && (
-            <div className="border border-border rounded-xl overflow-hidden">
+            <div className="border border-border rounded-xl">
               <div className="px-5 py-4 flex flex-col">
                 <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
                   <p className="text-[14px] text-text-body shrink-0">ID</p>
@@ -1546,11 +1594,49 @@ const CustomerProfilePage = () => {
                     <p className="text-[14px] font-medium text-text-body">{value}</p>
                   </div>
                 ))}
-                <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                  <p className="text-[14px] text-text-body shrink-0">Tags</p>
-                  <div className="flex items-center gap-1.5">
-                    <div className="flex items-center gap-1.5 bg-primary-50 rounded-full px-3 py-1">
-                      <span className="text-[13px] text-text-subtle">Technician</span>
+                <div className="flex items-start justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                  <p className="text-[14px] text-text-body shrink-0 mt-1">Tags</p>
+                  <div className="flex flex-wrap items-center gap-2 justify-end">
+                    {profileTags.map((tag) => (
+                      <div key={tag} className="flex items-center gap-1.5 bg-primary-50 rounded-full px-3 py-1">
+                        <span className="text-[13px] text-text-subtle">{tag}</span>
+                        <button
+                          onClick={() => setProfileTags((prev) => prev.filter((t) => t !== tag))}
+                          className="text-text-muted hover:text-text-body transition-colors"
+                        >
+                          <svg className="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                    <div className="relative" ref={profileTagRef}>
+                      <button
+                        onClick={() => setShowProfileTagDropdown((v) => !v)}
+                        className="flex items-center gap-1.5 px-3 py-1 h-[30px] bg-white border border-border rounded-lg text-[13px] text-text-subtle hover:bg-surface transition-colors"
+                      >
+                        Add tag...
+                        <svg className={cn('size-3.5 text-text-muted shrink-0 transition-transform duration-150', showProfileTagDropdown ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      {showProfileTagDropdown && (
+                        <div className="absolute right-0 top-full mt-1 w-[180px] bg-white border border-border rounded-lg shadow-lg z-50 overflow-hidden">
+                          {TAG_OPTIONS.filter((opt) => !profileTags.includes(opt)).length === 0 ? (
+                            <p className="px-4 py-3 text-[13px] text-text-muted">All tags added</p>
+                          ) : (
+                            TAG_OPTIONS.filter((opt) => !profileTags.includes(opt)).map((opt) => (
+                              <button
+                                key={opt}
+                                className="w-full px-4 py-2.5 text-left text-[14px] text-text-subtle hover:bg-primary-50 transition-colors"
+                                onClick={() => { setProfileTags((prev) => [...prev, opt]); setShowProfileTagDropdown(false); }}
+                              >
+                                {opt}
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
