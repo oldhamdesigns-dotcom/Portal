@@ -20,11 +20,11 @@ const CustomerCard = ({ customer, onClick }: { customer: Customer; onClick: () =
         <span className="text-white text-base font-semibold">{initials}</span>
       </div>
       <div className="flex flex-col flex-1 min-w-0">
-        <p className="text-[18px] font-semibold text-text-body leading-snug">
+        <p className="text-ds-h5 font-semibold text-text-body leading-snug">
           {customer.firstName} {customer.lastName}
         </p>
-        <p className="text-[14px] text-text-subtle mt-0.5">{customer.email}</p>
-        <p className="text-[12px] text-text-muted mt-0.5">
+        <p className="text-ds-body-sm text-text-subtle mt-0.5">{customer.email}</p>
+        <p className="text-ds-caption text-text-muted mt-0.5">
           {customer.phone} &nbsp;·&nbsp; {customer.id}
         </p>
       </div>
@@ -175,7 +175,7 @@ const SearchResultsPage = () => {
         <svg className="size-5 text-text-body" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
         </svg>
-        <h2 className="text-[20px] font-bold text-text-body">Search Results</h2>
+        <h2 className="text-ds-h4 font-bold text-text-body">Search Results</h2>
       </div>
 
       {hasSearched && (

@@ -118,35 +118,35 @@ type MockTransaction = {
 
 const MOCK_TRANSACTIONS: MockTransaction[] = [
   { id: 'TX-001', date: '05/05/2026 9:14 AM', orderId: '23269817', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Funds Added', details: 'Visa •••• 4242',                        amount: 15.00, status: 'Completed' },
-  { id: 'TX-002', date: '05/05/2026 8:52 AM', orderId: '23269814', customer: 'Marcus Lee',       customerId: 'C002', type: 'Washer',      details: 'Washer #3 — Riverside Location',        amount: 1.75,  status: 'Done' },
-  { id: 'TX-003', date: '05/05/2026 8:31 AM', orderId: '23269811', customer: 'Priya Patel',      customerId: 'C003', type: 'Dryer',       details: 'Dryer #5 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-002', date: '05/05/2026 8:52 AM', orderId: '23269814', customer: 'Marcus Lee',       customerId: 'C002', type: 'Washer',      details: 'Washer #3 — Riverside Location',        amount: 1.75,  status: 'Completed' },
+  { id: 'TX-003', date: '05/05/2026 8:31 AM', orderId: '23269811', customer: 'Priya Patel',      customerId: 'C003', type: 'Dryer',       details: 'Dryer #5 — Oak St. Location',           amount: 1.50,  status: 'Completed' },
   { id: 'TX-004', date: '05/05/2026 8:10 AM', orderId: '23269801', customer: 'James Rivera',     customerId: 'C004', type: 'Funds Added', details: 'Mastercard •••• 9010',                  amount: 20.00, status: 'Completed' },
-  { id: 'TX-005', date: '05/05/2026 7:58 AM', orderId: '23269796', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #6 — Riverside Location',        amount: 1.75,  status: 'Done' },
+  { id: 'TX-005', date: '05/05/2026 7:58 AM', orderId: '23269796', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #6 — Riverside Location',        amount: 1.75,  status: 'Completed' },
   { id: 'TX-006', date: '05/05/2026 7:44 AM', orderId: '23269793', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Funds Added', details: 'Visa •••• 3311',                        amount: 10.00, status: 'Completed' },
-  { id: 'TX-007', date: '05/05/2026 7:29 AM', orderId: '23269787', customer: 'Marcus Lee',       customerId: 'C002', type: 'Dryer',       details: 'Dryer #2 — Oak St. Location',           amount: 1.50,  status: 'Done' },
-  { id: 'TX-008', date: '05/05/2026 7:12 AM', orderId: '23269784', customer: 'David Kim',        customerId: 'C006', type: 'Washer',      details: 'Washer #1 — Central Location',          amount: 2.00,  status: 'Done' },
+  { id: 'TX-007', date: '05/05/2026 7:29 AM', orderId: '23269787', customer: 'Marcus Lee',       customerId: 'C002', type: 'Dryer',       details: 'Dryer #2 — Oak St. Location',           amount: 1.50,  status: 'Completed' },
+  { id: 'TX-008', date: '05/05/2026 7:12 AM', orderId: '23269784', customer: 'David Kim',        customerId: 'C006', type: 'Washer',      details: 'Washer #1 — Central Location',          amount: 2.00,  status: 'Completed' },
   { id: 'TX-009', date: '05/04/2026 6:55 PM', orderId: '23269759', customer: 'Priya Patel',      customerId: 'C003', type: 'Funds Added', details: 'Visa •••• 4242',                        amount: 15.00, status: 'Completed' },
-  { id: 'TX-010', date: '05/04/2026 6:38 PM', orderId: '23269730', customer: 'James Rivera',     customerId: 'C004', type: 'Washer',      details: 'Washer #4 — Riverside Location',        amount: 1.75,  status: 'Done' },
-  { id: 'TX-011', date: '05/04/2026 6:20 PM', orderId: '23269727', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Dryer',       details: 'Dryer #7 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-010', date: '05/04/2026 6:38 PM', orderId: '23269730', customer: 'James Rivera',     customerId: 'C004', type: 'Washer',      details: 'Washer #4 — Riverside Location',        amount: 1.75,  status: 'Completed' },
+  { id: 'TX-011', date: '05/04/2026 6:20 PM', orderId: '23269727', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Dryer',       details: 'Dryer #7 — Oak St. Location',           amount: 1.50,  status: 'Completed' },
   { id: 'TX-012', date: '05/04/2026 6:05 PM', orderId: '23269712', customer: 'David Kim',        customerId: 'C006', type: 'Funds Added', details: 'Mastercard •••• 5577',                  amount: 25.00, status: 'Completed' },
-  { id: 'TX-013', date: '05/04/2026 5:50 PM', orderId: '23269711', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #2 — Central Location',          amount: 1.75,  status: 'Done' },
+  { id: 'TX-013', date: '05/04/2026 5:50 PM', orderId: '23269711', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #2 — Central Location',          amount: 1.75,  status: 'Completed' },
   { id: 'TX-014', date: '05/04/2026 5:33 PM', orderId: '23269708', customer: 'Marcus Lee',       customerId: 'C002', type: 'Funds Added', details: 'Visa •••• 1122',                        amount: 10.00, status: 'Completed' },
   { id: 'TX-015', date: '05/04/2026 5:15 PM', orderId: '23269678', customer: 'Anna Torres',      customerId: 'C007', type: 'Washer',      details: 'Washer #8 — Riverside Location',        amount: 1.75,  status: 'Pending' },
-  { id: 'TX-016', date: '05/04/2026 4:58 PM', orderId: '23269670', customer: 'Priya Patel',      customerId: 'C003', type: 'Dryer',       details: 'Dryer #3 — Oak St. Location',           amount: 1.50,  status: 'Done', refundStatus: 'Refund Complete' },
+  { id: 'TX-016', date: '05/04/2026 4:58 PM', orderId: '23269670', customer: 'Priya Patel',      customerId: 'C003', type: 'Dryer',       details: 'Dryer #3 — Oak St. Location',           amount: 1.50,  status: 'Completed', refundStatus: 'Refund Complete' },
   { id: 'TX-017', date: '05/04/2026 4:40 PM', orderId: '23269652', customer: 'James Rivera',     customerId: 'C004', type: 'Funds Added', details: 'Visa •••• 6688',                        amount: 20.00, status: 'Completed' },
-  { id: 'TX-018', date: '05/04/2026 4:22 PM', orderId: '23269641', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Washer',      details: 'Washer #5 — Central Location',          amount: 2.00,  status: 'Done' },
-  { id: 'TX-019', date: '05/04/2026 4:08 PM', orderId: '23269628', customer: 'David Kim',        customerId: 'C006', type: 'Dryer',       details: 'Dryer #1 — Riverside Location',         amount: 1.50,  status: 'Done' },
+  { id: 'TX-018', date: '05/04/2026 4:22 PM', orderId: '23269641', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Washer',      details: 'Washer #5 — Central Location',          amount: 2.00,  status: 'Completed' },
+  { id: 'TX-019', date: '05/04/2026 4:08 PM', orderId: '23269628', customer: 'David Kim',        customerId: 'C006', type: 'Dryer',       details: 'Dryer #1 — Riverside Location',         amount: 1.50,  status: 'Completed' },
   { id: 'TX-020', date: '05/04/2026 3:50 PM', orderId: '23269610', customer: 'Anna Torres',      customerId: 'C007', type: 'Funds Added', details: 'Mastercard •••• 2244',                  amount: 15.00, status: 'Completed' },
-  { id: 'TX-021', date: '05/04/2026 3:33 PM', orderId: '23269591', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #6 — Riverside Location',        amount: 1.75,  status: 'Done', coupon: true },
+  { id: 'TX-021', date: '05/04/2026 3:33 PM', orderId: '23269591', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Washer',      details: 'Washer #6 — Riverside Location',        amount: 1.75,  status: 'Completed', coupon: true },
   { id: 'TX-022', date: '05/04/2026 3:15 PM', orderId: '23269580', customer: 'Marcus Lee',       customerId: 'C002', type: 'Dryer',       details: 'Dryer #4 — Central Location',           amount: 1.50,  status: 'Failed' },
   { id: 'TX-023', date: '05/04/2026 2:55 PM', orderId: '23269562', customer: 'Priya Patel',      customerId: 'C003', type: 'Funds Added', details: 'Visa •••• 4242',                        amount: 10.00, status: 'Completed' },
-  { id: 'TX-024', date: '05/04/2026 2:38 PM', orderId: '23269540', customer: 'James Rivera',     customerId: 'C004', type: 'Washer',      details: 'Washer #3 — Oak St. Location',          amount: 1.75,  status: 'Done' },
-  { id: 'TX-025', date: '05/04/2026 2:20 PM', orderId: '23269515', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Dryer',       details: 'Dryer #6 — Riverside Location',         amount: 1.50,  status: 'Done' },
+  { id: 'TX-024', date: '05/04/2026 2:38 PM', orderId: '23269540', customer: 'James Rivera',     customerId: 'C004', type: 'Washer',      details: 'Washer #3 — Oak St. Location',          amount: 1.75,  status: 'Completed' },
+  { id: 'TX-025', date: '05/04/2026 2:20 PM', orderId: '23269515', customer: 'Emily Nguyen',     customerId: 'C005', type: 'Dryer',       details: 'Dryer #6 — Riverside Location',         amount: 1.50,  status: 'Completed' },
   { id: 'TX-026', date: '05/04/2026 2:02 PM', orderId: '23269490', customer: 'David Kim',        customerId: 'C006', type: 'Funds Added', details: 'Mastercard •••• 9900',                  amount: 20.00, status: 'Completed' },
-  { id: 'TX-027', date: '05/04/2026 1:44 PM', orderId: '23269471', customer: 'Anna Torres',      customerId: 'C007', type: 'Washer',      details: 'Washer #1 — Central Location',          amount: 2.00,  status: 'Done' },
-  { id: 'TX-028', date: '05/04/2026 1:27 PM', orderId: '23269450', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Dryer',       details: 'Dryer #2 — Oak St. Location',           amount: 1.50,  status: 'Done' },
+  { id: 'TX-027', date: '05/04/2026 1:44 PM', orderId: '23269471', customer: 'Anna Torres',      customerId: 'C007', type: 'Washer',      details: 'Washer #1 — Central Location',          amount: 2.00,  status: 'Completed' },
+  { id: 'TX-028', date: '05/04/2026 1:27 PM', orderId: '23269450', customer: 'Sarah Johnson',    customerId: 'C001', type: 'Dryer',       details: 'Dryer #2 — Oak St. Location',           amount: 1.50,  status: 'Completed' },
   { id: 'TX-029', date: '05/04/2026 1:09 PM', orderId: '23269430', customer: 'Marcus Lee',       customerId: 'C002', type: 'Funds Added', details: 'Visa •••• 1122',                        amount: 15.00, status: 'Completed' },
-  { id: 'TX-030', date: '05/04/2026 12:50 PM', orderId: '23269410', customer: 'Priya Patel',    customerId: 'C003', type: 'Washer',      details: 'Washer #7 — Riverside Location',        amount: 1.75,  status: 'Done' },
+  { id: 'TX-030', date: '05/04/2026 12:50 PM', orderId: '23269410', customer: 'Priya Patel',    customerId: 'C003', type: 'Washer',      details: 'Washer #7 — Riverside Location',        amount: 1.75,  status: 'Completed' },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ const StatusBadge = ({ status }: { status: string }) => {
   const key = status.toLowerCase();
   const style = STATUS_STYLE[key] ?? 'bg-[#f2f2f2] text-[#444] border-[#ccc]';
   return (
-    <span className={cn('text-[12px] font-medium px-2 py-0.5 rounded border whitespace-nowrap', style)}>
+    <span className={cn('text-ds-caption font-medium px-2 py-0.5 rounded border whitespace-nowrap', style)}>
       {capitalize(startCase(status))}
     </span>
   );
@@ -177,7 +177,7 @@ const FilterInput = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="h-[36px] w-full rounded-lg border border-border bg-white pl-3 pr-8 text-[13px] text-text-body placeholder:text-text-muted focus:border-primary focus:outline-none"
+      className="h-[36px] w-full rounded-lg border border-border bg-white pl-3 pr-8 text-ds-body-sm text-text-body placeholder:text-text-muted focus:border-primary focus:outline-none"
     />
     {icon && <div className="absolute right-2.5 pointer-events-none">{icon}</div>}
   </div>
@@ -199,7 +199,7 @@ const FilterDropdown = ({
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="h-[36px] w-full flex items-center justify-between gap-2 rounded-lg border border-border bg-white px-3 text-[13px] text-text-body focus:border-primary focus:outline-none"
+        className="h-[36px] w-full flex items-center justify-between gap-2 rounded-lg border border-border bg-white px-3 text-ds-body-sm text-text-body focus:border-primary focus:outline-none"
       >
         <span className={value ? 'text-text-body' : 'text-text-muted'}>{value || placeholder}</span>
         <ChevronDownIcon />
@@ -211,7 +211,7 @@ const FilterDropdown = ({
               key={opt}
               onClick={() => { onChange(opt === placeholder ? '' : opt); setOpen(false); }}
               className={cn(
-                'w-full text-left px-3 py-2 text-[13px] hover:bg-surface transition-colors',
+                'w-full text-left px-3 py-2 text-ds-body-sm hover:bg-surface transition-colors',
                 (opt === placeholder ? '' : opt) === value ? 'bg-primary-50 text-primary font-medium' : 'text-text-body'
               )}
             >
@@ -234,7 +234,7 @@ const HeaderCell = ({
   onSort: (key: string) => void;
 }) => (
   <div className={cn('px-[10px] py-[10px] shrink-0 flex items-center gap-1', w)}>
-    <p className="text-[13px] font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
+    <p className="text-ds-body-sm font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
     {sortKey && (
       <button onClick={() => onSort(sortKey)} className="shrink-0">
         <SortIcon dir={sortField === sortKey ? (sortDir === 'ASC' ? 'asc' : 'desc') : undefined} />
@@ -256,7 +256,7 @@ const defaultFilters = {
   order: 'DESC',
 };
 
-const STATUS_OPTIONS = ['Done', 'Completed', 'Failed', 'Pending', 'Closed'];
+const STATUS_OPTIONS = ['Completed', 'Failed', 'Pending', 'Closed'];
 const PAGE_SIZE = 15;
 
 // ─── Main component ───────────────────────────────────────────────────────────
@@ -335,8 +335,8 @@ const OrdersPage = () => {
 
       {/* Title + toggle */}
       <div className="flex items-center justify-between mb-5">
-        <h1 className="text-[22px] font-bold text-text-body">Orders</h1>
-        <div className="flex items-center rounded-full border border-border overflow-hidden text-[13px] font-semibold">
+        <h1 className="text-ds-h4 font-bold text-text-body">Orders</h1>
+        <div className="flex items-center rounded-full border border-border overflow-hidden text-ds-body-sm font-semibold">
           <button
             onClick={() => setMode('app')}
             className={cn('px-4 py-1.5 transition-colors', mode === 'app' ? 'bg-black text-white' : 'bg-white text-text-body hover:bg-surface')}
@@ -379,7 +379,7 @@ const OrdersPage = () => {
                 <FilterDropdown
                   placeholder="Status"
                   value={txStatusFilter}
-                  options={['Completed', 'Done', 'Pending', 'Failed']}
+                  options={['Completed', 'Pending', 'Failed']}
                   onChange={(v) => { setTxStatusFilter(v); setTxPage(1); }}
                 />
               </div>
@@ -387,13 +387,13 @@ const OrdersPage = () => {
                 type="date"
                 value={txDateFrom}
                 onChange={(e) => { setTxDateFrom(e.target.value); setTxPage(1); }}
-                className="h-[36px] w-[140px] shrink-0 rounded-lg border border-border bg-white px-3 text-[13px] text-text-body focus:border-primary focus:outline-none"
+                className="h-[36px] w-[140px] shrink-0 rounded-lg border border-border bg-white px-3 text-ds-body-sm text-text-body focus:border-primary focus:outline-none"
               />
               <input
                 type="date"
                 value={txDateTo}
                 onChange={(e) => { setTxDateTo(e.target.value); setTxPage(1); }}
-                className="h-[36px] w-[140px] shrink-0 rounded-lg border border-border bg-white px-3 text-[13px] text-text-body focus:border-primary focus:outline-none"
+                className="h-[36px] w-[140px] shrink-0 rounded-lg border border-border bg-white px-3 text-ds-body-sm text-text-body focus:border-primary focus:outline-none"
               />
             </>
           ) : (
@@ -439,13 +439,13 @@ const OrdersPage = () => {
                 { label: 'Status', w: 'w-[140px]' },
               ].map(({ label, w }) => (
                 <div key={label} className={cn('px-[10px] py-[10px] shrink-0', w)}>
-                  <p className="text-[13px] font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
+                  <p className="text-ds-body-sm font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
                 </div>
               ))}
             </div>
 
             {txPaginated.length === 0 ? (
-              <div className="px-4 py-8 text-[14px] text-text-muted text-center">No transactions found.</div>
+              <div className="px-4 py-8 text-ds-body-sm text-text-muted text-center">No transactions found.</div>
             ) : (
               txPaginated.map((tx, i) => (
                 <div
@@ -453,24 +453,24 @@ const OrdersPage = () => {
                   className={cn('flex items-center border-t border-[#f0f0f0] hover:bg-primary-50 transition-colors', { 'border-t-0': i === 0 })}
                 >
                   <div className="w-[160px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[13px] text-text-body">{tx.date}</p>
+                    <p className="text-ds-body-sm text-text-body">{tx.date}</p>
                   </div>
                   <div className="w-[120px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] font-medium text-primary truncate">{tx.orderId}</p>
+                    <p className="text-ds-label font-medium text-primary truncate">{tx.orderId}</p>
                   </div>
                   <div className="w-[160px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body truncate">{tx.customer}</p>
+                    <p className="text-ds-body-sm text-text-body truncate">{tx.customer}</p>
                   </div>
                   <div className="w-[130px] shrink-0 px-[10px] py-[10px]">
-                    <span className={cn('inline-flex items-center text-[12px] font-medium px-2 py-0.5 rounded-md whitespace-nowrap', TX_TYPE_STYLE[tx.type] ?? 'bg-surface text-text-subtle')}>
+                    <span className={cn('inline-flex items-center text-ds-caption font-medium px-2 py-0.5 rounded-md whitespace-nowrap', TX_TYPE_STYLE[tx.type] ?? 'bg-surface text-text-subtle')}>
                       {TX_TYPE_LABEL[tx.type] ?? tx.type}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0 px-[10px] py-[10px]">
-                    <p className="text-[13px] text-text-muted truncate">{tx.details}</p>
+                    <p className="text-ds-body-sm text-text-muted truncate">{tx.details}</p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[10px]">
-                    <p className={cn('text-[14px] font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
+                    <p className={cn('text-ds-label font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
                       {tx.type === 'Washer' || tx.type === 'Dryer' ? `-$${tx.amount.toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
                     </p>
                   </div>
@@ -483,7 +483,7 @@ const OrdersPage = () => {
 
             {/* Pagination */}
             <div className="flex items-center justify-between px-4 py-2.5 border-t border-border">
-              <p className="text-[13px] text-[#6a7282]">
+              <p className="text-ds-body-sm text-[#6a7282]">
                 Showing {txPaginated.length > 0 ? `${(txPage - 1) * PAGE_SIZE + 1}–${Math.min(txPage * PAGE_SIZE, txFiltered.length)}` : '0'} of {txFiltered.length} transactions
               </p>
               <div className="flex items-center gap-1">
@@ -502,7 +502,7 @@ const OrdersPage = () => {
                     key={p}
                     onClick={() => setTxPage(p)}
                     className={cn(
-                      'size-[26px] text-[13px] rounded flex items-center justify-center',
+                      'size-[26px] text-ds-body-sm rounded flex items-center justify-center',
                       p === txPage ? 'bg-black text-white' : 'border border-border text-[#727272] hover:bg-surface'
                     )}
                   >
@@ -537,13 +537,13 @@ const OrdersPage = () => {
                 { label: 'CC 4 digits', w: 'w-[110px]' },
               ].map(({ label, w }) => (
                 <div key={label} className={cn('px-[10px] py-[10px] shrink-0', w)}>
-                  <p className="text-[13px] font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
+                  <p className="text-ds-body-sm font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
                 </div>
               ))}
             </div>
 
             {kioskPaginated.length === 0 ? (
-              <div className="px-4 py-8 text-[14px] text-text-muted text-center">No kiosk orders found.</div>
+              <div className="px-4 py-8 text-ds-body-sm text-text-muted text-center">No kiosk orders found.</div>
             ) : (
               kioskPaginated.map((order, i) => (
                 <div
@@ -551,31 +551,31 @@ const OrdersPage = () => {
                   className={cn('flex items-center border-t border-[#f0f0f0] hover:bg-primary-50 transition-colors', { 'border-t-0': i === 0 })}
                 >
                   <div className="w-[110px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[13px] text-text-muted">{order.id}</p>
+                    <p className="text-ds-body-sm text-text-muted">{order.id}</p>
                   </div>
                   <div className="w-[120px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body">{order.date}</p>
+                    <p className="text-ds-body-sm text-text-body">{order.date}</p>
                   </div>
                   <div className="w-[110px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] font-medium text-primary">{order.order}</p>
+                    <p className="text-ds-label font-medium text-primary">{order.order}</p>
                   </div>
                   <div className="w-[120px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body">{order.kioskId}</p>
+                    <p className="text-ds-body-sm text-text-body">{order.kioskId}</p>
                   </div>
                   <div className="w-[110px] shrink-0 px-[10px] py-[10px]">
                     <StatusBadge status={order.status} />
                   </div>
                   <div className="w-[130px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-muted">{order.as400Room || '—'}</p>
+                    <p className="text-ds-body-sm text-text-muted">{order.as400Room || '—'}</p>
                   </div>
                   <div className="flex-1 min-w-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-muted">{order.licensePlate || '—'}</p>
+                    <p className="text-ds-body-sm text-text-muted">{order.licensePlate || '—'}</p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] font-semibold text-text-body">${parseFloat(order.amount).toFixed(2)}</p>
+                    <p className="text-ds-label font-semibold text-text-body">${parseFloat(order.amount).toFixed(2)}</p>
                   </div>
                   <div className="w-[110px] shrink-0 px-[10px] py-[10px]">
-                    <p className="text-[14px] text-text-body font-mono">{order.cc4digits}</p>
+                    <p className="text-ds-body-sm text-text-body font-mono">{order.cc4digits}</p>
                   </div>
                 </div>
               ))
@@ -583,7 +583,7 @@ const OrdersPage = () => {
 
             {/* Pagination */}
             <div className="flex items-center justify-between px-4 py-2.5 border-t border-border">
-              <p className="text-[13px] text-[#6a7282]">
+              <p className="text-ds-body-sm text-[#6a7282]">
                 Showing {Math.min(kioskPaginated.length, PAGE_SIZE)} of {kioskFiltered.length} orders
               </p>
               <div className="flex items-center gap-1">
@@ -599,7 +599,7 @@ const OrdersPage = () => {
                     key={p}
                     onClick={() => setKioskPage(p)}
                     className={cn(
-                      'size-[26px] text-[13px] rounded flex items-center justify-center',
+                      'size-[26px] text-ds-body-sm rounded flex items-center justify-center',
                       p === kioskPage ? 'bg-black text-white' : 'border border-border text-[#727272] hover:bg-surface'
                     )}
                   >

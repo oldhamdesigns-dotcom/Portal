@@ -13,7 +13,6 @@ const STATUS_BADGE: Record<string, { bg: string; text: string; border: string }>
 };
 
 const TX_STATUS_STYLE: Record<string, string> = {
-  Done:      'bg-[#f2f2f2] text-[#444] border-[#ccc]',
   Completed: 'bg-ds-green-100 text-ds-green-900 border-ds-green-300',
   Failed:    'bg-ds-red-100 text-ds-red-900 border-ds-red-300',
   Pending:   'bg-ds-yellow-100 text-ds-yellow-900 border-ds-yellow-300',
@@ -49,11 +48,11 @@ const TX_TYPE_ICON: Record<string, React.ReactNode> = {
 };
 
 const FILTER_TYPES = ['All Types', 'Purchase', 'Funds Added'];
-const FILTER_STATUSES = ['All Statuses', 'Done', 'Completed', 'Pending', 'Refund Requested', 'Refund Pending', 'Refund Completed'];
+const FILTER_STATUSES = ['All Statuses', 'Completed', 'Pending', 'Refund Requested', 'Refund Pending', 'Refund Completed'];
 
 const FILTER_STATUS_GROUPS = [
   { label: null, options: ['All Statuses'] },
-  { label: 'Purchase', options: ['Done', 'Pending'] },
+  { label: 'Purchase', options: ['Completed', 'Pending'] },
   { label: 'Funds Added', options: ['Completed'] },
   { label: 'Refund', options: ['Refund Requested', 'Refund Pending', 'Refund Completed'] },
 ];
@@ -123,7 +122,7 @@ const CopyableId = ({ id }: { id: string }) => {
       className="flex items-center gap-1.5 group text-left"
       title={id}
     >
-      <span className="text-[12px] text-text-muted font-mono">
+      <span className="text-ds-caption text-text-muted font-mono">
         {id.length > 8 ? `${id.slice(0, 8)}…` : id}
       </span>
       {copied ? (
@@ -148,7 +147,7 @@ const InlineId = ({ id }: { id: string }) => {
   };
   return (
     <button onClick={handleCopy} className="flex items-center gap-1.5 group" title={id}>
-      <span className="text-[14px] font-medium text-text-body truncate max-w-[300px]">{id}</span>
+      <span className="text-ds-label font-medium text-text-body truncate max-w-[300px]">{id}</span>
       {copied ? (
         <svg className="size-3.5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -174,7 +173,7 @@ const FilterSelect = ({ label, options, value, onChange, groups }: SelectProps) 
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col gap-1 flex-1 min-w-0 relative">
-      <p className="text-[12px] text-[#6a7282]">{label}</p>
+      <p className="text-ds-caption text-[#6a7282]">{label}</p>
       <button
         className="flex items-center justify-between gap-2 h-[40px] px-4 bg-white border border-border rounded-lg text-sm text-text-body hover:bg-surface transition-colors"
         onClick={() => setOpen((v) => !v)}
@@ -188,7 +187,7 @@ const FilterSelect = ({ label, options, value, onChange, groups }: SelectProps) 
             groups.map((group, gi) => (
               <div key={gi}>
                 {group.label && (
-                  <p className="px-4 pt-2 pb-1 text-[11px] font-semibold text-text-muted uppercase tracking-wide">{group.label}</p>
+                  <p className="px-4 pt-2 pb-1 text-ds-caption font-semibold text-text-muted uppercase tracking-wide">{group.label}</p>
                 )}
                 {group.options.map((opt) => (
                   <button
@@ -236,8 +235,8 @@ const REFUND_REASONS = [
 
 const DetailRow = ({ label, value, chip = true, wrap = false }: { label: string; value: string; chip?: boolean; wrap?: boolean }) => (
   <div className={cn('flex justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', wrap ? 'items-start' : 'items-center')}>
-    <p className="text-[14px] text-text-body shrink-0">{label}</p>
-    <p className={cn('text-[14px] font-medium text-text-body text-right', wrap ? 'whitespace-normal' : 'truncate max-w-[60%]')}>{value}</p>
+    <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
+    <p className={cn('text-ds-label font-medium text-text-body text-right', wrap ? 'whitespace-normal' : 'truncate max-w-[60%]')}>{value}</p>
   </div>
 );
 
@@ -255,12 +254,12 @@ const TxDetailView = ({ tx, customer, onCreateRefund, onClose, txStats }: { tx: 
         {/* Left */}
         <div className="flex flex-col gap-4 w-[45%] shrink-0">
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">Customer Info</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Customer Info</p>
             <DetailRow label="Name" value={`${customer.firstName} ${customer.lastName}`} />
             <DetailRow label="Address" value={customer.address} />
           </div>
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">Attributes</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Attributes</p>
             <DetailRow label="walletId" value="CSC_USD" />
             <DetailRow label="amount" value={`$${tx.amount.toFixed(2)}`} />
             <DetailRow label="upperMachine" value="false" />
@@ -271,7 +270,7 @@ const TxDetailView = ({ tx, customer, onCreateRefund, onClose, txStats }: { tx: 
         {/* Right */}
         <div className="flex flex-col gap-4 flex-1 min-w-0">
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">PayRange Info</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">PayRange Info</p>
             <DetailRow label="Lifetime Laundry Loads" value={String(txStats.loads)} />
             <DetailRow label="Lifetime Laundry Spend" value={`$${txStats.spend.toFixed(2)}`} />
             <DetailRow label="Refund Request Count" value={String(txStats.refundCount)} />
@@ -281,7 +280,7 @@ const TxDetailView = ({ tx, customer, onCreateRefund, onClose, txStats }: { tx: 
             <DetailRow label="Current Balance" value={`$${txStats.balance.toFixed(2)}`} />
           </div>
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">Transaction</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Transaction</p>
             <DetailRow label="Transaction Date" value={`${tx.date} 12:00:00 AM`} />
             <DetailRow label="Order Number" value={tx.orderId} />
             <DetailRow label="Amount Paid" value={`$${tx.amount.toFixed(2)}`} />
@@ -298,13 +297,13 @@ const TxDetailView = ({ tx, customer, onCreateRefund, onClose, txStats }: { tx: 
         {/* Left column */}
         <div className="flex flex-col gap-4 w-[45%] shrink-0">
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">Customer Info</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Customer Info</p>
             <DetailRow label="Name" value={`${customer.firstName} ${customer.lastName}`} />
             <DetailRow label="Address" value={customer.address} />
           </div>
 
           <div className="border border-border rounded-lg p-4 flex-1">
-            <p className="text-[14px] text-text-subtle mb-1">Transaction Details</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Transaction Details</p>
             <DetailRow label="Order ID" value={tx.orderId} />
             <DetailRow label="Date" value={tx.date} />
             <DetailRow label="Time" value={tx.time} />
@@ -317,7 +316,7 @@ const TxDetailView = ({ tx, customer, onCreateRefund, onClose, txStats }: { tx: 
         {/* Right column */}
         <div className="flex flex-col gap-4 flex-1 min-w-0">
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">Load Details</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Load Details</p>
             <DetailRow label="Location" value={locationName.toUpperCase()} />
             <DetailRow label="AS400" value={String(as400Num)} />
             <DetailRow label="RoomID" value={`${as400Num}-0${(txIdx % 9) + 1}3`} />
@@ -349,7 +348,7 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <p className="text-[20px] font-semibold text-text-body">Create Refund</p>
+          <p className="text-ds-h4 font-semibold text-text-body">Create Refund</p>
         </div>
         <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors">
           <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -361,10 +360,10 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
 
       <div className="px-6 py-6 flex flex-col gap-5">
         <div className="flex flex-col gap-2">
-          <p className="text-[14px] text-text-muted">Reason</p>
+          <p className="text-ds-body-sm text-text-muted">Reason</p>
           <div className="relative">
             <button
-              className="w-full flex items-center justify-between h-[52px] px-4 bg-white border-2 border-primary rounded-lg text-[16px]"
+              className="w-full flex items-center justify-between h-[52px] px-4 bg-white border-2 border-primary rounded-lg text-ds-body"
               onClick={() => setShowReasons((v) => !v)}
             >
               <span className={reason ? 'text-text-body' : 'text-text-muted'}>{reason || 'Select a reason'}</span>
@@ -377,7 +376,7 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
                 {REFUND_REASONS.map((r) => (
                   <button
                     key={r}
-                    className="w-full px-4 py-3 text-left text-[14px] hover:bg-primary-50 transition-colors"
+                    className="w-full px-4 py-3 text-left text-ds-body-sm hover:bg-primary-50 transition-colors"
                     onClick={() => { setReason(r); setShowReasons(false); }}
                   >
                     {r}
@@ -389,21 +388,21 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
         </div>
 
         <div className="flex flex-col gap-2">
-          <p className="text-[14px] text-text-muted">Note</p>
+          <p className="text-ds-body-sm text-text-muted">Note</p>
           <textarea
-            className="w-full h-[130px] border border-border rounded-lg px-4 py-3 text-[14px] text-text-body placeholder:text-text-muted outline-none focus:border-primary resize-none transition-colors"
+            className="w-full h-[130px] border border-border rounded-lg px-4 py-3 text-ds-body-sm text-text-body placeholder:text-text-muted outline-none focus:border-primary resize-none transition-colors"
             placeholder="Add a note"
             value={note}
             maxLength={150}
             onChange={(e) => setNote(e.target.value)}
           />
-          <p className="text-[12px] text-text-muted text-right">{note.length}/150</p>
+          <p className="text-ds-caption text-text-muted text-right">{note.length}/150</p>
         </div>
 
         <button
           disabled={!reason}
           onClick={() => onSuccess(tx, reason, note)}
-          className="w-full h-[52px] bg-black text-white text-[16px] font-semibold rounded-lg hover:opacity-90 disabled:opacity-40 transition-opacity"
+          className="w-full h-[52px] bg-black text-white text-ds-button font-semibold rounded-lg hover:opacity-90 disabled:opacity-40 transition-opacity"
         >
           Create
         </button>
@@ -426,13 +425,13 @@ const RefundDetailTab = ({ tx, customer }: { tx: Transaction; customer: NonNulla
     <div className="flex gap-5 px-6 py-5 overflow-y-auto flex-1">
       <div className="flex flex-col gap-4 w-[45%] shrink-0">
         <div className="border border-border rounded-lg p-4">
-          <p className="text-[14px] text-text-subtle mb-1">Customer Info</p>
+          <p className="text-ds-body-sm text-text-subtle mb-1">Customer Info</p>
           <DetailRow label="Name" value={`${customer.firstName} ${customer.lastName}`} />
           <DetailRow label="Address" value={customer.address} />
           <DetailRow label="Member Since" value={joinFormatted} />
         </div>
         <div className="border border-border rounded-lg p-4">
-          <p className="text-[14px] text-text-subtle mb-1">Request Details</p>
+          <p className="text-ds-body-sm text-text-subtle mb-1">Request Details</p>
           <DetailRow label="Order ID" value={tx.orderId} />
           {tx.refundDate && <DetailRow label="Date Initiated" value={`${tx.refundDate} · ${tx.refundTime ?? ''}`} />}
           {tx.refundCreatedBy && (
@@ -452,23 +451,23 @@ const RefundDetailTab = ({ tx, customer }: { tx: Transaction; customer: NonNulla
       </div>
       <div className="flex flex-col gap-4 flex-1 min-w-0">
         <div className="border border-border rounded-lg p-4">
-          <p className="text-[14px] text-text-subtle mb-1">PayRange Info</p>
+          <p className="text-ds-body-sm text-text-subtle mb-1">PayRange Info</p>
           <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-            <p className="text-[14px] text-text-body">Total Loads</p>
-            <p className="text-[14px] text-text-subtle">8</p>
+            <p className="text-ds-body-sm text-text-body">Total Loads</p>
+            <p className="text-ds-body-sm text-text-subtle">8</p>
           </div>
           <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-            <p className="text-[14px] text-text-body">Refund Requests</p>
-            <p className="text-[14px] text-text-subtle">1</p>
+            <p className="text-ds-body-sm text-text-body">Refund Requests</p>
+            <p className="text-ds-body-sm text-text-subtle">1</p>
           </div>
           <div className="flex items-center justify-between py-2.5 rounded gap-4 bg-orange-50 px-3 -mx-3">
-            <p className="text-[14px] text-orange-700">Last 6 months</p>
-            <p className="text-[14px] font-semibold text-orange-700">1</p>
+            <p className="text-ds-body-sm text-orange-700">Last 6 months</p>
+            <p className="text-ds-label font-semibold text-orange-700">1</p>
           </div>
         </div>
         {tx.refundStatus === 'Refund Complete' && (
           <div className="border border-border rounded-lg p-4">
-            <p className="text-[14px] text-text-subtle mb-1">Refund Approval</p>
+            <p className="text-ds-body-sm text-text-subtle mb-1">Refund Approval</p>
             <DetailRow label="Resolution" value="Free Purchase" />
             <DetailRow label="Refund Complete Amount" value={`$${Math.abs(tx.amount).toFixed(2)}`} />
           </div>
@@ -508,14 +507,14 @@ const TransactionModal = ({ tx, customer, onClose, onRefundCreated, txStats }: {
         <div className="flex items-start justify-between px-6 pt-6 pb-3 shrink-0">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3">
-              <p className="text-[20px] font-semibold text-text-body">{tx.type === 'Funds Added' ? `Wallet Reload Service order: ${tx.orderId}` : `${tx.type} — Order: ${tx.orderId}`}</p>
+              <p className="text-ds-h4 font-semibold text-text-body">{tx.type === 'Funds Added' ? `Wallet Reload Service order: ${tx.orderId}` : `${tx.type} — Order: ${tx.orderId}`}</p>
               {tx.refundStatus && (
-                <span className={cn('text-[12px] font-medium px-2 py-0.5 rounded border', REFUND_STATUS_STYLE[tx.refundStatus])}>
+                <span className={cn('text-ds-caption font-medium px-2 py-0.5 rounded border', REFUND_STATUS_STYLE[tx.refundStatus])}>
                   {tx.refundStatus}
                 </span>
               )}
             </div>
-            <p className="text-[13px] text-text-muted">{tx.date} · {tx.time}</p>
+            <p className="text-ds-body-sm text-text-muted">{tx.date} · {tx.time}</p>
           </div>
           <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors mt-1">
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -532,7 +531,7 @@ const TransactionModal = ({ tx, customer, onClose, onRefundCreated, txStats }: {
                 key={t}
                 onClick={() => setTab(t)}
                 className={cn(
-                  'px-4 py-2.5 text-[14px] font-medium border-b-2 -mb-px transition-colors capitalize',
+                  'px-4 py-2.5 text-ds-label font-medium border-b-2 -mb-px transition-colors capitalize',
                   tab === t ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text-subtle'
                 )}
               >
@@ -561,12 +560,12 @@ const TransactionModal = ({ tx, customer, onClose, onRefundCreated, txStats }: {
           {!hasRefund && tab !== 'refund' && (
             <button
               onClick={() => setView('create-refund')}
-              className="px-5 py-2 bg-black text-white text-[14px] font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              className="px-5 py-2 bg-black text-white text-ds-label font-semibold rounded-lg hover:opacity-90 transition-opacity"
             >
               Create Refund
             </button>
           )}
-          <button onClick={onClose} className="px-5 py-2 border border-border rounded-lg text-[14px] text-text-subtle hover:bg-surface transition-colors">
+          <button onClick={onClose} className="px-5 py-2 border border-border rounded-lg text-ds-body-sm text-text-subtle hover:bg-surface transition-colors">
             Close
           </button>
         </div>
@@ -575,10 +574,13 @@ const TransactionModal = ({ tx, customer, onClose, onRefundCreated, txStats }: {
   );
 };
 
-const StatCard = ({ label, value, green = false }: { label: string; value: string; green?: boolean }) => (
-  <div className={cn('border border-border rounded-lg p-[10px] flex flex-col gap-1', green ? 'bg-[#f2f9ef]' : 'bg-white')}>
-    <p className={cn('text-[14px]', green ? 'text-[#27481e]' : 'text-[#101828]')}>{label}</p>
-    <p className={cn('text-[16px] font-semibold', green ? 'text-[#1b3910]' : 'text-text-body')}>{value}</p>
+const StatCard = ({ label, value, variant = 'default' }: { label: string; value: string; variant?: 'default' | 'warning' }) => (
+  <div className={cn(
+    'border rounded-lg p-[10px] flex flex-col gap-1',
+    variant === 'warning' ? 'bg-ds-orange-100 border-[#fbcb9b]' : 'bg-white border-border',
+  )}>
+    <p className={cn('text-ds-body-sm', variant === 'warning' ? 'text-ds-yellow-900' : 'text-[#101828]')}>{label}</p>
+    <p className={cn('text-ds-button font-semibold', variant === 'warning' ? 'text-ds-yellow-900' : 'text-text-body')}>{value}</p>
   </div>
 );
 
@@ -607,7 +609,7 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              'px-5 py-2.5 text-[14px] font-medium rounded-tl-lg rounded-tr-lg relative -mb-px transition-colors',
+              'px-5 py-2.5 text-ds-label font-medium rounded-tl-lg rounded-tr-lg relative -mb-px transition-colors',
               tab === t
                 ? 'bg-white border border-border border-b-white text-primary z-10'
                 : 'text-text-muted hover:text-text-subtle'
@@ -633,7 +635,7 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
             </div>
             <div className="grid grid-cols-3 gap-3">
               <StatCard label="Lifetime Loads" value={String(txStats.loads)} />
-              <StatCard label="Refund Requests" value={String(txStats.refundCount)} green />
+              <StatCard label="Refund Requests" value={String(txStats.refundCount)} variant={txStats.refundCount > 0 ? 'warning' : 'default'} />
               <StatCard label="Total Refunded" value={`$${txStats.refundTotal.toFixed(2)}`} />
             </div>
           </div>
@@ -641,7 +643,7 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
           {/* Offers list */}
           <div className={cn('col-start-1 row-start-1', tab !== 'offers' ? 'invisible pointer-events-none' : '')}>
             {offers.length === 0 ? (
-              <div className="flex items-center justify-center py-8 text-[14px] text-text-muted">
+              <div className="flex items-center justify-center py-8 text-ds-body-sm text-text-muted">
                 No offers issued yet
               </div>
             ) : (
@@ -655,8 +657,8 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
                       i > 0 ? 'border-t border-[#f0f0f0]' : ''
                     )}
                   >
-                    <p className="text-[14px] text-text-body">{offer.title}</p>
-                    <span className="text-[13px] font-semibold text-text-body shrink-0 ml-4">
+                    <p className="text-ds-body-sm text-text-body">{offer.title}</p>
+                    <span className="text-ds-body-sm font-semibold text-text-body shrink-0 ml-4">
                       ${offer.amount.toFixed(2)}
                     </span>
                   </button>
@@ -673,24 +675,24 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
               onClick={() => setShowActions((v) => !v)}
               className="flex items-center justify-between px-4 py-2 bg-black text-white rounded-lg h-[40px] w-full hover:opacity-90 transition-opacity"
             >
-              <span className="text-[14px] font-semibold">Actions</span>
+              <span className="text-ds-label font-semibold">Actions</span>
               <svg className={cn('size-4 text-white shrink-0 transition-transform duration-200', { 'rotate-180': showActions })} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {showActions && (
               <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-border rounded-lg shadow-lg overflow-hidden z-10">
-                <button className="w-full px-4 py-3 text-left text-[14px] text-text-body hover:bg-primary-50 transition-colors border-b border-[#f0f0f0]"
+                <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors border-b border-[#f0f0f0]"
                   onClick={() => { setShowActions(() => false); setShowOffersModal(true); }}>
                   Issue User Offers
                 </button>
                 {role !== 'Customer Support' && (
                   <>
-                    <button className="w-full px-4 py-3 text-left text-[14px] text-text-body hover:bg-primary-50 transition-colors border-b border-[#f0f0f0]"
+                    <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors border-b border-[#f0f0f0]"
                       onClick={() => setShowActions(() => false)}>
                       Add To User Wallet Balance
                     </button>
-                    <button className="w-full px-4 py-3 text-left text-[14px] text-text-body hover:bg-primary-50 transition-colors"
+                    <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors"
                       onClick={() => setShowActions(() => false)}>
                       Deduct from Balance
                     </button>
@@ -764,7 +766,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-3 shrink-0">
-          <p className="text-[20px] font-semibold text-[#0f172a]">Account Details</p>
+          <p className="text-ds-h4 font-semibold text-[#0f172a]">Account Details</p>
           <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors">
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -779,7 +781,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
               key={t}
               onClick={() => setTab(t)}
               className={cn(
-                'px-4 py-2.5 text-[14px] font-medium border-b-2 -mb-px transition-colors capitalize',
+                'px-4 py-2.5 text-ds-label font-medium border-b-2 -mb-px transition-colors capitalize',
                 tab === t ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text-subtle'
               )}
             >
@@ -795,12 +797,12 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
               {/* Customer name + avatar */}
               <div className="flex items-center gap-3">
                 <div className="size-[48px] rounded-full bg-primary flex items-center justify-center shrink-0">
-                  <span className="text-white text-[18px] font-semibold">{initials}</span>
+                  <span className="text-white text-ds-h5 font-semibold">{initials}</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2">
-                    <p className="text-[18px] font-semibold text-text-body">{customer.firstName} {customer.lastName}</p>
-                    <span className={cn('text-[13px] font-medium px-2 py-0.5 rounded-full border', badge.bg, badge.text, badge.border)}>
+                    <p className="text-ds-h5 font-semibold text-text-body">{customer.firstName} {customer.lastName}</p>
+                    <span className={cn('text-ds-body-sm font-medium px-2 py-0.5 rounded-full border', badge.bg, badge.text, badge.border)}>
                       {customer.status}
                     </span>
                   </div>
@@ -812,29 +814,29 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
               <div className="border border-border rounded-lg flex items-stretch">
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <EmailIcon />
-                  <p className="text-[14px] text-text-subtle">{customer.email}</p>
+                  <p className="text-ds-body-sm text-text-subtle">{customer.email}</p>
                 </div>
                 <div className="w-px my-3 bg-[#e2e8f0] shrink-0" />
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <PhoneIcon />
-                  <p className="text-[14px] text-text-subtle">{customer.phone}</p>
+                  <p className="text-ds-body-sm text-text-subtle">{customer.phone}</p>
                 </div>
                 <div className="w-px my-3 bg-[#e2e8f0] shrink-0" />
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <HomeIcon />
-                  <p className="text-[14px] text-text-subtle">{customer.address}</p>
+                  <p className="text-ds-body-sm text-text-subtle">{customer.address}</p>
                 </div>
                 <div className="w-px my-3 bg-[#e2e8f0] shrink-0" />
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <CalendarIcon />
-                  <p className="text-[14px] text-text-subtle">Member since: {joinFormatted}</p>
+                  <p className="text-ds-body-sm text-text-subtle">Member since: {joinFormatted}</p>
                 </div>
               </div>
 
               {/* Account detail rows */}
               <div className="border border-border rounded-lg p-4 flex flex-col">
                 <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                  <p className="text-[14px] text-text-body shrink-0">Property</p>
+                  <p className="text-ds-body-sm text-text-body shrink-0">Property</p>
                   <button onClick={() => setHasChanges(true)} className="flex items-center gap-2 h-[32px] px-3 bg-white border border-border rounded-lg text-sm text-text-body min-w-[160px] justify-between">
                     <span>OTA flow B</span>
                     <svg className="size-4 text-text-subtle shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -844,16 +846,16 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                 </div>
                 {DETAIL_ROWS.map(({ label, value }) => (
                   <div key={label} className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                    <p className="text-[14px] text-text-body shrink-0">{label}</p>
-                    <p className="text-[14px] font-medium text-text-body">{value}</p>
+                    <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
+                    <p className="text-ds-label font-medium text-text-body">{value}</p>
                   </div>
                 ))}
                 <div className="flex items-start justify-between py-2.5 gap-4">
-                  <p className="text-[14px] text-text-body shrink-0 mt-1">Tags</p>
+                  <p className="text-ds-body-sm text-text-body shrink-0 mt-1">Tags</p>
                   <div className="flex flex-wrap items-center gap-2 justify-end">
                     {tags.map((tag) => (
                       <div key={tag} className="flex items-center gap-1.5 bg-primary-50 rounded-full px-3 py-1">
-                        <span className="text-[13px] text-text-subtle">{tag}</span>
+                        <span className="text-ds-body-sm text-text-subtle">{tag}</span>
                         <button
                           onClick={() => { setTags((prev) => prev.filter((t) => t !== tag)); setHasChanges(true); }}
                           className="text-text-muted hover:text-text-body transition-colors"
@@ -867,7 +869,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     <div className="relative" ref={tagDropdownRef}>
                       <button
                         onClick={() => setShowTagDropdown((v) => !v)}
-                        className="flex items-center gap-1.5 px-3 py-1 h-[30px] bg-white border border-border rounded-lg text-[13px] text-text-subtle hover:bg-surface transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1 h-[30px] bg-white border border-border rounded-lg text-ds-body-sm text-text-subtle hover:bg-surface transition-colors"
                       >
                         Add tag...
                         <svg className={cn('size-3.5 text-text-muted shrink-0 transition-transform duration-150', showTagDropdown ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -877,12 +879,12 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                       {showTagDropdown && (
                         <div className="absolute right-0 top-full mt-1 w-[180px] bg-white border border-border rounded-lg shadow-lg z-50 overflow-hidden">
                           {TAG_OPTIONS.filter((opt) => !tags.includes(opt)).length === 0 ? (
-                            <p className="px-4 py-3 text-[13px] text-text-muted">All tags added</p>
+                            <p className="px-4 py-3 text-ds-body-sm text-text-muted">All tags added</p>
                           ) : (
                             TAG_OPTIONS.filter((opt) => !tags.includes(opt)).map((opt) => (
                               <button
                                 key={opt}
-                                className="w-full px-4 py-2.5 text-left text-[14px] text-text-subtle hover:bg-primary-50 transition-colors"
+                                className="w-full px-4 py-2.5 text-left text-ds-body-sm text-text-subtle hover:bg-primary-50 transition-colors"
                                 onClick={() => { setTags((prev) => [...prev, opt]); setHasChanges(true); setShowTagDropdown(false); }}
                               >
                                 {opt}
@@ -901,7 +903,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
             <div className="px-6 py-5 flex flex-col gap-4">
               {/* Devices header */}
               <div className="flex items-center justify-between">
-                <p className="text-[15px] font-semibold text-text-body">Users Devices</p>
+                <p className="text-ds-body font-semibold text-text-body">Users Devices</p>
                 <button
                   onClick={() => {
                     const headers = ['Allows Push', 'Is Tester', 'Device Fingerprint', 'App Version', 'Created At', 'Updated At'];
@@ -915,7 +917,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     a.click();
                     URL.revokeObjectURL(url);
                   }}
-                  className="text-[14px] text-primary hover:underline transition-colors"
+                  className="text-ds-body-sm text-primary hover:underline transition-colors"
                 >
                   Export CSV
                 </button>
@@ -934,7 +936,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     { label: 'Updated at', w: 'w-[18%]' },
                   ].map(({ label, w }) => (
                     <div key={label} className={cn('px-3 py-2.5', w)}>
-                      <p className="text-[13px] font-medium text-[#6a7282]">{label}</p>
+                      <p className="text-ds-body-sm font-medium text-[#6a7282]">{label}</p>
                     </div>
                   ))}
                 </div>
@@ -943,29 +945,29 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                 {MOCK_DEVICES.map((device, i) => (
                   <div key={i} className="flex items-start border-t border-[#f0f0f0]">
                     <div className="w-[10%] px-3 py-3">
-                      <p className="text-[14px] text-text-body">{String(device.allowsPush)}</p>
+                      <p className="text-ds-body-sm text-text-body">{String(device.allowsPush)}</p>
                     </div>
                     <div className="w-[9%] px-3 py-3">
-                      <p className="text-[14px] text-text-body">{String(device.isTester)}</p>
+                      <p className="text-ds-body-sm text-text-body">{String(device.isTester)}</p>
                     </div>
                     <div className="flex-1 px-3 py-3">
-                      <p className="text-[13px] text-text-body font-mono break-all">{device.fingerprint}</p>
+                      <p className="text-ds-body-sm text-text-body font-mono break-all">{device.fingerprint}</p>
                     </div>
                     <div className="w-[16%] px-3 py-3">
-                      <p className="text-[14px] text-text-body break-words">{device.appVersion}</p>
+                      <p className="text-ds-body-sm text-text-body break-words">{device.appVersion}</p>
                     </div>
                     <div className="w-[18%] px-3 py-3">
-                      <p className="text-[13px] text-text-body">{device.createdAt}</p>
+                      <p className="text-ds-body-sm text-text-body">{device.createdAt}</p>
                     </div>
                     <div className="w-[18%] px-3 py-3">
-                      <p className="text-[13px] text-text-body">{device.updatedAt}</p>
+                      <p className="text-ds-body-sm text-text-body">{device.updatedAt}</p>
                     </div>
                   </div>
                 ))}
 
                 {/* Footer */}
                 <div className="flex items-center px-3 py-2 border-t border-border bg-white">
-                  <p className="text-[13px] text-[#6a7282]">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
+                  <p className="text-ds-body-sm text-[#6a7282]">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
                 </div>
               </div>
 
@@ -975,13 +977,13 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
 
         {/* Shared footer — always pinned to bottom */}
         <div className="flex justify-end gap-3 px-6 pb-5 shrink-0">
-          <button onClick={onClose} className="px-6 py-2.5 border border-border rounded-lg text-[16px] font-semibold text-text-body hover:bg-surface transition-colors">
+          <button onClick={onClose} className="px-6 py-2.5 border border-border rounded-lg text-ds-button font-semibold text-text-body hover:bg-surface transition-colors">
             Close
           </button>
           {tab === 'details' && (
             <button
               disabled={!hasChanges}
-              className="px-6 py-2.5 bg-black rounded-lg text-[16px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-2.5 bg-black rounded-lg text-ds-button font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Save
             </button>
@@ -1020,7 +1022,7 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
       <div className="relative bg-white rounded-lg border border-border shadow-xl w-full max-w-[500px] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
-          <p className="text-[20px] font-semibold text-text-body">Issue User Offers</p>
+          <p className="text-ds-h4 font-semibold text-text-body">Issue User Offers</p>
           <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors">
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1031,12 +1033,12 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
         <div className="px-6 pb-6 flex flex-col gap-4">
           {/* Amount */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-[14px] text-text-muted">Amount</p>
+            <p className="text-ds-body-sm text-text-muted">Amount</p>
             <input
               type="number"
               min="0"
               step="0.01"
-              className="h-[48px] px-4 border border-border rounded-lg text-[15px] text-text-body placeholder:text-text-muted outline-none focus:border-primary transition-colors"
+              className="h-[48px] px-4 border border-border rounded-lg text-ds-body text-text-body placeholder:text-text-muted outline-none focus:border-primary transition-colors"
               placeholder="$0.00"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -1045,11 +1047,11 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
 
           {/* Number of Purchases */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-[14px] text-text-muted">Number of Purchases</p>
+            <p className="text-ds-body-sm text-text-muted">Number of Purchases</p>
             <input
               type="number"
               min="1"
-              className="h-[48px] px-4 border border-border rounded-lg text-[15px] text-text-body outline-none focus:border-primary transition-colors"
+              className="h-[48px] px-4 border border-border rounded-lg text-ds-body text-text-body outline-none focus:border-primary transition-colors"
               value={purchases}
               onChange={(e) => setPurchases(e.target.value)}
             />
@@ -1057,18 +1059,18 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
 
           {/* Total Amount */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-[14px] text-text-muted">Total Amount</p>
+            <p className="text-ds-body-sm text-text-muted">Total Amount</p>
             <div className="h-[48px] px-4 bg-[#f2f2f2] border border-border rounded-lg flex items-center">
-              <p className="text-[15px] text-text-subtle">{totalLabel}</p>
+              <p className="text-ds-body text-text-subtle">{totalLabel}</p>
             </div>
           </div>
 
           {/* Title */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-[14px] text-text-muted">Title</p>
+            <p className="text-ds-body-sm text-text-muted">Title</p>
             <div className="relative">
               <button
-                className="w-full flex items-center justify-between h-[48px] px-4 bg-white border border-border rounded-lg text-[15px] hover:bg-surface transition-colors"
+                className="w-full flex items-center justify-between h-[48px] px-4 bg-white border border-border rounded-lg text-ds-body hover:bg-surface transition-colors"
                 onClick={() => amt > 0 && setShowTitles((v) => !v)}
               >
                 <span className={computedTitle ? 'text-text-body' : 'text-text-muted'}>{computedTitle || 'Enter an amount first'}</span>
@@ -1079,7 +1081,7 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
               {showTitles && amt > 0 && (
                 <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-border rounded-lg shadow-md z-10 overflow-hidden">
                   <button
-                    className="w-full px-4 py-3 text-left text-[14px] bg-primary text-white"
+                    className="w-full px-4 py-3 text-left text-ds-body-sm bg-primary text-white"
                     onClick={() => setShowTitles(false)}
                   >
                     {computedTitle}
@@ -1091,23 +1093,23 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
 
           {/* Note */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-[14px] text-text-muted">Note</p>
+            <p className="text-ds-body-sm text-text-muted">Note</p>
             <textarea
-              className="w-full h-[110px] border border-border rounded-lg px-4 py-3 text-[14px] text-text-body placeholder:text-text-muted outline-none focus:border-primary resize-none transition-colors"
+              className="w-full h-[110px] border border-border rounded-lg px-4 py-3 text-ds-body-sm text-text-body placeholder:text-text-muted outline-none focus:border-primary resize-none transition-colors"
               placeholder="Add a note"
               value={note}
               maxLength={150}
               onChange={(e) => setNote(e.target.value)}
             />
-            <p className="text-[12px] text-text-muted text-right">{note.length}/150</p>
+            <p className="text-ds-caption text-text-muted text-right">{note.length}/150</p>
           </div>
 
           {/* Duration */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-[14px] text-text-muted">Duration in days</p>
+            <p className="text-ds-body-sm text-text-muted">Duration in days</p>
             <div className="relative">
               <button
-                className="w-full flex items-center justify-between h-[48px] px-4 bg-white border border-border rounded-lg text-[15px] text-text-body hover:bg-surface transition-colors"
+                className="w-full flex items-center justify-between h-[48px] px-4 bg-white border border-border rounded-lg text-ds-body text-text-body hover:bg-surface transition-colors"
                 onClick={() => setShowDurations((v) => !v)}
               >
                 <span>{duration}</span>
@@ -1120,7 +1122,7 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
                   {OFFER_DURATIONS.map((d) => (
                     <button
                       key={d}
-                      className={cn('w-full px-4 py-3 text-left text-[14px] hover:bg-primary-50 transition-colors', d === duration ? 'text-primary font-medium' : 'text-text-subtle')}
+                      className={cn('w-full px-4 py-3 text-left text-ds-body-sm hover:bg-primary-50 transition-colors', d === duration ? 'text-primary font-medium' : 'text-text-subtle')}
                       onClick={() => { setDuration(d); setShowDurations(false); }}
                     >
                       {d}
@@ -1147,7 +1149,7 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
               });
               onClose();
             }}
-            className="w-full h-[52px] bg-black text-white text-[16px] font-semibold rounded-lg hover:opacity-90 disabled:opacity-40 transition-opacity mt-1"
+            className="w-full h-[52px] bg-black text-white text-ds-button font-semibold rounded-lg hover:opacity-90 disabled:opacity-40 transition-opacity mt-1"
           >
             Submit
           </button>
@@ -1169,8 +1171,8 @@ type Offer = {
 
 const BadgeRow = ({ label, value, green = false }: { label: string; value: string; green?: boolean }) => (
   <div className={cn('flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', green ? 'bg-[#f2f9ef] px-3 -mx-3 rounded' : '')}>
-    <p className={cn('text-[14px] shrink-0', green ? 'text-ds-green-900' : 'text-text-body')}>{label}</p>
-    <span className="text-[13px] font-medium bg-[#f2f2f2] border border-[#ddd] rounded px-2 py-0.5 text-text-body">{value}</span>
+    <p className={cn('text-ds-body-sm shrink-0', green ? 'text-ds-green-900' : 'text-text-body')}>{label}</p>
+    <span className="text-ds-body-sm font-medium bg-[#f2f2f2] border border-[#ddd] rounded px-2 py-0.5 text-text-body">{value}</span>
   </div>
 );
 
@@ -1188,8 +1190,8 @@ const OfferDetailModal = ({ offer, customer, txStats, onClose }: { offer: Offer;
         {/* Header */}
         <div className="flex items-start justify-between px-6 pt-6 pb-3 shrink-0">
           <div className="flex flex-col gap-1">
-            <p className="text-[20px] font-semibold text-text-body">Partner Offer Service order: {offer.id}</p>
-            <p className="text-[13px] text-text-muted">{offer.createdAt}</p>
+            <p className="text-ds-h4 font-semibold text-text-body">Partner Offer Service order: {offer.id}</p>
+            <p className="text-ds-body-sm text-text-muted">{offer.createdAt}</p>
           </div>
           <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors mt-1">
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -1204,12 +1206,12 @@ const OfferDetailModal = ({ offer, customer, txStats, onClose }: { offer: Offer;
           {/* Left */}
           <div className="flex flex-col gap-4 w-[45%] shrink-0">
             <div className="border border-border rounded-lg p-4">
-              <p className="text-[14px] text-text-subtle mb-1">Customer Info</p>
+              <p className="text-ds-body-sm text-text-subtle mb-1">Customer Info</p>
               <DetailRow label="Name" value={`${customer.firstName} ${customer.lastName}`} />
               <DetailRow label="Address" value={customer.address} />
             </div>
             <div className="border border-border rounded-lg p-4">
-              <p className="text-[14px] text-text-subtle mb-1">Attributes</p>
+              <p className="text-ds-body-sm text-text-subtle mb-1">Attributes</p>
               <DetailRow label="note" value={offer.note || offer.title} />
               <DetailRow label="amount" value={`$${offer.amount.toFixed(2)}`} />
               <DetailRow label="numPurchases" value={String(offer.numPurchases)} />
@@ -1221,7 +1223,7 @@ const OfferDetailModal = ({ offer, customer, txStats, onClose }: { offer: Offer;
           {/* Right */}
           <div className="flex flex-col gap-4 flex-1 min-w-0">
             <div className="border border-border rounded-lg p-4">
-              <p className="text-[14px] text-text-subtle mb-1">PayRange Info</p>
+              <p className="text-ds-body-sm text-text-subtle mb-1">PayRange Info</p>
               <DetailRow label="Lifetime Laundry Loads" value={String(txStats.loads)} />
               <DetailRow label="Lifetime Laundry Spend" value={`$${txStats.spend.toFixed(2)}`} />
               <DetailRow label="Refund Request Count" value={String(txStats.refundCount)} />
@@ -1235,7 +1237,7 @@ const OfferDetailModal = ({ offer, customer, txStats, onClose }: { offer: Offer;
 
         {/* Footer */}
         <div className="flex justify-end px-6 py-4 border-t border-border shrink-0">
-          <button onClick={onClose} className="px-5 py-2 border border-border rounded-lg text-[14px] text-text-subtle hover:bg-surface transition-colors">
+          <button onClick={onClose} className="px-5 py-2 border border-border rounded-lg text-ds-body-sm text-text-subtle hover:bg-surface transition-colors">
             Close
           </button>
         </div>
@@ -1256,7 +1258,7 @@ const DevicesModal = ({ customer, onClose }: { customer: NonNullable<ReturnType<
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <div className="relative bg-white rounded-lg border border-border shadow-xl w-full max-w-[860px] max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
-          <p className="text-[18px] font-semibold text-text-body">Devices</p>
+          <p className="text-ds-h5 font-semibold text-text-body">Devices</p>
           <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors">
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1279,7 +1281,7 @@ const DevicesModal = ({ customer, onClose }: { customer: NonNullable<ReturnType<
                 a.click();
                 URL.revokeObjectURL(url);
               }}
-              className="text-[14px] text-primary hover:underline transition-colors"
+              className="text-ds-body-sm text-primary hover:underline transition-colors"
             >
               Export CSV
             </button>
@@ -1296,22 +1298,22 @@ const DevicesModal = ({ customer, onClose }: { customer: NonNullable<ReturnType<
                 { label: 'Updated at', w: 'w-[18%]' },
               ].map(({ label, w }) => (
                 <div key={label} className={cn('px-3 py-2.5', w)}>
-                  <p className="text-[13px] font-medium text-[#6a7282]">{label}</p>
+                  <p className="text-ds-body-sm font-medium text-[#6a7282]">{label}</p>
                 </div>
               ))}
             </div>
             {MOCK_DEVICES.map((device, i) => (
               <div key={i} className="flex items-start border-t border-[#f0f0f0]">
-                <div className="w-[10%] px-3 py-3"><p className="text-[14px] text-text-body">{String(device.allowsPush)}</p></div>
-                <div className="w-[9%] px-3 py-3"><p className="text-[14px] text-text-body">{String(device.isTester)}</p></div>
-                <div className="flex-1 px-3 py-3"><p className="text-[13px] text-text-body font-mono break-all">{device.fingerprint}</p></div>
-                <div className="w-[16%] px-3 py-3"><p className="text-[14px] text-text-body break-words">{device.appVersion}</p></div>
-                <div className="w-[18%] px-3 py-3"><p className="text-[13px] text-text-body">{device.createdAt}</p></div>
-                <div className="w-[18%] px-3 py-3"><p className="text-[13px] text-text-body">{device.updatedAt}</p></div>
+                <div className="w-[10%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{String(device.allowsPush)}</p></div>
+                <div className="w-[9%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{String(device.isTester)}</p></div>
+                <div className="flex-1 px-3 py-3"><p className="text-ds-body-sm text-text-body font-mono break-all">{device.fingerprint}</p></div>
+                <div className="w-[16%] px-3 py-3"><p className="text-ds-body-sm text-text-body break-words">{device.appVersion}</p></div>
+                <div className="w-[18%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{device.createdAt}</p></div>
+                <div className="w-[18%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{device.updatedAt}</p></div>
               </div>
             ))}
             <div className="flex items-center px-3 py-2 border-t border-border bg-white">
-              <p className="text-[13px] text-[#6a7282]">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
+              <p className="text-ds-body-sm text-[#6a7282]">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
             </div>
           </div>
         </div>
@@ -1457,7 +1459,7 @@ const CustomerProfilePage = () => {
             <svg className="size-[26px] text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-            <p className="flex-1 text-white text-[18px] font-semibold leading-[28px] truncate">Refund Submitted</p>
+            <p className="flex-1 text-white text-ds-h5 font-semibold leading-[28px] truncate">Refund Submitted</p>
             <button onClick={() => setSuccessAlert(null)} className="text-white/70 hover:text-white transition-colors shrink-0 ml-2">
               <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1465,7 +1467,7 @@ const CustomerProfilePage = () => {
             </button>
           </div>
           <div className="px-4 py-5">
-            <p className="text-[15px] text-text-body leading-relaxed">{successAlert}</p>
+            <p className="text-ds-body text-text-body leading-relaxed">{successAlert}</p>
           </div>
         </div>
       )}
@@ -1512,23 +1514,23 @@ const CustomerProfilePage = () => {
           {/* Identity */}
           <div className="flex items-start gap-4">
             <div className="size-[52px] rounded-full bg-primary flex items-center justify-center shrink-0">
-              <span className="text-white text-[18px] font-semibold">{initials}</span>
+              <span className="text-white text-ds-h5 font-semibold">{initials}</span>
             </div>
             <div className="flex flex-col gap-1 flex-1">
               {/* Row 1: name + status badge */}
               <div className="flex items-center gap-2">
-                <p className="text-[20px] font-bold text-text-body">{customer.firstName} {customer.lastName}</p>
-                <span className={cn('text-[13px] font-medium px-3 py-0.5 rounded-full border', badge.bg, badge.text, badge.border)}>
+                <p className="text-ds-h4 font-bold text-text-body">{customer.firstName} {customer.lastName}</p>
+                <span className={cn('text-ds-body-sm font-medium px-3 py-0.5 rounded-full border', badge.bg, badge.text, badge.border)}>
                   {customer.status}
                 </span>
               </div>
               {/* Row 2: email */}
-              <div className="flex items-center gap-1.5 text-[13px] text-text-subtle">
+              <div className="flex items-center gap-1.5 text-ds-body-sm text-text-subtle">
                 <span>{customer.email}</span>
               </div>
               {/* Row 3: phone */}
               <div className="flex items-center gap-1.5 text-text-subtle">
-                <span className="text-[13px]">{customer.phone}</span>
+                <span className="text-ds-body-sm">{customer.phone}</span>
               </div>
             </div>
           </div>
@@ -1538,11 +1540,11 @@ const CustomerProfilePage = () => {
             <div className="flex items-start gap-2 flex-1 px-4 py-2">
               <SmartphoneIcon />
               <div className="flex flex-col gap-0.5">
-                <p className="text-[13px] text-text-body font-medium">App Version</p>
-                <p className="text-[14px] text-text-subtle">{MOCK_DEVICES[0]?.appVersion ?? '—'}</p>
+                <p className="text-ds-body-sm text-text-body font-medium">App Version</p>
+                <p className="text-ds-body-sm text-text-subtle">{MOCK_DEVICES[0]?.appVersion ?? '—'}</p>
                 <button
                   onClick={() => setShowDevicesModal(true)}
-                  className="text-[12px] text-primary hover:underline transition-colors text-left mt-1"
+                  className="text-ds-caption text-primary hover:underline transition-colors text-left mt-1"
                 >
                   View Devices
                 </button>
@@ -1552,23 +1554,23 @@ const CustomerProfilePage = () => {
             <div className="flex items-start gap-2 flex-1 px-4 py-2">
               <HomeIcon />
               <div className="flex flex-col gap-0.5">
-                <p className="text-[13px] text-text-body font-medium">Address</p>
-                <p className="text-[14px] text-text-subtle">{customer.address}</p>
+                <p className="text-ds-body-sm text-text-body font-medium">Address</p>
+                <p className="text-ds-body-sm text-text-subtle">{customer.address}</p>
               </div>
             </div>
             <div className="w-px self-stretch bg-border shrink-0" />
             <div className="flex items-start gap-2 flex-1 px-4 py-2">
               <MapPinIcon />
               <div className="flex flex-col gap-0.5">
-                <p className="text-[13px] text-text-body font-medium">Laundry Location</p>
-                <p className="text-[14px] text-text-subtle">{txStats.laundryLocation}</p>
+                <p className="text-ds-body-sm text-text-body font-medium">Laundry Location</p>
+                <p className="text-ds-body-sm text-text-subtle">{txStats.laundryLocation}</p>
               </div>
             </div>
           </div>
           <div className="flex justify-end">
             <button
               onClick={() => setShowDetails((v) => !v)}
-              className="flex items-center gap-1 text-[13px] text-primary hover:underline transition-colors"
+              className="flex items-center gap-1 text-ds-body-sm text-primary hover:underline transition-colors"
             >
               {showDetails ? 'Hide details' : 'View more details'}
               <svg className={cn('size-3 transition-transform duration-200', showDetails ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -1581,25 +1583,25 @@ const CustomerProfilePage = () => {
             <div className="border border-border rounded-xl">
               <div className="px-5 py-4 flex flex-col">
                 <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                  <p className="text-[14px] text-text-body shrink-0">ID</p>
+                  <p className="text-ds-body-sm text-text-body shrink-0">ID</p>
                   <InlineId id={customer.userId ?? customer.id} />
                 </div>
                 <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                  <p className="text-[14px] text-text-body shrink-0">Member Since</p>
-                  <p className="text-[14px] font-medium text-text-body">{joinFormatted}</p>
+                  <p className="text-ds-body-sm text-text-body shrink-0">Member Since</p>
+                  <p className="text-ds-label font-medium text-text-body">{joinFormatted}</p>
                 </div>
                 {DETAIL_ROWS.map(({ label, value }) => (
                   <div key={label} className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                    <p className="text-[14px] text-text-body shrink-0">{label}</p>
-                    <p className="text-[14px] font-medium text-text-body">{value}</p>
+                    <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
+                    <p className="text-ds-label font-medium text-text-body">{value}</p>
                   </div>
                 ))}
                 <div className="flex items-start justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
-                  <p className="text-[14px] text-text-body shrink-0 mt-1">Tags</p>
+                  <p className="text-ds-body-sm text-text-body shrink-0 mt-1">Tags</p>
                   <div className="flex flex-wrap items-center gap-2 justify-end">
                     {profileTags.map((tag) => (
                       <div key={tag} className="flex items-center gap-1.5 bg-primary-50 rounded-full px-3 py-1">
-                        <span className="text-[13px] text-text-subtle">{tag}</span>
+                        <span className="text-ds-body-sm text-text-subtle">{tag}</span>
                         <button
                           onClick={() => setProfileTags((prev) => prev.filter((t) => t !== tag))}
                           className="text-text-muted hover:text-text-body transition-colors"
@@ -1613,7 +1615,7 @@ const CustomerProfilePage = () => {
                     <div className="relative" ref={profileTagRef}>
                       <button
                         onClick={() => setShowProfileTagDropdown((v) => !v)}
-                        className="flex items-center gap-1.5 px-3 py-1 h-[30px] bg-white border border-border rounded-lg text-[13px] text-text-subtle hover:bg-surface transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1 h-[30px] bg-white border border-border rounded-lg text-ds-body-sm text-text-subtle hover:bg-surface transition-colors"
                       >
                         Add tag...
                         <svg className={cn('size-3.5 text-text-muted shrink-0 transition-transform duration-150', showProfileTagDropdown ? 'rotate-180' : '')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1623,12 +1625,12 @@ const CustomerProfilePage = () => {
                       {showProfileTagDropdown && (
                         <div className="absolute right-0 top-full mt-1 w-[180px] bg-white border border-border rounded-lg shadow-lg z-50 overflow-hidden">
                           {TAG_OPTIONS.filter((opt) => !profileTags.includes(opt)).length === 0 ? (
-                            <p className="px-4 py-3 text-[13px] text-text-muted">All tags added</p>
+                            <p className="px-4 py-3 text-ds-body-sm text-text-muted">All tags added</p>
                           ) : (
                             TAG_OPTIONS.filter((opt) => !profileTags.includes(opt)).map((opt) => (
                               <button
                                 key={opt}
-                                className="w-full px-4 py-2.5 text-left text-[14px] text-text-subtle hover:bg-primary-50 transition-colors"
+                                className="w-full px-4 py-2.5 text-left text-ds-body-sm text-text-subtle hover:bg-primary-50 transition-colors"
                                 onClick={() => { setProfileTags((prev) => [...prev, opt]); setShowProfileTagDropdown(false); }}
                               >
                                 {opt}
@@ -1655,7 +1657,7 @@ const CustomerProfilePage = () => {
         <div className="border border-border rounded-lg shadow-[0px_2px_8px_rgba(0,0,0,0.08)] bg-white p-6">
           <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-[18px] font-semibold text-text-body">User Transactions</h2>
+            <h2 className="text-ds-h5 font-semibold text-text-body">User Transactions</h2>
             <button
               onClick={() => {
                 const headers = ['Date', 'Time', 'Order ID', 'Type', 'Details', 'Amount', 'Balance', 'Status'];
@@ -1677,7 +1679,7 @@ const CustomerProfilePage = () => {
                 a.click();
                 URL.revokeObjectURL(url);
               }}
-              className="text-[14px] text-primary hover:underline transition-colors"
+              className="text-ds-body-sm text-primary hover:underline transition-colors"
             >
               Export CSV
             </button>
@@ -1691,7 +1693,7 @@ const CustomerProfilePage = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
                 </svg>
                 <input
-                  className="w-full h-[40px] pl-[40px] pr-4 border border-[#d1d5dc] rounded-lg text-[14px] placeholder:text-[rgba(15,23,42,0.5)] outline-none focus:border-primary transition-colors"
+                  className="w-full h-[40px] pl-[40px] pr-4 border border-[#d1d5dc] rounded-lg text-ds-body-sm placeholder:text-[rgba(15,23,42,0.5)] outline-none focus:border-primary transition-colors"
                   placeholder="Search by ID, type, details..."
                   value={txSearch}
                   onChange={(e) => { setTxSearch(e.target.value); setPage(1); }}
@@ -1701,7 +1703,7 @@ const CustomerProfilePage = () => {
             <button
               onClick={() => setShowFilters((v) => !v)}
               className={cn(
-                'flex items-center gap-2 h-[40px] px-4 rounded-lg border text-[14px] transition-colors shrink-0',
+                'flex items-center gap-2 h-[40px] px-4 rounded-lg border text-ds-body-sm transition-colors shrink-0',
                 showFilters
                   ? 'bg-primary text-white border-primary'
                   : 'bg-white text-text-body border-border hover:bg-surface'
@@ -1713,7 +1715,7 @@ const CustomerProfilePage = () => {
               Filters
               {(filterType !== 'All Types' || filterStatus !== 'All Statuses' || filterSort !== 'Most Recent') && (
                 <span className={cn(
-                  'size-[18px] rounded-full text-[11px] font-semibold flex items-center justify-center',
+                  'size-[18px] rounded-full text-ds-caption font-semibold flex items-center justify-center',
                   showFilters ? 'bg-white text-primary' : 'bg-primary text-white'
                 )}>
                   {[filterType !== 'All Types', filterStatus !== 'All Statuses', filterSort !== 'Most Recent'].filter(Boolean).length}
@@ -1723,7 +1725,7 @@ const CustomerProfilePage = () => {
             {(filterType !== 'All Types' || filterStatus !== 'All Statuses' || filterSort !== 'Most Recent') && (
               <button
                 onClick={() => { setFilterType('All Types'); setFilterStatus('All Statuses'); setFilterSort('Most Recent'); setPage(1); }}
-                className="flex items-center gap-1.5 h-[40px] px-3 rounded-lg text-[14px] text-text-muted hover:text-text-body transition-colors shrink-0"
+                className="flex items-center gap-1.5 h-[40px] px-3 rounded-lg text-ds-body-sm text-text-muted hover:text-text-body transition-colors shrink-0"
               >
                 <svg className="size-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1756,7 +1758,7 @@ const CustomerProfilePage = () => {
                 { label: 'Status', w: 'w-[160px]' },
               ].map(({ label, w }) => (
                 <div key={label} className={cn('p-[10px] shrink-0', w)}>
-                  <p className="text-[14px] font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
+                  <p className="text-ds-label font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
                 </div>
               ))}
             </div>
@@ -1772,55 +1774,50 @@ const CustomerProfilePage = () => {
                   className={cn('flex items-center border-t border-[#f0f0f0] hover:bg-primary-50 transition-colors cursor-pointer', { 'border-t-0': i === 0 })}
                 >
                   <div className="w-[180px] shrink-0 px-[10px] py-[8px]">
-                    <span className="text-[14px] font-medium text-text-body">{tx.date}</span>{' '}
-                    <span className="text-[12px] text-text-muted">{tx.time}</span>
+                    <span className="text-ds-label font-medium text-text-body">{tx.date}</span>{' '}
+                    <span className="text-ds-caption text-text-muted">{tx.time}</span>
                   </div>
                   <div className="w-[110px] shrink-0 px-[10px] py-[8px]">
-                    <p className="text-[14px] text-text-body">{tx.orderId}</p>
+                    <p className="text-ds-body-sm text-text-body">{tx.orderId}</p>
                   </div>
                   <div className="w-[180px] shrink-0 px-[10px] py-[8px]">
-                    <span className={cn('inline-flex items-center gap-1 text-[12px] font-medium px-1.5 py-0.5 rounded-md whitespace-nowrap', TX_TYPE_STYLE[tx.type] ?? 'bg-surface text-text-subtle')}>
+                    <span className={cn('inline-flex items-center gap-1 text-ds-caption font-medium px-1.5 py-0.5 rounded-md whitespace-nowrap', TX_TYPE_STYLE[tx.type] ?? 'bg-surface text-text-subtle')}>
                       {TX_TYPE_ICON[tx.type] ?? null}
                       {TX_TYPE_LABEL[tx.type] ?? tx.type}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0 px-[10px] py-[8px]">
-                    <p className="text-[14px] text-text-body truncate">
+                    <p className="text-ds-body-sm text-text-body truncate">
                       {(tx.type === 'Washer' || tx.type === 'Dryer') ? tx.details.split('—')[0].trim() : tx.details}
                     </p>
                     {tx.refundStatus && (
-                      <p className="text-[12px] text-primary truncate">
+                      <p className="text-ds-caption text-primary truncate">
                         {tx.refundStatus === 'Refund Complete'
                           ? `Refunded · $${tx.amount.toFixed(2)}`
                           : `Refund Request - ${tx.refundReason ?? ''}`}
                       </p>
                     )}
-                    {tx.coupon && <p className="text-[12px] text-primary truncate">{tx.coupon}</p>}
+                    {tx.coupon && <p className="text-ds-caption text-primary truncate">{tx.coupon}</p>}
                   </div>
                   <div className="w-[90px] shrink-0 px-[10px] py-[8px]">
-                    <p className={cn('text-[14px] font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
+                    <p className={cn('text-ds-body-sm font-semibold', tx.type === 'Funds Added' ? 'text-blue-500' : 'text-text-body')}>
                       {(tx.coupon || tx.refundStatus === 'Refund Complete')
                         ? '$0.00'
                         : (tx.type === 'Washer' || tx.type === 'Dryer') ? `-$${tx.amount.toFixed(2)}` : tx.amount < 0 ? `-$${Math.abs(tx.amount).toFixed(2)}` : `$${tx.amount.toFixed(2)}`}
                     </p>
                   </div>
                   <div className="w-[100px] shrink-0 px-[10px] py-[8px]">
-                    {(() => {
-                      const bal = Math.max(0, runningBalanceMap[tx.id] ?? 0);
-                      return (
-                        <p className="text-[14px] text-text-body">
-                          {`$${bal.toFixed(2)}`}
-                        </p>
-                      );
-                    })()}
+                    <p className="text-ds-body-sm text-text-body">
+                      {`$${Math.max(0, runningBalanceMap[tx.id] ?? 0).toFixed(2)}`}
+                    </p>
                   </div>
                   <div className="w-[160px] shrink-0 px-[10px] py-[8px]">
                     {tx.refundStatus ? (
-                      <span className={cn('text-[12px] font-medium px-2 py-0.5 rounded border', REFUND_STATUS_STYLE[tx.refundStatus])}>
+                      <span className={cn('text-ds-caption font-medium px-2 py-0.5 rounded border', REFUND_STATUS_STYLE[tx.refundStatus])}>
                         {tx.refundStatus}
                       </span>
                     ) : (
-                      <span className={cn('text-[12px] font-medium px-2 py-0.5 rounded border', TX_STATUS_STYLE[tx.status])}>
+                      <span className={cn('text-ds-caption font-medium px-2 py-0.5 rounded border', TX_STATUS_STYLE[tx.status])}>
                         {tx.status}
                       </span>
                     )}
@@ -1831,7 +1828,7 @@ const CustomerProfilePage = () => {
 
             {/* Pagination */}
             <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-white">
-              <p className="text-[14px] text-[#6a7282]">
+              <p className="text-ds-body-sm text-[#6a7282]">
                 Showing {Math.min(paginated.length, PAGE_SIZE)} of {filtered.length} entries
               </p>
               <div className="flex items-center gap-1">
@@ -1840,7 +1837,7 @@ const CustomerProfilePage = () => {
                     key={p}
                     onClick={() => setPage(p)}
                     className={cn(
-                      'size-[26px] text-[14px] rounded flex items-center justify-center',
+                      'size-[26px] text-ds-body-sm rounded flex items-center justify-center',
                       p === page ? 'bg-black text-white' : 'border border-black text-[#727272]'
                     )}
                   >

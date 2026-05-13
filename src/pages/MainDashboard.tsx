@@ -93,7 +93,7 @@ const MainDashboardPage = () => {
     <div className="flex flex-col items-center justify-center px-6 min-h-full">
       {/* Greeting */}
       <div className="text-center mb-8 w-full max-w-2xl">
-        <h1 className="text-[40px] font-bold text-[#101828] leading-tight mb-3">
+        <h1 className="text-ds-h1 font-bold text-[#101828] leading-tight mb-3">
           Welcome back, {firstName || 'there'}!
         </h1>
         <p className="text-lg text-text-subtle">

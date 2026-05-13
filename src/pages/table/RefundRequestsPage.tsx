@@ -28,15 +28,15 @@ const STATUS_STYLE: Record<string, { bg: string; text: string; border: string; d
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
   <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4">
-    <p className="text-[14px] text-text-body shrink-0">{label}</p>
-    <p className="text-[14px] font-medium text-text-body truncate max-w-[60%] text-right">{value}</p>
+    <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
+    <p className="text-ds-label font-medium text-text-body truncate max-w-[60%] text-right">{value}</p>
   </div>
 );
 
 const StatRow = ({ label, value, warn = false }: { label: string; value: string | number; warn?: boolean }) => (
   <div className={cn('flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', warn && 'bg-orange-50 px-3 -mx-3 rounded')}>
-    <p className={cn('text-[14px]', warn ? 'text-orange-700' : 'text-text-body')}>{label}</p>
-    <p className={cn('text-[14px] font-semibold', warn ? 'text-orange-700' : 'text-text-body')}>{value}</p>
+    <p className={cn('text-ds-body-sm', warn ? 'text-orange-700' : 'text-text-body')}>{label}</p>
+    <p className={cn('text-ds-label font-semibold', warn ? 'text-orange-700' : 'text-text-body')}>{value}</p>
   </div>
 );
 
@@ -60,15 +60,15 @@ const RefundDetailModal = ({ refund, onClose }: { refund: RefundRequest; onClose
         <div className="flex items-start justify-between px-6 pt-6 pb-3 shrink-0">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3">
-              <p className="text-[20px] font-semibold text-text-body">
+              <p className="text-ds-h4 font-semibold text-text-body">
                 Refund Request — {refund.orderId}
               </p>
-              <span className={cn('flex items-center gap-1.5 text-[13px] font-medium px-2.5 py-0.5 rounded-full border', statusStyle.bg, statusStyle.text, statusStyle.border)}>
+              <span className={cn('flex items-center gap-1.5 text-ds-body-sm font-medium px-2.5 py-0.5 rounded-full border', statusStyle.bg, statusStyle.text, statusStyle.border)}>
                 <span className={cn('size-1.5 rounded-full', statusStyle.dot)} />
                 {formatReason(refund.status)}
               </span>
             </div>
-            <p className="text-[13px] text-text-muted">
+            <p className="text-ds-body-sm text-text-muted">
               Parent Order ID: <span className="text-primary font-medium">{refund.parentOrderId}</span>
               {' · '}
               Requested: {formatDateTime(refund.requestedDateTime)}
@@ -90,7 +90,7 @@ const RefundDetailModal = ({ refund, onClose }: { refund: RefundRequest; onClose
           <div className="flex flex-col gap-4 flex-1 min-w-0">
             {/* Request Details */}
             <div className="border border-border rounded-lg p-4">
-              <p className="text-[14px] font-semibold text-text-body mb-1">Request Details</p>
+              <p className="text-ds-label font-semibold text-text-body mb-1">Request Details</p>
               <DetailRow label="Amount" value={`$${parseFloat(String(refund.amount)).toFixed(2)}`} />
               <DetailRow label="Refund Type" value={formatReason(refund.refundType)} />
               <DetailRow label="Reason" value={formatReason(refund.reason)} />
@@ -99,7 +99,7 @@ const RefundDetailModal = ({ refund, onClose }: { refund: RefundRequest; onClose
 
             {/* Refund Approval */}
             <div className="border border-border rounded-lg p-4 flex-1">
-              <p className="text-[14px] font-semibold text-text-body mb-1">Refund Approval</p>
+              <p className="text-ds-label font-semibold text-text-body mb-1">Refund Approval</p>
               {refund.resolution
                 ? <DetailRow label="Resolution" value={formatReason(refund.resolution)} />
                 : null}
@@ -112,21 +112,21 @@ const RefundDetailModal = ({ refund, onClose }: { refund: RefundRequest; onClose
           <div className="flex flex-col gap-4 w-[220px] shrink-0">
             {/* Customer card */}
             <div className="border border-border rounded-lg p-4">
-              <p className="text-[14px] font-semibold text-text-body mb-3">Customer Summary</p>
+              <p className="text-ds-label font-semibold text-text-body mb-3">Customer Summary</p>
               <div className="flex items-center gap-3 mb-3">
                 <div className="size-[40px] rounded-full bg-primary flex items-center justify-center shrink-0">
-                  <span className="text-white text-[15px] font-semibold">{initials}</span>
+                  <span className="text-white text-ds-body font-semibold">{initials}</span>
                 </div>
                 <div>
-                  <p className="text-[14px] font-semibold text-text-body">{refund.firstName} {refund.lastName}</p>
-                  <p className="text-[12px] text-text-muted">Since {customerSince}</p>
+                  <p className="text-ds-label font-semibold text-text-body">{refund.firstName} {refund.lastName}</p>
+                  <p className="text-ds-caption text-text-muted">Since {customerSince}</p>
                 </div>
               </div>
             </div>
 
             {/* Stats */}
             <div className="border border-border rounded-lg p-4">
-              <p className="text-[14px] font-semibold text-text-body mb-1">PayRange Info</p>
+              <p className="text-ds-label font-semibold text-text-body mb-1">PayRange Info</p>
               <StatRow label="Total Loads" value={62} />
               <StatRow label="Refund Requests" value={8} />
               <StatRow label="Last 6 months" value={3} warn />
@@ -138,7 +138,7 @@ const RefundDetailModal = ({ refund, onClose }: { refund: RefundRequest; onClose
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-border shrink-0">
           <button
             onClick={onClose}
-            className="px-5 py-2 border border-border rounded-lg text-[14px] font-semibold text-text-body hover:bg-surface transition-colors"
+            className="px-5 py-2 border border-border rounded-lg text-ds-label font-semibold text-text-body hover:bg-surface transition-colors"
           >
             Close
           </button>

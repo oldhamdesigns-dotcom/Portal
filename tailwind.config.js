@@ -8,6 +8,22 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'ds-h1':      ['40px', { lineHeight: '48px',   fontWeight: '700' }],
+        'ds-h2':      ['28px', { lineHeight: '33.6px', fontWeight: '700' }],
+        'ds-h3':      ['24px', { lineHeight: '31.2px', fontWeight: '700' }],
+        'ds-h4':      ['20px', { lineHeight: '28px',   fontWeight: '600' }],
+        'ds-h5':      ['18px', { lineHeight: '25.2px', fontWeight: '600' }],
+        'ds-body-lg': ['18px', { lineHeight: '28.8px', fontWeight: '400' }],
+        'ds-body':    ['16px', { lineHeight: '25.6px', fontWeight: '400' }],
+        'ds-body-sm': ['14px', { lineHeight: '21px',   fontWeight: '400' }],
+        'ds-label':   ['14px', { lineHeight: '19.6px', fontWeight: '500' }],
+        'ds-button':  ['16px', { lineHeight: '25.6px', fontWeight: '600' }],
+        'ds-caption': ['12px', { lineHeight: '16.8px', fontWeight: '400' }],
+      },
       colors: {
         primary: '#0072ce',
         'primary-50': '#e6f4fd',
