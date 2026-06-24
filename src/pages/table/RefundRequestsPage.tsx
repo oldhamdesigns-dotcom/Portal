@@ -23,18 +23,18 @@ const formatDateTime = (val: string | Date) => {
 const STATUS_STYLE: Record<string, { bg: string; text: string; border: string; dot: string }> = {
   COMPLETED: { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-400', dot: 'bg-green-500' },
   REFUND_REQUESTED: { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-400', dot: 'bg-yellow-500' },
-  COMPLETED_WITHOUT_PAYMENT: { bg: 'bg-[#f2f2f2]', text: 'text-[#666]', border: 'border-[#bbb]', dot: 'bg-[#999]' },
+  COMPLETED_WITHOUT_PAYMENT: { bg: 'bg-surface', text: 'text-text-muted', border: 'border-[#bbb]', dot: 'bg-ds-neutral-500' },
 };
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4">
+  <div className="flex items-center justify-between py-2.5 border-b border-gray last:border-0 gap-4">
     <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
     <p className="text-ds-label font-medium text-text-body truncate max-w-[60%] text-right">{value}</p>
   </div>
 );
 
 const StatRow = ({ label, value, warn = false }: { label: string; value: string | number; warn?: boolean }) => (
-  <div className={cn('flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', warn && 'bg-orange-50 px-3 -mx-3 rounded')}>
+  <div className={cn('flex items-center justify-between py-2.5 border-b border-gray last:border-0 gap-4', warn && 'bg-orange-50 px-3 -mx-3 rounded')}>
     <p className={cn('text-ds-body-sm', warn ? 'text-orange-700' : 'text-text-body')}>{label}</p>
     <p className={cn('text-ds-label font-semibold', warn ? 'text-orange-700' : 'text-text-body')}>{value}</p>
   </div>

@@ -1,3 +1,6 @@
+// ─── Types ────────────────────────────────────────────────────────────────────
+// These should match the shapes returned by the real customer API endpoints.
+
 export type Customer = {
   id: string;
   userId?: string;
@@ -10,10 +13,36 @@ export type Customer = {
   balance: number;
   joinDate: string;
   plan: string;
+  roomName?: string;
+  authMethod?: 'Email/Password' | 'Google (federated)' | 'Apple (federated)' | 'Multiple/Linked';
 };
 
-const customers: Customer[] = [
-  { id: 'C001', userId: '24882418-8031-70c7-0a12-748657977aaf', firstName: 'Sarah', lastName: 'Johnson', email: 'sarah.johnson@email.com', phone: '(555) 201-4321', address: '4311 Royal Oak Blvd, San Marcos TX 78666', status: 'Active', balance: 12.50, joinDate: '2022-03-15', plan: 'Premium' },
+export type RefundStatus = 'Refund Requested' | 'Refund Pending' | 'Refund Complete' | 'Refund Denied';
+
+export type Transaction = {
+  id: string;
+  date: string;
+  time: string;
+  orderId: string;
+  type: string;
+  details: string;
+  amount: number;
+  status: 'Completed' | 'Failed' | 'Pending' | 'Closed';
+  coupon?: string;
+  refundStatus?: RefundStatus;
+  refundReason?: string;
+  refundNote?: string;
+  refundDate?: string;
+  refundTime?: string;
+  refundCreatedBy?: string;
+};
+
+// ─── Mock data ────────────────────────────────────────────────────────────────
+// Used for UI development only. Replace the functions below with real API calls
+// from src/services/customers.service.ts once endpoints are available.
+
+const MOCK_CUSTOMERS: Customer[] = [
+  { id: 'C001', userId: '24882418-8031-70c7-0a12-748657977aaf', firstName: 'Sarah', lastName: 'Johnson', email: 'sarah.johnson@email.com', phone: '(555) 201-4321', address: '4311 Royal Oak Blvd, San Marcos TX 78666', status: 'Active', balance: 12.50, joinDate: '2022-03-15', plan: 'Premium', roomName: 'East Room', authMethod: 'Google (federated)' },
   { id: 'C002', userId: 'a3f1cc29-4d72-41b8-b305-1e6a09d84f12', firstName: 'Michael', lastName: 'Thompson', email: 'm.thompson@gmail.com', phone: '(555) 304-8872', address: '820 Westover Hills Blvd, San Antonio TX 78251', status: 'Active', balance: 0, joinDate: '2021-07-22', plan: 'Basic' },
   { id: 'C003', userId: '7b2e5f84-c910-4a3d-9e67-2d4b8c1f0a35', firstName: 'Emily', lastName: 'Rodriguez', email: 'emily.r@outlook.com', phone: '(555) 412-3390', address: '1502 Lakeline Blvd, Cedar Park TX 78613', status: 'Active', balance: 8.75, joinDate: '2023-01-08', plan: 'Standard' },
   { id: 'C004', userId: 'f0d3a7e1-5b24-48c6-8f91-3c7e2a6d9b04', firstName: 'James', lastName: 'Wilson', email: 'jwilson@company.com', phone: '(555) 509-6641', address: '3201 Cherry Ridge Dr, San Antonio TX 78230', status: 'Inactive', balance: 0, joinDate: '2020-11-30', plan: 'Basic' },
@@ -37,14 +66,30 @@ const customers: Customer[] = [
   { id: 'C025', userId: '9a5c3e20-6b71-4d84-a639-1d4f0e8c6b18', firstName: 'Rachel', lastName: 'Roberts', email: 'rachel.roberts@email.com', phone: '(555) 809-1151', address: '6301 W Parmer Ln, Austin TX 78729', status: 'Active', balance: 16.25, joinDate: '2023-07-04', plan: 'Premium' },
 ];
 
+const MOCK_TRANSACTIONS: Transaction[] = [
+  { id: '{customerId}-1', date: '08/24/2025', time: '3:21:28 PM', orderId: '2344075', type: 'Washer', details: 'Washer #3 — Sunset Location', amount: 1.75, status: 'Completed', coupon: 'App Download Bonus up to $5.00' },
+  { id: '{customerId}-2', date: '08/20/2025', time: '11:15:42 AM', orderId: '2344012', type: 'Dryer', details: 'Dryer #1 — Sunset Location', amount: 1.75, status: 'Completed' },
+  { id: '{customerId}-3', date: '08/18/2025', time: '9:05:10 AM', orderId: '2343890', type: 'Washer', details: 'Washer #5 — Riverside Location', amount: 1.75, status: 'Completed' },
+  { id: '{customerId}-4', date: '08/15/2025', time: '2:33:00 PM', orderId: '2343742', type: 'Funds Added', details: 'Visa •••• 4242', amount: 15.00, status: 'Completed' },
+  { id: '{customerId}-5', date: '08/12/2025', time: '4:10:55 PM', orderId: '2343601', type: 'Washer', details: 'Washer #2 — Northside Location', amount: 1.75, status: 'Completed' },
+  { id: '{customerId}-7', date: '08/05/2025', time: '7:44:30 AM', orderId: '2343310', type: 'Dryer', details: 'Dryer #3 — Sunset Location', amount: 1.75, status: 'Completed', refundStatus: 'Refund Complete', refundReason: 'Machine Malfunction', refundDate: '08/08/2025', refundTime: '10:22:11 AM', refundCreatedBy: 'Agent:Support Agent' },
+  { id: '{customerId}-8', date: '08/01/2025', time: '1:00:00 PM', orderId: '2343199', type: 'Washer', details: 'Washer #6 — Riverside Location', amount: 1.75, status: 'Completed' },
+  { id: '{customerId}-10', date: '07/25/2025', time: '8:30:00 AM', orderId: '2342910', type: 'Funds Added', details: 'Visa •••• 4242', amount: 15.00, status: 'Completed' },
+];
+
+// ─── Mock implementations ─────────────────────────────────────────────────────
+// TODO: Replace each function body with the corresponding call from
+//       src/services/customers.service.ts once the API endpoints are ready.
+
 export const searchCustomers = async (
   query: string,
   field: 'name' | 'email' | 'phone'
 ): Promise<Customer[]> => {
+  // TODO: replace with customersService.searchCustomers(query, field)
   await new Promise((res) => setTimeout(res, 300));
   if (!query.trim()) return [];
   const q = query.toLowerCase();
-  return customers.filter((c) => {
+  return MOCK_CUSTOMERS.filter((c) => {
     if (field === 'email') return c.email.toLowerCase().includes(q);
     if (field === 'phone') return c.phone.replace(/\D/g, '').includes(q.replace(/\D/g, ''));
     return (
@@ -55,38 +100,12 @@ export const searchCustomers = async (
   });
 };
 
-export type RefundStatus = 'Refund Requested' | 'Refund Pending' | 'Refund Complete' | 'Refund Denied';
-
-export type Transaction = {
-  id: string;
-  date: string;
-  time: string;
-  orderId: string;
-  type: string;
-  details: string;
-  amount: number;
-  status: 'Completed' | 'Failed' | 'Pending' | 'Closed';
-  coupon?: string;
-  refundStatus?: RefundStatus;
-  refundReason?: string;
-  refundNote?: string;
-  refundDate?: string;
-  refundTime?: string;
-  refundCreatedBy?: string;
-};
-
 export const getCustomerById = (id: string): Customer | undefined =>
-  customers.find((c) => c.id === id);
+  // TODO: replace with customersService.getCustomerById(id)
+  MOCK_CUSTOMERS.find((c) => c.id === id);
 
-export const getTransactions = (customerId: string): Transaction[] => [
-  { id: `${customerId}-1`, date: '08/24/2025', time: '3:21:28 PM', orderId: '2344075', type: 'Washer', details: 'Washer #3 — Sunset Location', amount: 1.75, status: 'Completed', coupon: 'App Download Bonus up to $5.00' },
-  { id: `${customerId}-2`, date: '08/20/2025', time: '11:15:42 AM', orderId: '2344012', type: 'Dryer', details: 'Dryer #1 — Sunset Location', amount: 1.75, status: 'Completed' },
-  { id: `${customerId}-3`, date: '08/18/2025', time: '9:05:10 AM', orderId: '2343890', type: 'Washer', details: 'Washer #5 — Riverside Location', amount: 1.75, status: 'Completed' },
-  { id: `${customerId}-4`, date: '08/15/2025', time: '2:33:00 PM', orderId: '2343742', type: 'Funds Added', details: 'Visa •••• 4242', amount: 15.00, status: 'Completed' },
-  { id: `${customerId}-5`, date: '08/12/2025', time: '4:10:55 PM', orderId: '2343601', type: 'Washer', details: 'Washer #2 — Northside Location', amount: 1.75, status: 'Completed' },
-  { id: `${customerId}-7`, date: '08/05/2025', time: '7:44:30 AM', orderId: '2343310', type: 'Dryer', details: 'Dryer #3 — Sunset Location', amount: 1.75, status: 'Completed', refundStatus: 'Refund Complete', refundReason: 'Machine Malfunction', refundDate: '08/08/2025', refundTime: '10:22:11 AM', refundCreatedBy: 'Agent:Mark Oldham' },
-  { id: `${customerId}-8`, date: '08/01/2025', time: '1:00:00 PM', orderId: '2343199', type: 'Washer', details: 'Washer #6 — Riverside Location', amount: 1.75, status: 'Completed' },
-  { id: `${customerId}-10`, date: '07/25/2025', time: '8:30:00 AM', orderId: '2342910', type: 'Funds Added', details: 'Visa •••• 4242', amount: 15.00, status: 'Completed' },
-];
+export const getTransactions = (customerId: string): Transaction[] =>
+  // TODO: replace with customersService.getTransactions(customerId)
+  MOCK_TRANSACTIONS.map((t) => ({ ...t, id: t.id.replace('{customerId}', customerId) }));
 
-export default customers;
+export default MOCK_CUSTOMERS;

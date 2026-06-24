@@ -93,7 +93,7 @@ const MainDashboardPage = () => {
     <div className="flex flex-col items-center justify-center px-6 min-h-full">
       {/* Greeting */}
       <div className="text-center mb-8 w-full max-w-2xl">
-        <h1 className="text-ds-h1 font-bold text-[#101828] leading-tight mb-3">
+        <h1 className="text-ds-h1 font-bold text-text-body leading-tight mb-3">
           Welcome back, {firstName || 'there'}!
         </h1>
         <p className="text-lg text-text-subtle">
@@ -109,12 +109,12 @@ const MainDashboardPage = () => {
               className={cn(
                 'flex items-center justify-between gap-2 h-[60px] px-4 border border-r-0 rounded-l-lg min-w-[180px] transition-colors',
                 (inputFocused || showDropdown) ? 'border-[#bbbbbb]' : 'border-border hover:border-[#bbbbbb]',
-                showDropdown ? 'bg-[#fafafa]' : 'bg-white hover:bg-[#fafafa]',
+                showDropdown ? 'bg-ds-neutral-50' : 'bg-white hover:bg-ds-neutral-50',
               )}
               onClick={() => setShowDropdown((v) => !v)}
             >
               <span className="text-text-subtle text-base">{searchType.label}</span>
-              <svg className="size-4 text-text-muted shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className={cn("size-4 text-text-muted shrink-0 transition-transform duration-200", showDropdown ? 'rotate-180' : 'rotate-0')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -137,7 +137,7 @@ const MainDashboardPage = () => {
           <div className="relative flex-1">
             <div className={cn(
               'flex items-center h-[60px] border rounded-r-lg px-4 gap-2 transition-colors',
-              (inputFocused || showDropdown) ? 'border-[#bbbbbb] bg-[#fafafa]' : 'border-border bg-white hover:border-[#bbbbbb] hover:bg-[#fafafa]',
+              (inputFocused || showDropdown) ? 'border-[#bbbbbb] bg-ds-neutral-50' : 'border-border bg-white hover:border-[#bbbbbb] hover:bg-ds-neutral-50',
             )}>
               <input
                 className="flex-1 outline-none bg-transparent text-base text-text-body placeholder:text-text-muted"
@@ -180,7 +180,7 @@ const MainDashboardPage = () => {
                     <button
                       key={c.id}
                       onClick={() => navigate(routes.CUSTOMER_PROFILE.replace(':id', c.id))}
-                      className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-primary-50 transition-colors border-b border-[#f0f0f0] last:border-0"
+                      className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-primary-50 transition-colors border-b border-gray last:border-0"
                     >
                       <div>
                         <p className="text-sm font-medium text-text-body">
@@ -213,9 +213,9 @@ const MainDashboardPage = () => {
               <span className="text-white text-sm font-bold">{card.num}</span>
             </div>
             <p className="font-bold text-sm text-text-body mb-1">{card.title}</p>
-            <p className="text-xs text-[#4a5565] leading-relaxed">{card.desc}</p>
+            <p className="text-xs text-gray-1 leading-relaxed">{card.desc}</p>
             {card.extra && (
-              <div className="border-t border-[#e2e8f0] pt-2 mt-3">{card.extra}</div>
+              <div className="border-t border-gray-2 pt-2 mt-3">{card.extra}</div>
             )}
           </div>
         ))}

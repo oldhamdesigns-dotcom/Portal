@@ -32,7 +32,7 @@ const NavItem = ({ title, path, icon, isActive, isWide }: NavItemProps) => (
     to={path}
     title={title}
     className={cn(
-      'relative group flex items-center gap-2 pl-1 pr-0 py-1 transition-colors w-full',
+      'relative group flex items-center gap-2 pr-0 py-1 transition-colors w-full',
       isActive ? 'bg-primary-50' : 'hover:bg-primary-50'
     )}
   >
@@ -63,7 +63,7 @@ const NavigationMenu = () => {
 
   return (
     <div className={cn(
-      'flex flex-col h-screen bg-white border-r border-[#e2e8f0] shadow-sm transition-[width] duration-300 ease-in-out shrink-0 will-change-[width]',
+      'flex flex-col h-screen bg-white border-r border-gray-2 shadow-sm transition-[width] duration-300 ease-in-out shrink-0 will-change-[width]',
       isWide ? 'w-[180px]' : 'w-[64px]'
     )}>
       {/* Logo */}
@@ -93,7 +93,7 @@ const NavigationMenu = () => {
           <button
             onClick={() => setAdminOpen((v) => !v)}
             title="Admin Tools"
-            className="relative flex items-center gap-2 pl-1 pr-0 py-1 w-full hover:bg-primary-50 transition-colors"
+            className="relative flex items-center gap-2 pr-0 py-1 w-full hover:bg-primary-50 transition-colors"
           >
             <NavIcon icon="Admin" state="Default" />
             <p className={cn(

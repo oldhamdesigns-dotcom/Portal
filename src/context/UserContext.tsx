@@ -1,4 +1,4 @@
-import { createContext, DetailedHTMLProps, useCallback, useContext, useEffect } from 'react';
+import { createContext, DetailedHTMLProps, useCallback, useContext } from 'react';
 import { useQuery } from 'react-query';
 import { AuthUser } from 'aws-amplify/auth';
 import { getUser, logoutUser } from '@aws/aws.service';
@@ -16,12 +16,15 @@ const LOGGED_IN_USER_DATA_KEY = 'loggedInUserData';
 const USER_INFO_KEY = 'userInfo';
 const USER_KEY = 'user';
 
-const DEMO_USER = {
-  user: { username: 'demo' } as any,
+// Fallback used when the auth query has not yet resolved (e.g. on first load
+// before localStorage is hydrated). Replace with a proper loading/redirect
+// state once the real auth flow is wired end-to-end.
+const AUTH_FALLBACK_USER = {
+  user: { username: '' } as any,
   userInfo: [] as TenantPermission[],
   loggedInUserData: {
-    firstName: 'Mark',
-    lastName: 'Oldham',
+    firstName: '',
+    lastName: '',
     userPhotos: [],
   } as any,
 };
@@ -54,7 +57,7 @@ const UserProvider = ({ children }: DetailedHTMLProps<any, any>) => {
   const navigate = useNavigate();
   const { changeTenantData } = useTenant();
 
-  const { data: userData, isError } = useQuery({
+  const { data: userData } = useQuery({
     initialData: initUserData(),
     queryKey: 'user',
     queryFn: async () => {
@@ -89,14 +92,10 @@ const UserProvider = ({ children }: DetailedHTMLProps<any, any>) => {
     })();
   }, [navigate]);
 
-  useEffect(() => {
-    // In demo/prototype mode, don't redirect on auth failure
-  }, [isError, navigate]);
-
   return (
     <UserContext.Provider
       value={{
-        userData: userData?.loggedInUserData ? userData : DEMO_USER,
+        userData: userData?.loggedInUserData ? userData : AUTH_FALLBACK_USER,
         logout,
       }}
     >

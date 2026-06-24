@@ -116,12 +116,12 @@ const SearchResultsPage = () => {
             className={cn(
               'flex items-center justify-between gap-2 h-[52px] px-4 border border-r-0 rounded-l-lg min-w-[180px] transition-colors',
               (inputFocused || showDropdown) ? 'border-[#bbbbbb]' : 'border-border hover:border-[#bbbbbb]',
-              showDropdown ? 'bg-[#fafafa]' : 'bg-white hover:bg-[#fafafa]',
+              showDropdown ? 'bg-ds-neutral-50' : 'bg-white hover:bg-ds-neutral-50',
             )}
             onClick={() => setShowDropdown((v) => !v)}
           >
             <span className="text-text-subtle text-sm">{searchType.label}</span>
-            <svg className="size-4 text-text-muted shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className={cn("size-4 text-text-muted shrink-0 transition-transform duration-200", showDropdown ? 'rotate-180' : 'rotate-0')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </button>
@@ -143,7 +143,7 @@ const SearchResultsPage = () => {
         {/* Input */}
         <div className={cn(
           'flex items-center flex-1 h-[52px] border rounded-r-lg px-4 gap-2 transition-colors',
-          (inputFocused || showDropdown) ? 'border-[#bbbbbb] bg-[#fafafa]' : 'border-border bg-white hover:border-[#bbbbbb] hover:bg-[#fafafa]',
+          (inputFocused || showDropdown) ? 'border-[#bbbbbb] bg-ds-neutral-50' : 'border-border bg-white hover:border-[#bbbbbb] hover:bg-ds-neutral-50',
         )}>
           <input
             className="flex-1 outline-none bg-transparent text-sm text-text-body placeholder:text-text-muted"
@@ -186,7 +186,7 @@ const SearchResultsPage = () => {
         </p>
       )}
 
-      <div className="border-t border-[#e2e8f0] mb-4" />
+      <div className="border-t border-gray-2 mb-4" />
 
       {/* Results list */}
       {!hasSearched ? (

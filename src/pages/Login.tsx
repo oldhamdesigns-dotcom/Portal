@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-
+import { toast } from 'react-toastify';
 import BgLogin from '@/assets/images/bg-login.jpeg';
 import { Link, useNavigate } from 'react-router';
 import CSCLogoImage from '@icons/CSCLogoImage';
@@ -27,7 +27,7 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          console.error(error);
+          toast.error(error?.message ?? 'Login failed. Please try again.');
         });
     },
     [navigate]

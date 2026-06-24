@@ -7,11 +7,21 @@ type Props = {
   state?: 'Default' | 'Hover' | 'Selected';
 };
 
-function DashboardIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fillLarge = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#D9D9D9';
+// Icon state colors — map to DS tokens: primary-800, primary, ds-neutral-500, secondary, border
+const ICON_STROKE: Record<NonNullable<Props['state']>, string> = {
+  Selected: '#005ba5',
+  Hover:    '#0072ce',
+  Default:  '#666666',
+};
+const ICON_FILL: Record<NonNullable<Props['state']>, string> = {
+  Selected: '#c2ecff',
+  Hover:    '#c2ecff',
+  Default:  '#dddddd',
+};
+
+function DashboardIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const stroke = ICON_STROKE[state];
+  const fillLarge = ICON_FILL[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="21.6042" y="10.375" width="8.02083" height="4.8125" rx="1" stroke={stroke} strokeWidth="2"/>
@@ -22,11 +32,9 @@ function DashboardIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-function MobileUserIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
+function MobileUserIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const accent = ICON_STROKE[state];
+  const fill = ICON_FILL[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M26.1419 8.84375H14.0108C13.0577 8.84375 12.2778 9.6236 12.2778 10.5768L12.2778 29.4232C12.2778 30.3764 13.0577 31.1562 14.0108 31.1562H26.1419C27.0951 31.1562 27.8749 30.3764 27.8749 29.4232V10.5768C27.8749 9.6236 27.0951 8.84375 26.1419 8.84375ZM20.0764 18.1587C21.7487 18.1587 23.1091 19.5191 23.1091 21.1914C23.1091 22.8638 21.7487 24.2242 20.0764 24.2242C18.404 24.2242 17.0436 22.8638 17.0436 21.1914C17.0436 19.5191 18.404 18.1587 20.0764 18.1587ZM26.1419 29.4232H14.0108V29.2239C14.0108 28.6867 14.2535 28.1841 14.6694 27.8549C16.1511 26.6678 18.0314 25.9572 20.0764 25.9572C22.1213 25.9572 24.0016 26.6678 25.4834 27.8549C25.8993 28.1841 26.1419 28.6954 26.1419 29.2239V29.4232Z" fill={fill} />
@@ -36,12 +44,10 @@ function MobileUserIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-function OrdersIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
-  const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+function OrdersIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const stroke = ICON_STROKE[state];
+  const fill = ICON_FILL[state];
+  const accent = ICON_STROKE[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="11.375" y="10.5729" width="17.25" height="18.8542" rx="1" fill={fill} stroke={stroke} strokeWidth="2"/>
@@ -55,11 +61,9 @@ function OrdersIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-function RefundIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
+function RefundIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const accent = ICON_STROKE[state];
+  const fill = ICON_FILL[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="16.9869" y="19.3814" width="13.9723" height="9.18077" rx="1" stroke={accent} strokeWidth="2"/>
@@ -77,12 +81,10 @@ function RefundIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-function ReportsIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
-  const bar = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+function ReportsIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const stroke = ICON_STROKE[state];
+  const fill = ICON_FILL[state];
+  const bar = ICON_STROKE[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="10.5" y="9.625" width="19" height="20.75" rx="1" fill={fill} stroke={stroke} strokeWidth="2"/>
@@ -93,11 +95,9 @@ function ReportsIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-function TagsIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#D9D9D9';
+function TagsIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const stroke = ICON_STROKE[state];
+  const fill = ICON_FILL[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M29.1577 18.9655L17.331 12.1374C17.0696 11.9864 16.754 11.9618 16.4723 12.0701L12.0107 13.786C11.5705 13.9553 11.3083 14.4094 11.3818 14.8753L12.1266 19.597C12.1736 19.8953 12.3527 20.1561 12.6142 20.3071L24.4409 27.1352C24.9192 27.4114 25.5307 27.2475 25.8069 26.7692L29.5237 20.3315C29.7998 19.8532 29.636 19.2416 29.1577 18.9655Z" fill={fill} stroke={stroke} strokeWidth="2" />
@@ -106,11 +106,9 @@ function TagsIcon({ state }: { state: Props['state'] }) {
   );
 }
 
-function AS400Icon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
-  const stroke = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
+function AS400Icon({ state = 'Default' }: { state: Props['state'] }) {
+  const fill = ICON_FILL[state];
+  const stroke = ICON_STROKE[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 10C16.13 10 13 13.13 13 17C13 20.7317 16.5367 25.7265 18.5823 28.3034C19.3189 29.2314 20.6811 29.2314 21.4177 28.3034C23.4633 25.7265 27 20.7317 27 17C27 13.13 23.87 10 20 10ZM20 19.5C18.62 19.5 17.5 18.38 17.5 17C17.5 15.62 18.62 14.5 20 14.5C21.38 14.5 22.5 15.62 22.5 17C22.5 18.38 21.38 19.5 20 19.5Z" fill={fill} stroke={stroke} strokeWidth="2"/>
@@ -118,11 +116,9 @@ function AS400Icon({ state }: { state: Props['state'] }) {
   );
 }
 
-function AdminIcon({ state }: { state: Props['state'] }) {
-  const isSelected = state === 'Selected';
-  const isHover = state === 'Hover';
-  const accent = isSelected ? '#005ba5' : isHover ? '#0072ce' : '#666666';
-  const fill = isSelected ? '#c2ecff' : isHover ? '#c2ecff' : '#DDDDDD';
+function AdminIcon({ state = 'Default' }: { state: Props['state'] }) {
+  const accent = ICON_STROKE[state];
+  const fill = ICON_FILL[state];
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M26.1248 13.7V18.0574C25.616 17.9542 25.0889 17.9002 24.5496 17.9002C20.2006 17.9004 16.6746 21.4261 16.6746 25.7752C16.6746 26.6472 16.8192 27.4853 17.0809 28.2693C16.8917 28.2276 16.7274 28.2419 16.6746 28.4002L17.2 28.9246C16.646 29.1324 16.6125 29.4227 16.6443 29.5672C16.5549 29.419 16.2944 29.0698 15.6248 28.4002C12.9999 25.7753 11.4247 20.5253 11.4246 17.9002V13.7L18.7752 10.5496L26.1248 13.7Z" fill={fill}/>
@@ -135,7 +131,7 @@ const NavIcon = ({ icon, state = 'Default' }: Props) => {
   const isActive = state === 'Selected' || state === 'Hover';
 
   return (
-    <div className={`overflow-clip relative size-[40px] ${isActive ? 'bg-[#e6f4fd] rounded-[4px]' : ''}`}>
+    <div className={`overflow-clip relative size-[40px] ${isActive ? 'bg-primary-50 rounded-[4px]' : ''}`}>
       {icon === 'Dashboard' && <DashboardIcon state={state} />}
       {icon === 'MobileUser' && <MobileUserIcon state={state} />}
       {icon === 'Orders' && <OrdersIcon state={state} />}

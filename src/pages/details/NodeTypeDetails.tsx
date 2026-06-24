@@ -18,8 +18,6 @@ const NodeTypeDetails = () => {
       return data;
     },
   });
-  console.log(node);
-
   return <></>;
 };
 

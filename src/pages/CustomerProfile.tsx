@@ -8,21 +8,21 @@ import { useUserData } from '@/context/UserContext';
 
 const STATUS_BADGE: Record<string, { bg: string; text: string; border: string }> = {
   Active: { bg: 'bg-primary-50', text: 'text-primary', border: 'border-primary' },
-  Inactive: { bg: 'bg-[#f2f2f2]', text: 'text-[#666]', border: 'border-[#bbb]' },
+  Inactive: { bg: 'bg-surface', text: 'text-text-muted', border: 'border-border' },
   Suspended: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-400' },
 };
 
 const TX_STATUS_STYLE: Record<string, string> = {
-  Completed: 'bg-ds-green-100 text-[#444] border-[#b6dfa8]',
-  Failed:    'bg-[#f7b7b7] text-[#444] border-[#e73b3b]',
-  Pending:   'bg-ds-yellow-100 text-[#444] border-ds-yellow-300',
-  Closed:    'bg-[#f2f2f2] text-[#888] border-[#ccc]',
+  Completed: 'bg-ds-green-100 text-text-subtle border-ds-green-500',
+  Failed:    'bg-ds-red-500 text-text-subtle border-danger',
+  Pending:   'bg-ds-yellow-100 text-text-subtle border-ds-yellow-300',
+  Closed:    'bg-surface text-ds-neutral-500 border-border',
 };
 
 const TX_TYPE_STYLE: Record<string, string> = {
-  'Washer':      'text-[#333333] bg-[#DDDDDD]',
-  'Dryer':       'text-[#333333] bg-[#DDDDDD]',
-  'Funds Added': 'text-ds-green-900 bg-[#B6DFA8]',
+  'Washer':      'text-text-subtle bg-border',
+  'Dryer':       'text-text-subtle bg-border',
+  'Funds Added': 'text-ds-green-900 bg-ds-green-500',
 };
 
 const TX_TYPE_LABEL: Record<string, string> = {
@@ -83,7 +83,7 @@ const Checkbox = ({ checked, onChange, disabled = false, indeterminate = false }
     className={cn(
       'size-4 rounded border-[1.5px] flex items-center justify-center shrink-0 transition-colors select-none',
       disabled
-        ? 'border-[#ccc] bg-[#f5f5f5] opacity-50 cursor-not-allowed'
+        ? 'border-border bg-surface opacity-50 cursor-not-allowed'
         : checked || indeterminate
         ? 'bg-primary border-primary cursor-pointer'
         : 'bg-white border-[#9da5b0] cursor-pointer hover:border-primary'
@@ -200,7 +200,7 @@ const FilterSelect = ({ label, options, value, onChange, groups }: SelectProps) 
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col gap-1 flex-1 min-w-0 relative">
-      <p className="text-ds-caption text-[#6a7282]">{label}</p>
+      <p className="text-ds-caption text-gray-1">{label}</p>
       <button
         className="flex items-center justify-between gap-2 h-[40px] px-4 bg-white border border-border rounded-lg text-sm text-text-body hover:bg-surface transition-colors"
         onClick={() => setOpen((v) => !v)}
@@ -229,7 +229,7 @@ const FilterSelect = ({ label, options, value, onChange, groups }: SelectProps) 
                     {opt}
                   </button>
                 ))}
-                {gi < groups.length - 1 && <div className="border-t border-[#f0f0f0] my-1" />}
+                {gi < groups.length - 1 && <div className="border-t border-gray my-1" />}
               </div>
             ))
           ) : (
@@ -260,8 +260,15 @@ const REFUND_REASONS = [
   'Other',
 ];
 
+const FUNDS_ADDED_REFUND_REASONS = [
+  'Funds Accidentally Added',
+  'Close Account',
+  'Moving Out',
+  'Other Financial',
+];
+
 const DetailRow = ({ label, value, chip = true, wrap = false }: { label: string; value: string; chip?: boolean; wrap?: boolean }) => (
-  <div className={cn('flex justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', wrap ? 'items-start' : 'items-center')}>
+  <div className={cn('flex justify-between py-2.5 border-b border-gray last:border-0 gap-4', wrap ? 'items-start' : 'items-center')}>
     <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
     <p className={cn('text-ds-label font-medium text-text-body text-right', wrap ? 'whitespace-normal' : 'truncate max-w-[60%]')}>{value}</p>
   </div>
@@ -365,6 +372,7 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
   const [reason, setReason] = useState('');
   const [note, setNote] = useState('');
   const [showReasons, setShowReasons] = useState(false);
+  const reasonOptions = tx.type === 'Funds Added' ? FUNDS_ADDED_REFUND_REASONS : REFUND_REASONS;
 
   return (
     <>
@@ -400,7 +408,7 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
             </button>
             {showReasons && (
               <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-border rounded-lg shadow-md z-10 overflow-hidden">
-                {REFUND_REASONS.map((r) => (
+                {reasonOptions.map((r) => (
                   <button
                     key={r}
                     className="w-full px-4 py-3 text-left text-ds-body-sm hover:bg-primary-50 transition-colors"
@@ -440,10 +448,10 @@ const CreateRefundView = ({ tx, onBack, onClose, onSuccess }: { tx: Transaction;
 
 
 const REFUND_STATUS_STYLE: Record<string, string> = {
-  'Refund Requested': 'bg-ds-orange-100 text-ds-orange-900 border-[#fbcb9b]',
-  'Refund Pending':   'bg-ds-orange-100 text-[#444] border-[#fbcb9b]',
-  'Refund Complete':  'bg-ds-green-100 text-[#444] border-[#b6dfa8]',
-  'Refund Denied':    'bg-[#f2f2f2] text-[#444] border-[#bbb]',
+  'Refund Requested': 'bg-ds-orange-100 text-ds-orange-900 border-ds-orange-500',
+  'Refund Pending':   'bg-ds-orange-100 text-text-subtle border-ds-orange-500',
+  'Refund Complete':  'bg-ds-green-100 text-text-subtle border-ds-green-500',
+  'Refund Denied':    'bg-surface text-text-subtle border-border',
 };
 
 const RefundDetailTab = ({ tx, customer }: { tx: Transaction; customer: NonNullable<ReturnType<typeof getCustomerById>> }) => {
@@ -479,11 +487,11 @@ const RefundDetailTab = ({ tx, customer }: { tx: Transaction; customer: NonNulla
       <div className="flex flex-col gap-4 flex-1 min-w-0">
         <div className="border border-border rounded-lg p-4">
           <p className="text-ds-body-sm text-text-subtle mb-1">PayRange Info</p>
-          <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+          <div className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
             <p className="text-ds-body-sm text-text-body">Total Loads</p>
             <p className="text-ds-body-sm text-text-subtle">8</p>
           </div>
-          <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+          <div className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
             <p className="text-ds-body-sm text-text-body">Refund Requests</p>
             <p className="text-ds-body-sm text-text-subtle">1</p>
           </div>
@@ -713,9 +721,9 @@ const BulkRefundModal = ({ transactions, onClose, onSuccess }: {
 const StatCard = ({ label, value, variant = 'default' }: { label: string; value: string; variant?: 'default' | 'warning' }) => (
   <div className={cn(
     'border rounded-lg p-[10px] flex flex-col gap-1',
-    variant === 'warning' ? 'bg-ds-orange-100 border-[#fbcb9b]' : 'bg-white border-border',
+    variant === 'warning' ? 'bg-ds-orange-100 border-ds-orange-500' : 'bg-white border-border',
   )}>
-    <p className={cn('text-ds-body-sm', variant === 'warning' ? 'text-ds-yellow-900' : 'text-[#101828]')}>{label}</p>
+    <p className={cn('text-ds-body-sm', variant === 'warning' ? 'text-ds-yellow-900' : 'text-text-body')}>{label}</p>
     <p className={cn('text-ds-button font-semibold', variant === 'warning' ? 'text-ds-yellow-900' : 'text-text-body')}>{value}</p>
   </div>
 );
@@ -751,7 +759,7 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
                 : 'text-text-muted hover:text-text-subtle'
             )}
           >
-            {t === 'payrange' ? 'PayRange Info' : `Partner Offers (${offers.length})`}
+            {t === 'payrange' ? 'Last 12 Months Activity' : `Partner Offers (${offers.length})`}
           </button>
         ))}
       </div>
@@ -763,15 +771,14 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
       )}>
         {/* Both tab contents rendered simultaneously — inactive is invisible but holds height */}
         <div className="grid">
-          {/* PayRange stats */}
+          {/* Activity stats */}
           <div className={cn('col-start-1 row-start-1 flex flex-col gap-3', tab !== 'payrange' ? 'invisible pointer-events-none' : '')}>
             <div className="grid grid-cols-2 gap-3">
-              <StatCard label="Current Balance" value={`$${txStats.balance.toFixed(2)}`} />
-              <StatCard label="Lifetime Laundry Spend" value={`$${txStats.spend.toFixed(2)}`} />
+              <StatCard label="Laundry Loads" value={String(txStats.loads)} />
+              <StatCard label="Laundry Spend" value={`$${txStats.spend.toFixed(2)}`} />
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              <StatCard label="Lifetime Loads" value={String(txStats.loads)} />
-              <StatCard label="Refund Requests" value={String(txStats.refundCount)} variant={txStats.refundCount > 0 ? 'warning' : 'default'} />
+            <div className="grid grid-cols-2 gap-3">
+              <StatCard label="Refund Request" value={String(txStats.refundCount)} variant={txStats.refundCount > 0 ? 'warning' : 'default'} />
               <StatCard label="Total Refunded" value={`$${txStats.refundTotal.toFixed(2)}`} />
             </div>
           </div>
@@ -790,7 +797,7 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
                     onClick={() => onOfferClick(offer)}
                     className={cn(
                       'w-full flex items-center justify-between px-4 py-3 hover:bg-surface transition-colors text-left',
-                      i > 0 ? 'border-t border-[#f0f0f0]' : ''
+                      i > 0 ? 'border-t border-gray' : ''
                     )}
                   >
                     <p className="text-ds-body-sm text-text-body">{offer.title}</p>
@@ -818,13 +825,13 @@ const PayRangeTabs = ({ txStats, actionsRef, showActions, setShowActions, setSho
             </button>
             {showActions && (
               <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-border rounded-lg shadow-lg overflow-hidden z-10">
-                <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors border-b border-[#f0f0f0]"
+                <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors border-b border-gray"
                   onClick={() => { setShowActions(() => false); setShowOffersModal(true); }}>
                   Issue User Offers
                 </button>
                 {role !== 'Customer Support' && (
                   <>
-                    <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors border-b border-[#f0f0f0]"
+                    <button className="w-full px-4 py-3 text-left text-ds-body-sm text-text-body hover:bg-primary-50 transition-colors border-b border-gray"
                       onClick={() => setShowActions(() => false)}>
                       Add To User Wallet Balance
                     </button>
@@ -861,14 +868,34 @@ const DETAIL_ROWS = [
 
 const TAG_OPTIONS = ['Building Attendant', 'CSC Employee', 'Developer', 'Technician', 'Tester'];
 
+// TODO: replace with the current app version from the API / config once available
+const CURRENT_APP_VERSION = 'one_tap_away_1.9.25';
+
+const parseVersion = (v: string) => (v.match(/(\d+)\.(\d+)\.(\d+)$/) ?? []).slice(1).map(Number);
+const isOutdated = (v: string) => {
+  const [ma, mi, pa] = parseVersion(v);
+  const [cma, cmi, cpa] = parseVersion(CURRENT_APP_VERSION);
+  if (ma !== cma) return ma < cma;
+  if (mi !== cmi) return mi < cmi;
+  return pa < cpa;
+};
+
 const MOCK_DEVICES = [
   {
     allowsPush: true,
     isTester: false,
     fingerprint: '5755B9AF-A93B-4DBB-B9F7-33F808117033',
-    appVersion: 'one_tap_away_1.9.25',
+    appVersion: 'one_tap_away_1.8.10',
     createdAt: '08/24/2025 07:45:20 AM',
     updatedAt: '04/13/2026 07:53:50 AM',
+  },
+  {
+    allowsPush: false,
+    isTester: false,
+    fingerprint: 'A1B2C3D4-E5F6-7890-ABCD-EF1234567890',
+    appVersion: 'one_tap_away_1.8.10',
+    createdAt: '03/11/2025 10:22:00 AM',
+    updatedAt: '03/11/2025 10:22:00 AM',
   },
 ];
 
@@ -902,7 +929,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-3 shrink-0">
-          <p className="text-ds-h4 font-semibold text-[#0f172a]">Account Details</p>
+          <p className="text-ds-h4 font-semibold text-text-body">Account Details</p>
           <button onClick={onClose} className="text-text-muted hover:text-text-body transition-colors">
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -952,17 +979,17 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                   <EmailIcon />
                   <p className="text-ds-body-sm text-text-subtle">{customer.email}</p>
                 </div>
-                <div className="w-px my-3 bg-[#e2e8f0] shrink-0" />
+                <div className="w-px my-3 bg-gray-2 shrink-0" />
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <PhoneIcon />
                   <p className="text-ds-body-sm text-text-subtle">{customer.phone}</p>
                 </div>
-                <div className="w-px my-3 bg-[#e2e8f0] shrink-0" />
+                <div className="w-px my-3 bg-gray-2 shrink-0" />
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <HomeIcon />
                   <p className="text-ds-body-sm text-text-subtle">{customer.address}</p>
                 </div>
-                <div className="w-px my-3 bg-[#e2e8f0] shrink-0" />
+                <div className="w-px my-3 bg-gray-2 shrink-0" />
                 <div className="flex flex-col gap-2 flex-1 px-4 py-4 justify-start">
                   <CalendarIcon />
                   <p className="text-ds-body-sm text-text-subtle">Member since: {joinFormatted}</p>
@@ -971,7 +998,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
 
               {/* Account detail rows */}
               <div className="border border-border rounded-lg p-4 flex flex-col">
-                <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                <div className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
                   <p className="text-ds-body-sm text-text-body shrink-0">Property</p>
                   <button onClick={() => setHasChanges(true)} className="flex items-center gap-2 h-[32px] px-3 bg-white border border-border rounded-lg text-sm text-text-body min-w-[160px] justify-between">
                     <span>OTA flow B</span>
@@ -980,8 +1007,17 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     </svg>
                   </button>
                 </div>
+                <div className="flex items-start justify-between py-2.5 border-b border-gray gap-4">
+                  <p className="text-ds-body-sm text-text-body shrink-0">Authentication Method</p>
+                  <div className="flex flex-col items-end gap-0.5">
+                    <p className="text-ds-label font-medium text-text-body">{customer.authMethod ?? '—'}</p>
+                    {(customer.authMethod === 'Google (federated)' || customer.authMethod === 'Apple (federated)') && (
+                      <p className="text-ds-caption text-text-muted text-right">Password reset unavailable. Customer must use "Continue with {customer.authMethod.split(' ')[0]}."</p>
+                    )}
+                  </div>
+                </div>
                 {DETAIL_ROWS.map(({ label, value }) => (
-                  <div key={label} className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                  <div key={label} className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
                     <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
                     <p className="text-ds-label font-medium text-text-body">{value}</p>
                   </div>
@@ -1062,7 +1098,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
               {/* Table */}
               <div className="border border-border rounded-lg overflow-hidden">
                 {/* Header */}
-                <div className="flex bg-[#f9fafb]">
+                <div className="flex bg-ds-neutral-50">
                   {[
                     { label: 'Allows Push', w: 'w-[10%]' },
                     { label: 'Is Tester', w: 'w-[9%]' },
@@ -1072,14 +1108,14 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     { label: 'Updated at', w: 'w-[18%]' },
                   ].map(({ label, w }) => (
                     <div key={label} className={cn('px-3 py-2.5', w)}>
-                      <p className="text-ds-body-sm font-medium text-[#6a7282]">{label}</p>
+                      <p className="text-ds-body-sm font-medium text-gray-1">{label}</p>
                     </div>
                   ))}
                 </div>
 
                 {/* Rows */}
                 {MOCK_DEVICES.map((device, i) => (
-                  <div key={i} className="flex items-start border-t border-[#f0f0f0]">
+                  <div key={i} className="flex items-start border-t border-gray">
                     <div className="w-[10%] px-3 py-3">
                       <p className="text-ds-body-sm text-text-body">{String(device.allowsPush)}</p>
                     </div>
@@ -1089,8 +1125,11 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
                     <div className="flex-1 px-3 py-3">
                       <p className="text-ds-body-sm text-text-body font-mono break-all">{device.fingerprint}</p>
                     </div>
-                    <div className="w-[16%] px-3 py-3">
+                    <div className="w-[16%] px-3 py-3 flex flex-col gap-1">
                       <p className="text-ds-body-sm text-text-body break-words">{device.appVersion}</p>
+                      {isOutdated(device.appVersion) && (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-ds-caption font-medium bg-ds-yellow-100 text-ds-yellow-900 border border-ds-yellow-300 w-fit">Outdated</span>
+                      )}
                     </div>
                     <div className="w-[18%] px-3 py-3">
                       <p className="text-ds-body-sm text-text-body">{device.createdAt}</p>
@@ -1103,7 +1142,7 @@ const AccountDetailsModal = ({ customer, initials, badge, joinFormatted, onClose
 
                 {/* Footer */}
                 <div className="flex items-center px-3 py-2 border-t border-border bg-white">
-                  <p className="text-ds-body-sm text-[#6a7282]">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
+                  <p className="text-ds-body-sm text-gray-1">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
                 </div>
               </div>
 
@@ -1196,7 +1235,7 @@ const IssueUserOffersModal = ({ onClose, onSubmit }: { onClose: () => void; onSu
           {/* Total Amount */}
           <div className="flex flex-col gap-1.5">
             <p className="text-ds-body-sm text-text-muted">Total Amount</p>
-            <div className="h-[48px] px-4 bg-[#f2f2f2] border border-border rounded-lg flex items-center">
+            <div className="h-[48px] px-4 bg-surface border border-border rounded-lg flex items-center">
               <p className="text-ds-body text-text-subtle">{totalLabel}</p>
             </div>
           </div>
@@ -1306,9 +1345,9 @@ type Offer = {
 };
 
 const BadgeRow = ({ label, value, green = false }: { label: string; value: string; green?: boolean }) => (
-  <div className={cn('flex items-center justify-between py-2.5 border-b border-[#f0f0f0] last:border-0 gap-4', green ? 'bg-[#f2f9ef] px-3 -mx-3 rounded' : '')}>
+  <div className={cn('flex items-center justify-between py-2.5 border-b border-gray last:border-0 gap-4', green ? 'bg-ds-green-100 px-3 -mx-3 rounded' : '')}>
     <p className={cn('text-ds-body-sm shrink-0', green ? 'text-ds-green-900' : 'text-text-body')}>{label}</p>
-    <span className="text-ds-body-sm font-medium bg-[#f2f2f2] border border-[#ddd] rounded px-2 py-0.5 text-text-body">{value}</span>
+    <span className="text-ds-body-sm font-medium bg-surface border border-border rounded px-2 py-0.5 text-text-body">{value}</span>
   </div>
 );
 
@@ -1403,28 +1442,8 @@ const DevicesModal = ({ customer, onClose }: { customer: NonNullable<ReturnType<
         </div>
 
         <div className="px-6 pb-6 overflow-y-auto flex flex-col gap-4">
-          <div className="flex items-center justify-end">
-            <button
-              onClick={() => {
-                const headers = ['Allows Push', 'Is Tester', 'Device Fingerprint', 'App Version', 'Created At', 'Updated At'];
-                const rows = MOCK_DEVICES.map((d) => [String(d.allowsPush), String(d.isTester), d.fingerprint, d.appVersion, d.createdAt, d.updatedAt]);
-                const csv = [headers, ...rows].map((r) => r.map((v) => `"${v}"`).join(',')).join('\n');
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `devices-${customer.firstName}-${customer.lastName}.csv`;
-                a.click();
-                URL.revokeObjectURL(url);
-              }}
-              className="text-ds-body-sm text-primary hover:underline transition-colors"
-            >
-              Export CSV
-            </button>
-          </div>
-
           <div className="border border-border rounded-lg overflow-hidden">
-            <div className="flex bg-[#f9fafb]">
+            <div className="flex bg-ds-neutral-50">
               {[
                 { label: 'Allows Push', w: 'w-[10%]' },
                 { label: 'Is Tester', w: 'w-[9%]' },
@@ -1434,22 +1453,27 @@ const DevicesModal = ({ customer, onClose }: { customer: NonNullable<ReturnType<
                 { label: 'Updated at', w: 'w-[18%]' },
               ].map(({ label, w }) => (
                 <div key={label} className={cn('px-3 py-2.5', w)}>
-                  <p className="text-ds-body-sm font-medium text-[#6a7282]">{label}</p>
+                  <p className="text-ds-body-sm font-medium text-gray-1">{label}</p>
                 </div>
               ))}
             </div>
             {MOCK_DEVICES.map((device, i) => (
-              <div key={i} className="flex items-start border-t border-[#f0f0f0]">
+              <div key={i} className="flex items-start border-t border-gray">
                 <div className="w-[10%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{String(device.allowsPush)}</p></div>
                 <div className="w-[9%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{String(device.isTester)}</p></div>
                 <div className="flex-1 px-3 py-3"><p className="text-ds-body-sm text-text-body font-mono break-all">{device.fingerprint}</p></div>
-                <div className="w-[16%] px-3 py-3"><p className="text-ds-body-sm text-text-body break-words">{device.appVersion}</p></div>
+                <div className="w-[16%] px-3 py-3 flex flex-col gap-1">
+                  <p className="text-ds-body-sm text-text-body break-words">{device.appVersion}</p>
+                  {isOutdated(device.appVersion) && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-ds-caption font-medium bg-ds-yellow-100 text-ds-yellow-900 border border-ds-yellow-300 w-fit">Outdated</span>
+                  )}
+                </div>
                 <div className="w-[18%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{device.createdAt}</p></div>
                 <div className="w-[18%] px-3 py-3"><p className="text-ds-body-sm text-text-body">{device.updatedAt}</p></div>
               </div>
             ))}
             <div className="flex items-center px-3 py-2 border-t border-border bg-white">
-              <p className="text-ds-body-sm text-[#6a7282]">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
+              <p className="text-ds-body-sm text-gray-1">Showing {MOCK_DEVICES.length} of {MOCK_DEVICES.length} devices</p>
             </div>
           </div>
         </div>
@@ -1703,6 +1727,11 @@ const CustomerProfilePage = () => {
                 <span className="text-ds-body-sm">{customer.phone}</span>
               </div>
             </div>
+            {/* Current Balance — always visible */}
+            <div className="shrink-0 bg-primary-50 border border-primary-100 rounded-lg px-4 py-3 flex flex-col gap-0.5 min-w-[140px]">
+              <p className="text-ds-caption text-text-subtle">Current Balance</p>
+              <p className="text-ds-h4 font-bold text-text-body">${txStats.balance.toFixed(2)}</p>
+            </div>
           </div>
 
           {/* Contact card */}
@@ -1710,7 +1739,12 @@ const CustomerProfilePage = () => {
             <div className="flex items-start gap-2 flex-1 px-4 py-2">
               <SmartphoneIcon />
               <div className="flex flex-col gap-0.5">
-                <p className="text-ds-body-sm text-text-body font-medium">App Version</p>
+                <div className="flex items-center gap-1.5">
+                  <p className="text-ds-body-sm text-text-body font-medium">App Version</p>
+                  {MOCK_DEVICES[0] && isOutdated(MOCK_DEVICES[0].appVersion) && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-ds-caption font-medium bg-ds-yellow-100 text-ds-yellow-900 border border-ds-yellow-300">Outdated</span>
+                  )}
+                </div>
                 <p className="text-ds-body-sm text-text-subtle">{MOCK_DEVICES[0]?.appVersion ?? '—'}</p>
                 <button
                   onClick={() => setShowDevicesModal(true)}
@@ -1734,6 +1768,9 @@ const CustomerProfilePage = () => {
               <div className="flex flex-col gap-0.5">
                 <p className="text-ds-body-sm text-text-body font-medium">Laundry Location</p>
                 <p className="text-ds-body-sm text-text-subtle">{txStats.laundryLocation}</p>
+                <p className="text-ds-caption text-text-muted mt-1">
+                  {customer.roomName ?? 'Room Not Available'}
+                </p>
               </div>
             </div>
           </div>
@@ -1752,21 +1789,30 @@ const CustomerProfilePage = () => {
           {showDetails && (
             <div className="border border-border rounded-xl">
               <div className="px-5 py-4 flex flex-col">
-                <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                <div className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
                   <p className="text-ds-body-sm text-text-body shrink-0">ID</p>
                   <InlineId id={customer.userId ?? customer.id} />
                 </div>
-                <div className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                <div className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
                   <p className="text-ds-body-sm text-text-body shrink-0">Member Since</p>
                   <p className="text-ds-label font-medium text-text-body">{joinFormatted}</p>
                 </div>
+                <div className="flex items-start justify-between py-2.5 border-b border-gray gap-4">
+                  <p className="text-ds-body-sm text-text-body shrink-0">Authentication Method</p>
+                  <div className="flex flex-col items-end gap-0.5">
+                    <p className="text-ds-label font-medium text-text-body">{customer.authMethod ?? '—'}</p>
+                    {(customer.authMethod === 'Google (federated)' || customer.authMethod === 'Apple (federated)') && (
+                      <p className="text-ds-caption text-text-muted text-right">Password reset unavailable. Customer must use "Continue with {customer.authMethod.split(' ')[0]}."</p>
+                    )}
+                  </div>
+                </div>
                 {DETAIL_ROWS.map(({ label, value }) => (
-                  <div key={label} className="flex items-center justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                  <div key={label} className="flex items-center justify-between py-2.5 border-b border-gray gap-4">
                     <p className="text-ds-body-sm text-text-body shrink-0">{label}</p>
                     <p className="text-ds-label font-medium text-text-body">{value}</p>
                   </div>
                 ))}
-                <div className="flex items-start justify-between py-2.5 border-b border-[#f0f0f0] gap-4">
+                <div className="flex items-start justify-between py-2.5 border-b border-gray gap-4">
                   <p className="text-ds-body-sm text-text-body shrink-0 mt-1">Tags</p>
                   <div className="flex flex-wrap items-center gap-2 justify-end">
                     {profileTags.map((tag) => (
@@ -1863,7 +1909,7 @@ const CustomerProfilePage = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
                 </svg>
                 <input
-                  className="w-full h-[40px] pl-[40px] pr-4 border border-[#d1d5dc] rounded-lg text-ds-body-sm placeholder:text-[rgba(15,23,42,0.5)] outline-none focus:border-primary transition-colors"
+                  className="w-full h-[40px] pl-[40px] pr-4 border border-border rounded-lg text-ds-body-sm placeholder:text-[rgba(15,23,42,0.5)] outline-none focus:border-primary transition-colors"
                   placeholder="Search by ID, type, details..."
                   value={txSearch}
                   onChange={(e) => { setTxSearch(e.target.value); setPage(1); }}
@@ -1936,9 +1982,9 @@ const CustomerProfilePage = () => {
           )}
 
           {/* Table */}
-          <div className="border border-[#efefef] rounded-lg overflow-hidden">
+          <div className="border border-surface rounded-lg overflow-hidden">
             {/* Header */}
-            <div className="flex bg-[#f9fafb]">
+            <div className="flex bg-ds-neutral-50">
               {/* Checkbox col */}
               <div className="w-[44px] shrink-0 p-[10px] flex items-center justify-center">
                 {(() => {
@@ -1970,7 +2016,7 @@ const CustomerProfilePage = () => {
                 { label: 'Status', w: 'w-[160px]' },
               ].map(({ label, w }) => (
                 <div key={label} className={cn('p-[10px] shrink-0', w)}>
-                  <p className="text-ds-label font-medium text-[#6a7282] whitespace-nowrap">{label}</p>
+                  <p className="text-ds-label font-medium text-gray-1 whitespace-nowrap">{label}</p>
                 </div>
               ))}
             </div>
@@ -1984,7 +2030,7 @@ const CustomerProfilePage = () => {
                   key={tx.id}
                   onClick={() => setSelectedTx(tx)}
                   className={cn(
-                    'flex items-center border-t border-[#f0f0f0] hover:bg-primary-50 transition-colors cursor-pointer',
+                    'flex items-center border-t border-gray hover:bg-primary-50 transition-colors cursor-pointer',
                     { 'border-t-0': i === 0 },
                     selectedTxIds.has(tx.id) ? 'bg-primary-50' : '',
                   )}
@@ -2011,7 +2057,7 @@ const CustomerProfilePage = () => {
                   </div>
                   <div className="w-[180px] shrink-0 px-[10px] py-[8px] flex items-center">
                     <span className="text-ds-label font-medium text-text-body">{tx.date}</span>
-                    <span className="text-ds-caption text-text-muted ml-2">{tx.time}</span>
+                    <span className="text-ds-caption text-text-muted ml-1">{tx.time}</span>
                   </div>
                   <div className="w-[110px] shrink-0 px-[10px] py-[8px] flex items-center">
                     <p className="text-ds-body-sm text-text-body">{tx.orderId}</p>
@@ -2070,7 +2116,7 @@ const CustomerProfilePage = () => {
 
             {/* Pagination */}
             <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-white">
-              <p className="text-ds-body-sm text-[#6a7282]">
+              <p className="text-ds-body-sm text-gray-1">
                 Showing {Math.min(paginated.length, PAGE_SIZE)} of {filtered.length} entries
               </p>
               <div className="flex items-center gap-1">
@@ -2080,7 +2126,7 @@ const CustomerProfilePage = () => {
                     onClick={() => setPage(p)}
                     className={cn(
                       'size-[26px] text-ds-body-sm rounded flex items-center justify-center',
-                      p === page ? 'bg-black text-white' : 'border border-black text-[#727272]'
+                      p === page ? 'bg-black text-white' : 'border border-black text-ds-neutral-500'
                     )}
                   >
                     {p}

@@ -1,5 +1,3 @@
-const VoidFn = (...props: any) => {
-  console.log(...props);
-};
+const VoidFn = (..._props: any) => {};
 
 export default VoidFn;

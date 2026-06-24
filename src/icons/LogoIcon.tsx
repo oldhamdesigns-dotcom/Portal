@@ -9,8 +9,8 @@ const LogoIcon = ({ height = 40, width = 40, fill = '#111111', color = '#ffffff'
     xmlns={'http://www.w3.org/2000/svg'}
   >
     <rect
-      width={width}
-      height={height}
+      width={40}
+      height={40}
       rx={'4'}
       fill={fill}
     />

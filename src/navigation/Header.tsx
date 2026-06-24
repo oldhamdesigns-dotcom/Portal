@@ -28,7 +28,7 @@ const Header = () => {
   );
 
   return (
-    <div className="flex w-full items-center justify-between px-4 h-[67px] bg-white border-b border-[#e2e8f0] shadow-[0px_1px_1px_rgba(0,0,0,0.1)] shrink-0">
+    <div className="flex w-full items-center justify-between px-4 h-[67px] bg-white border-b border-gray-2 shadow-[0px_1px_1px_rgba(0,0,0,0.1)] shrink-0">
       <p className="text-lg font-semibold text-text-body">Support Portal</p>
 
       <div className="relative">
@@ -55,7 +55,7 @@ const Header = () => {
 
         {profileMenu.visible ? (
           <div
-            className="animate__animated animate__faster animate__fadeInDown absolute right-0 top-full mt-2 w-[220px] flex flex-col gap-2 rounded-lg bg-white py-4 shadow-lg border border-[#e2e8f0] z-50"
+            className="animate__animated animate__faster animate__fadeInDown absolute right-0 top-full mt-2 w-[220px] flex flex-col gap-2 rounded-lg bg-white py-4 shadow-lg border border-gray-2 z-50"
             ref={profileMenu.menuRef}
             style={profileMenu.styles}
             {...profileMenu.props}

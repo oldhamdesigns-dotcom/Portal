@@ -11,7 +11,7 @@ const Layout = () => {
         <NavigationMenu />
         <div className="flex flex-1 flex-col min-w-0">
           <Header />
-          <main className="flex-1 overflow-auto bg-[#f7f7f7]">
+          <main className="flex-1 overflow-auto bg-surface">
             <Outlet />
           </main>
         </div>
