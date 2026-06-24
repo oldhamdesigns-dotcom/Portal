@@ -42,7 +42,7 @@ export type Transaction = {
 // from src/services/customers.service.ts once endpoints are available.
 
 const MOCK_CUSTOMERS: Customer[] = [
-  { id: 'C001', userId: '24882418-8031-70c7-0a12-748657977aaf', firstName: 'Sarah', lastName: 'Johnson', email: 'sarah.johnson@email.com', phone: '(555) 201-4321', address: '4311 Royal Oak Blvd, San Marcos TX 78666', status: 'Active', balance: 12.50, joinDate: '2022-03-15', plan: 'Premium', roomName: 'East Room', authMethod: 'Google (federated)' },
+  { id: 'C001', userId: '24882418-8031-70c7-0a12-748657977aaf', firstName: 'Sarah', lastName: 'Johnson', email: 'sarah.johnson@email.com', phone: '(555) 201-4321', address: '4311 Royal Oak Blvd, San Marcos TX 78666', status: 'Active', balance: 12.50, joinDate: '2022-03-15', plan: 'Premium', authMethod: 'Google (federated)' },
   { id: 'C002', userId: 'a3f1cc29-4d72-41b8-b305-1e6a09d84f12', firstName: 'Michael', lastName: 'Thompson', email: 'm.thompson@gmail.com', phone: '(555) 304-8872', address: '820 Westover Hills Blvd, San Antonio TX 78251', status: 'Active', balance: 0, joinDate: '2021-07-22', plan: 'Basic' },
   { id: 'C003', userId: '7b2e5f84-c910-4a3d-9e67-2d4b8c1f0a35', firstName: 'Emily', lastName: 'Rodriguez', email: 'emily.r@outlook.com', phone: '(555) 412-3390', address: '1502 Lakeline Blvd, Cedar Park TX 78613', status: 'Active', balance: 8.75, joinDate: '2023-01-08', plan: 'Standard' },
   { id: 'C004', userId: 'f0d3a7e1-5b24-48c6-8f91-3c7e2a6d9b04', firstName: 'James', lastName: 'Wilson', email: 'jwilson@company.com', phone: '(555) 509-6641', address: '3201 Cherry Ridge Dr, San Antonio TX 78230', status: 'Inactive', balance: 0, joinDate: '2020-11-30', plan: 'Basic' },
